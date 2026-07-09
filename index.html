@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EcoBridge EC · Build your financial identity</title>
-  <!-- Google Fonts - using HTTPS -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -85,6 +84,44 @@
     nav .nav-cta:hover {
       background: #00e67a;
       color: #0b0b0b;
+    }
+
+    .nav-user {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 16px 4px 12px;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      cursor: default;
+    }
+
+    .nav-user.active {
+      display: flex;
+    }
+
+    .nav-user .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #00ff88;
+      color: #0b0b0b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .nav-user .user-name {
+      color: #ddd;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .nav-user .user-name span {
+      color: #00ff88;
     }
 
     /* ===== HERO ===== */
@@ -205,24 +242,6 @@
       cursor: not-allowed;
       transform: none !important;
       pointer-events: none;
-    }
-
-    .btn .spinner-small {
-      display: none;
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(0, 0, 0, 0.1);
-      border-top-color: #0b0b0b;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-
-    .btn.loading .spinner-small {
-      display: inline-block;
-    }
-
-    .btn.loading .btn-text {
-      display: none;
     }
 
     @keyframes spin {
@@ -630,6 +649,32 @@
       text-decoration: underline;
     }
 
+    .modal-box .success-state {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .modal-box .success-state.active {
+      display: block;
+    }
+
+    .modal-box .success-state .check {
+      font-size: 56px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .modal-box .success-state h3 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .modal-box .success-state p {
+      color: #888;
+      font-size: 14px;
+    }
+
     /* ===== POPIA CONSENT STYLES ===== */
     .popia-consent {
       background: rgba(0, 255, 136, 0.03);
@@ -764,31 +809,6 @@
 
     .onboarding-step.active {
       display: block;
-    }
-
-    .onboarding-step .step-indicator {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-bottom: 24px;
-    }
-
-    .onboarding-step .step-indicator .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #2a2a2a;
-      transition: all 0.3s;
-    }
-
-    .onboarding-step .step-indicator .dot.active {
-      background: #00ff88;
-      width: 24px;
-      border-radius: 4px;
-    }
-
-    .onboarding-step .step-indicator .dot.done {
-      background: #00ff88;
     }
 
     .onboarding-step .step-actions {
@@ -1001,6 +1021,43 @@
       display: block;
     }
 
+    .connect-options {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .connect-options .btn-small {
+      padding: 6px 14px;
+      font-size: 11px;
+      border-radius: 40px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      border: 1px solid rgba(0, 255, 136, 0.15);
+    }
+
+    .connect-options .btn-small:hover {
+      background: rgba(0, 255, 136, 0.2);
+      transform: scale(1.02);
+    }
+
+    .connect-options .btn-small.connected-btn {
+      background: rgba(0, 255, 136, 0.05);
+      color: #555;
+      border-color: rgba(255, 255, 255, 0.05);
+      cursor: default;
+    }
+
+    .connect-options .btn-small.connected-btn:hover {
+      transform: none;
+      background: rgba(0, 255, 136, 0.05);
+    }
+
     .dashboard-section {
       margin-bottom: 40px;
     }
@@ -1102,11 +1159,6 @@
     .skeleton-card {
       height: 120px;
       border-radius: 16px;
-    }
-
-    /* ===== HIDDEN CLASS ===== */
-    .hidden {
-      display: none !important;
     }
 
     /* ===== RESPONSIVE ===== */
@@ -1270,6 +1322,10 @@
       <a href="#" onclick="showLanding()">EcoScore</a>
       <a href="#" onclick="showLanding()">For Lenders</a>
       <a href="#" class="nav-cta" id="navSignupBtn">Sign Up</a>
+      <div class="nav-user" id="navUser">
+        <div class="avatar" id="userAvatar">A</div>
+        <span class="user-name">Hi, <span id="navUserName">Amara</span></span>
+      </div>
     </nav>
   </header>
 
@@ -1404,7 +1460,7 @@
     <!-- Onboarding Card -->
     <div class="onboarding-card" id="onboardingCard">
       <div class="info">
-        <h3>📋 Finish setting up your profile</h3>
+        <h3 id="onboardingTitle">📋 Finish setting up your profile</h3>
         <p id="onboardingMessage">Tell us about your business to unlock your full EcoScore</p>
       </div>
       <div class="progress">
@@ -1431,32 +1487,36 @@
           <span class="card-icon">📊</span>
           <div class="card-label">EcoScore</div>
           <div class="card-value" id="userEcoScore">--</div>
-          <div class="card-change">Complete profile to calculate</div>
+          <div class="card-change" id="ecoScoreChange">Complete profile to calculate</div>
         </div>
         <div class="dashboard-card">
           <span class="card-icon">💰</span>
           <div class="card-label">Monthly Income</div>
           <div class="card-value" id="userIncome">--</div>
-          <div class="card-change">Add your business details</div>
+          <div class="card-change" id="incomeChange">Add your business details</div>
         </div>
         <div class="dashboard-card">
           <span class="card-icon">🏦</span>
           <div class="card-label">Connected Accounts</div>
-          <div class="card-value">0</div>
-          <div class="card-change">Connect your first account</div>
+          <div class="card-value" id="connectedCount">0</div>
+          <div class="card-change" id="connectedAccountsList">Connect your first account</div>
+          <div class="connect-options">
+            <button class="btn-small" id="connectBankFromCard">🏛️ Connect Bank</button>
+            <button class="btn-small" id="connectYocoFromCard">🧾 Connect Yoco</button>
+          </div>
         </div>
         <div class="dashboard-card">
           <span class="card-icon">📈</span>
           <div class="card-label">Growth Readiness</div>
-          <div class="card-value" style="font-size:24px;">--</div>
-          <div class="card-change">Complete profile to unlock</div>
+          <div class="card-value" id="growthReadiness" style="font-size:24px;">--</div>
+          <div class="card-change" id="growthReadinessDesc">Complete profile to unlock</div>
         </div>
       </div>
     </div>
 
     <div class="dashboard-section">
       <h3>Recent Activity</h3>
-      <div class="activity-list">
+      <div class="activity-list" id="activityList">
         <div class="activity-item">
           <div class="activity-left">
             <div class="activity-icon">✅</div>
@@ -1464,7 +1524,7 @@
           </div>
           <div class="activity-time" id="signupTime">Just now</div>
         </div>
-        <div class="activity-item">
+        <div class="activity-item" id="pendingProfileActivity">
           <div class="activity-left">
             <div class="activity-icon">📋</div>
             <div class="activity-text"><strong>Profile setup</strong> pending — Complete your business profile</div>
@@ -1478,10 +1538,10 @@
       <button class="btn" id="quickOnboardingBtn">
         <span>📋</span> Complete Profile
       </button>
-      <button class="btn" onclick="alert('🔗 Connecting to your bank...')">
+      <button class="btn" id="quickConnectBankBtn">
         <span>🏛️</span> Connect Bank
       </button>
-      <button class="btn" onclick="alert('🧾 Connecting to Yoco...')">
+      <button class="btn" id="quickConnectYocoBtn">
         <span>🧾</span> Connect Yoco
       </button>
       <button class="btn btn-outline" onclick="showLanding()">
@@ -1646,9 +1706,15 @@
               <option value="services">Services (cleaning, repairs, etc.)</option>
               <option value="transport">Transport / Logistics</option>
               <option value="agriculture">Agriculture / Farming</option>
-              <option value="other">Other</option>
+              <option value="other">Other (please specify)</option>
             </select>
             <div class="error-text" id="businessTypeError">Please select your business type</div>
+          </div>
+
+          <div class="input-group" id="otherBusinessTypeGroup" style="display:none;">
+            <label for="otherBusinessType">Please specify your business type</label>
+            <input type="text" id="otherBusinessType" placeholder="e.g. Handmade crafts, Tutoring, etc.">
+            <div class="error-text" id="otherBusinessTypeError">Please specify your business type</div>
           </div>
 
           <div class="input-group">
@@ -1715,260 +1781,923 @@
   </div>
 
   <!-- ============================================================
+  BANK CONNECTION MODAL
+  ============================================================ -->
+  <div class="modal-overlay" id="bankConnectionModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeBankConnectionBtn">✕</button>
+      <div class="modal-header">
+        <span class="logo-icon">🏛️</span>
+        <h2>Connect Your Bank</h2>
+      </div>
+      <div class="sub">Securely link your bank account to verify your income</div>
+
+      <form id="bankConnectionForm" novalidate>
+        <div class="input-group">
+          <label for="bankAccountNumber">Bank Account Number</label>
+          <input type="text" id="bankAccountNumber" placeholder="e.g. 1234567890" required>
+          <div class="error-text" id="bankAccountError">Please enter your bank account number</div>
+        </div>
+
+        <div class="input-group">
+          <label for="bankName">Bank Name</label>
+          <select id="bankName" required>
+            <option value="">Select your bank</option>
+            <option value="fnb">FNB</option>
+            <option value="standard">Standard Bank</option>
+            <option value="absa">ABSA</option>
+            <option value="nedbank">Nedbank</option>
+            <option value="capitec">Capitec</option>
+            <option value="other">Other</option>
+          </select>
+          <div class="error-text" id="bankNameError">Please select your bank</div>
+        </div>
+
+        <div class="input-group" id="otherBankGroup" style="display:none;">
+          <label for="otherBankName">Please specify your bank</label>
+          <input type="text" id="otherBankName" placeholder="e.g. TymeBank">
+          <div class="error-text" id="otherBankNameError">Please specify your bank</div>
+        </div>
+
+        <div class="popia-consent" style="margin-top:16px;">
+          <div class="popia-header">
+            <span class="shield-icon">🔒</span>
+            <h3>Bank Data Consent</h3>
+          </div>
+          <div class="popia-content" style="max-height:100px;">
+            <p style="font-size:12px;">By connecting your bank account, you consent to EcoBridge EC accessing your transaction data to calculate your EcoScore and match you with lenders. Your data is encrypted and secure.</p>
+          </div>
+          <div class="popia-checkbox" style="border-top:none; padding-top:8px; margin-top:8px;">
+            <input type="checkbox" id="bankConsent">
+            <label for="bankConsent" style="font-size:13px;">
+              I consent to EcoBridge EC accessing my bank transaction data for financial assessment purposes.
+            </label>
+          </div>
+          <div class="popia-checkbox" style="border-top:none; padding-top:0; margin-top:0;">
+            <div style="margin-left:32px;">
+              <div class="checkbox-error" id="bankConsentError">You must consent to access your bank data</div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="bankConnectionSubmitBtn">
+          <span class="btn-text">🔗 Connect Bank</span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+  YOCO CONNECTION MODAL
+  ============================================================ -->
+  <div class="modal-overlay" id="yocoConnectionModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeYocoConnectionBtn">✕</button>
+      <div class="modal-header">
+        <span class="logo-icon">🧾</span>
+        <h2>Connect Your Yoco</h2>
+      </div>
+      <div class="sub">Securely link your Yoco POS to verify your sales</div>
+
+      <form id="yocoConnectionForm" novalidate>
+        <div class="input-group">
+          <label for="yocoApiKey">Yoco API Key</label>
+          <input type="text" id="yocoApiKey" placeholder="e.g. YC-XXXX-XXXX-XXXX" required>
+          <div class="error-text" id="yocoApiKeyError">Please enter your Yoco API key</div>
+        </div>
+
+        <div class="input-group">
+          <label for="yocoDeviceName">Device Name (Optional)</label>
+          <input type="text" id="yocoDeviceName" placeholder="e.g. Yoco Point (Main)">
+        </div>
+
+        <div class="popia-consent" style="margin-top:16px;">
+          <div class="popia-header">
+            <span class="shield-icon">🔒</span>
+            <h3>Yoco Data Consent</h3>
+          </div>
+          <div class="popia-content" style="max-height:100px;">
+            <p style="font-size:12px;">By connecting your Yoco account, you consent to EcoBridge EC accessing your sales data to calculate your EcoScore and match you with lenders. Your data is encrypted and secure.</p>
+          </div>
+          <div class="popia-checkbox" style="border-top:none; padding-top:8px; margin-top:8px;">
+            <input type="checkbox" id="yocoConsent">
+            <label for="yocoConsent" style="font-size:13px;">
+              I consent to EcoBridge EC accessing my Yoco sales data for financial assessment purposes.
+            </label>
+          </div>
+          <div class="popia-checkbox" style="border-top:none; padding-top:0; margin-top:0;">
+            <div style="margin-left:32px;">
+              <div class="checkbox-error" id="yocoConsentError">You must consent to access your Yoco data</div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="yocoConnectionSubmitBtn">
+          <span class="btn-text">🔗 Connect Yoco</span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+  CONNECTION PROGRESS MODAL
+  ============================================================ -->
+  <div class="modal-overlay connection-modal" id="connectionModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeConnectionBtn">✕</button>
+      <div id="connectionContent">
+        <div class="modal-header">
+          <span class="logo-icon" id="connectionIcon">🔗</span>
+          <h2 id="connectionTitle">Connecting...</h2>
+        </div>
+        <div class="sub" id="connectionSub">Please wait while we securely connect your account</div>
+
+        <div class="connection-status">
+          <span class="icon-large" id="connectionStatusIcon">⏳</span>
+          <div class="progress-ring" id="connectionProgressRing"></div>
+          <div class="status-text" id="connectionStatusText">Initiating connection...</div>
+          <div class="status-sub" id="connectionStatusSub">This may take a few seconds</div>
+        </div>
+
+        <div class="connection-details" id="connectionDetails" style="display:none;">
+          <div class="detail-row">
+            <span class="detail-label">Data Retrieved</span>
+            <span class="detail-value highlight" id="connectionDataCount">0 items</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Status</span>
+            <span class="detail-value" id="connectionDetailStatus">Processing...</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Time</span>
+            <span class="detail-value" id="connectionTime">--</span>
+          </div>
+        </div>
+
+        <button class="btn-submit" id="connectionDoneBtn" style="display:none; margin-top:16px;">
+          ✓ Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
   JAVASCRIPT
   ============================================================ -->
   <script>
-    // Wrap everything in a single function to avoid conflicts
+    // ============================================================
+    // API SERVICE LAYER (Simulated)
+    // ============================================================
+    const EcoBridgeAPI = {
+      connectBank: function(accountNumber, bankName) {
+        return new Promise(function(resolve) {
+          console.log('🏛️ Connecting to Bank API for account:', accountNumber);
+          setTimeout(function() {
+            resolve({
+              success: true,
+              data: {
+                transactions: [
+                  { date: '2026-06-01', amount: 8500, type: 'credit' },
+                  { date: '2026-06-03', amount: -3200, type: 'debit' },
+                  { date: '2026-06-05', amount: 12000, type: 'credit' },
+                  { date: '2026-06-10', amount: 4500, type: 'credit' },
+                  { date: '2026-06-15', amount: 7500, type: 'credit' },
+                  { date: '2026-06-20', amount: 6000, type: 'credit' },
+                  { date: '2026-06-25', amount: 9000, type: 'credit' },
+                  { date: '2026-06-30', amount: 11000, type: 'credit' }
+                ],
+                balance: 45200,
+                accountName: bankName + ' Account',
+                accountNumber: accountNumber
+              },
+              source: 'bank'
+            });
+          }, 2500);
+        });
+      },
+
+      connectYoco: function(apiKey, deviceName) {
+        return new Promise(function(resolve) {
+          console.log('🧾 Connecting to Yoco API with key:', apiKey);
+          setTimeout(function() {
+            resolve({
+              success: true,
+              data: {
+                transactions: [
+                  { date: '2026-06-01', amount: 850 },
+                  { date: '2026-06-02', amount: 1200 },
+                  { date: '2026-06-03', amount: 680 },
+                  { date: '2026-06-05', amount: 1500 },
+                  { date: '2026-06-07', amount: 2100 },
+                  { date: '2026-06-10', amount: 1300 },
+                  { date: '2026-06-12', amount: 1100 },
+                  { date: '2026-06-15', amount: 1800 },
+                  { date: '2026-06-18', amount: 720 },
+                  { date: '2026-06-20', amount: 1600 },
+                  { date: '2026-06-22', amount: 1050 },
+                  { date: '2026-06-25', amount: 1450 },
+                  { date: '2026-06-28', amount: 1250 },
+                  { date: '2026-06-30', amount: 1340 }
+                ],
+                deviceName: deviceName || 'Yoco Point (Main)'
+              },
+              source: 'yoco'
+            });
+          }, 2500);
+        });
+      }
+    };
+
+    // ============================================================
+    // ECOSCORE ENGINE
+    // ============================================================
+    const EcoScoreEngine = {
+      calculateScore: function(bankData, yocoData) {
+        var incomeStability = 85;
+        var salesConsistency = 88;
+        var cashFlowHealth = 78;
+        var growthTrend = 82;
+
+        if (bankData && bankData.transactions) {
+          var credits = bankData.transactions.filter(function(t) { return t.type === 'credit'; });
+          var totalIncome = credits.reduce(function(sum, t) { return sum + t.amount; }, 0);
+          incomeStability = Math.min(100, Math.round((totalIncome / (credits.length * 100)) * 80 + 20));
+        }
+
+        if (yocoData && yocoData.transactions) {
+          var dailyTotals = yocoData.transactions.map(function(t) { return t.amount; });
+          var avgDaily = dailyTotals.reduce(function(a, b) { return a + b; }, 0) / dailyTotals.length;
+          var variance = dailyTotals.reduce(function(a, b) { return a + Math.pow(b - avgDaily, 2); }, 0) / dailyTotals
+            .length;
+          var stdDev = Math.sqrt(variance);
+          var cv = stdDev / (avgDaily || 1);
+          salesConsistency = Math.min(100, Math.max(0, 100 - (cv * 100)));
+        }
+
+        var ecoScore = Math.round(
+          (incomeStability * 0.30) +
+          (salesConsistency * 0.30) +
+          (cashFlowHealth * 0.20) +
+          (growthTrend * 0.20)
+        );
+
+        ecoScore = Math.min(100, Math.max(0, ecoScore));
+        var totalIncome = bankData ? bankData.transactions.filter(function(t) { return t.type === 'credit'; })
+          .reduce(function(sum, t) { return sum + t.amount; }, 0) : 28500;
+
+        return {
+          score: ecoScore,
+          incomeStability: incomeStability,
+          salesConsistency: salesConsistency,
+          cashFlowHealth: cashFlowHealth,
+          growthTrend: growthTrend,
+          income: totalIncome
+        };
+      },
+
+      getGrowthReadiness: function(score) {
+        if (score >= 85) return { level: 'High', desc: 'Ready for funding' };
+        if (score >= 70) return { level: 'Medium', desc: 'Good potential' };
+        if (score >= 50) return { level: 'Low', desc: 'Needs improvement' };
+        return { level: '--', desc: 'Connect accounts to unlock' };
+      },
+
+      matchLenders: function(score) {
+        var lenders = [];
+        var allLenders = [
+          { id: 1, name: 'Merchant Cash Advance', minScore: 60, maxAmount: 'R50,000', rate: '12% APR',
+            description: 'Quick access to working capital' },
+          { id: 2, name: 'Inventory Finance', minScore: 50, maxAmount: 'R35,000', rate: '15% APR',
+            description: 'Stock up for the season' },
+          { id: 3, name: 'Equipment Finance', minScore: 65, maxAmount: 'R75,000', rate: '10% APR',
+            description: 'Get the equipment you need' },
+          { id: 4, name: 'Buy Now Pay Later', minScore: 40, maxAmount: 'R15,000', rate: '0% APR',
+            description: 'Pay over time with 0% interest' },
+          { id: 5, name: 'Business Expansion Loan', minScore: 75, maxAmount: 'R100,000', rate: '8% APR',
+            description: 'Scale your business' }
+        ];
+
+        allLenders.forEach(function(lender) {
+          if (score >= lender.minScore) {
+            var matchScore = 70 + Math.round((score - lender.minScore) / 10) * 5;
+            matchScore = Math.min(100, matchScore);
+            lenders.push({ ...lender, matchScore: matchScore, qualified: true });
+          } else {
+            lenders.push({ ...lender, matchScore: 0, qualified: false, scoreNeeded: lender.minScore });
+          }
+        });
+
+        lenders.sort(function(a, b) { return b.matchScore - a.matchScore; });
+        return lenders;
+      }
+    };
+
+    // ============================================================
+    // MAIN APP
+    // ============================================================
     (function() {
       'use strict';
 
       console.log('🌿 EcoBridge EC initializing...');
 
-      // ===== DOM REFS =====
-      const modal = document.getElementById('signupModal');
-      const formState = document.getElementById('formState');
-      const successState = document.getElementById('successState');
-      const form = document.getElementById('signupForm');
-      const submitBtn = document.getElementById('submitBtn');
-      const goToDashboardBtn = document.getElementById('goToDashboardBtn');
-      const nameInput = document.getElementById('signupName');
-      const contactInput = document.getElementById('signupContact');
-      const passwordInput = document.getElementById('signupPassword');
-      const nameError = document.getElementById('nameError');
-      const contactError = document.getElementById('contactError');
-      const passwordError = document.getElementById('passwordError');
-      const successMessage = document.getElementById('successMessage');
-      const closeBtn = document.getElementById('closeModalBtn');
-
-      const onboardingModal = document.getElementById('onboardingModal');
-      const onboardingForm = document.getElementById('onboardingForm');
-      const onboardingSubmitBtn = document.getElementById('onboardingSubmitBtn');
-      const closeOnboardingBtn = document.getElementById('closeOnboardingBtn');
-      const backToConsentBtn = document.getElementById('backToConsentBtn');
-      const popiaContinueBtn = document.getElementById('popiaContinueBtn');
-      const popiaConsent = document.getElementById('popiaConsent');
-      const popiaError = document.getElementById('popiaError');
-
-      const step1 = document.getElementById('step1');
-      const step2 = document.getElementById('step2');
-
-      const businessName = document.getElementById('businessName');
-      const businessType = document.getElementById('businessType');
-      const primaryTransactions = document.getElementById('primaryTransactions');
-      const avgMonthlyRevenue = document.getElementById('avgMonthlyRevenue');
-      const businessLocation = document.getElementById('businessLocation');
-      const businessYears = document.getElementById('businessYears');
-      const businessNameError = document.getElementById('businessNameError');
-      const businessTypeError = document.getElementById('businessTypeError');
-      const primaryTransactionsError = document.getElementById('primaryTransactionsError');
-      const avgMonthlyRevenueError = document.getElementById('avgMonthlyRevenueError');
-      const businessLocationError = document.getElementById('businessLocationError');
-      const businessYearsError = document.getElementById('businessYearsError');
-
-      const landingPage = document.getElementById('landingPage');
-      const profileDashboard = document.getElementById('profileDashboard');
-      const userFullName = document.getElementById('userFullName');
-      const userStatus = document.getElementById('userStatus');
-      const mainFooter = document.getElementById('mainFooter');
-      const dashboardSkeleton = document.getElementById('dashboardSkeleton');
-      const dashboardContent = document.getElementById('dashboardContent');
-      const userEcoScore = document.getElementById('userEcoScore');
-      const userIncome = document.getElementById('userIncome');
-      const progressFill = document.getElementById('profileProgress');
-      const progressText = document.getElementById('progressText');
-      const onboardingMessage = document.getElementById('onboardingMessage');
-      const signupTime = document.getElementById('signupTime');
-
-      const startOnboardingBtn = document.getElementById('startOnboardingBtn');
-      const quickOnboardingBtn = document.getElementById('quickOnboardingBtn');
-
-      // Open buttons
-      const openBtns = [
-        document.getElementById('getStartedBtn'),
-        document.getElementById('joinNetworkBtn'),
-        document.getElementById('navSignupBtn'),
-        document.getElementById('learnMoreBtn'),
-        document.getElementById('contactBtn')
-      ];
-
-      // ===== USER DATA =====
-      let currentUser = {
-        name: 'Amara',
-        surname: 'Nkosi',
-        contact: '',
-        businessName: '',
-        businessType: '',
-        primaryTransactions: '',
-        avgMonthlyRevenue: '',
-        businessLocation: '',
-        businessYears: '',
-        profileComplete: false,
-        popiaConsent: false
+      var currentUser = { name: 'Amara', surname: 'Nkosi' };
+      var connectionState = {
+        bank: { connected: false, data: null },
+        yoco: { connected: false, data: null },
+        ecoScore: null,
+        lenders: []
       };
+      var isLoggedIn = false;
 
-      let signupTimestamp = new Date();
+      // ===== DOM REFS =====
+      var landingPage = document.getElementById('landingPage');
+      var profileDashboard = document.getElementById('profileDashboard');
+      var userFullName = document.getElementById('userFullName');
+      var userStatus = document.getElementById('userStatus');
+      var userEcoScore = document.getElementById('userEcoScore');
+      var userIncome = document.getElementById('userIncome');
+      var connectedCount = document.getElementById('connectedCount');
+      var connectedAccountsList = document.getElementById('connectedAccountsList');
+      var ecoScoreChange = document.getElementById('ecoScoreChange');
+      var incomeChange = document.getElementById('incomeChange');
+      var growthReadiness = document.getElementById('growthReadiness');
+      var growthReadinessDesc = document.getElementById('growthReadinessDesc');
+
+      var signupModal = document.getElementById('signupModal');
+      var connectionModal = document.getElementById('connectionModal');
+      var closeModalBtn = document.getElementById('closeModalBtn');
+      var closeConnectionBtn = document.getElementById('closeConnectionBtn');
+      var connectionDoneBtn = document.getElementById('connectionDoneBtn');
+      var goToDashboardBtn = document.getElementById('goToDashboardBtn');
+      var getStartedBtn = document.getElementById('getStartedBtn');
+      var joinNetworkBtn = document.getElementById('joinNetworkBtn');
+      var navSignupBtn = document.getElementById('navSignupBtn');
+      var navUser = document.getElementById('navUser');
+      var navUserName = document.getElementById('navUserName');
+      var userAvatar = document.getElementById('userAvatar');
+
+      var signupForm = document.getElementById('signupForm');
+      var submitBtn = document.getElementById('submitBtn');
+      var nameInput = document.getElementById('signupName');
+      var contactInput = document.getElementById('signupContact');
+      var passwordInput = document.getElementById('signupPassword');
+      var nameError = document.getElementById('nameError');
+      var contactError = document.getElementById('contactError');
+      var passwordError = document.getElementById('passwordError');
+      var formState = document.getElementById('formState');
+      var successState = document.getElementById('successState');
+      var successMessage = document.getElementById('successMessage');
+
+      var onboardingModal = document.getElementById('onboardingModal');
+      var onboardingForm = document.getElementById('onboardingForm');
+      var onboardingSubmitBtn = document.getElementById('onboardingSubmitBtn');
+      var closeOnboardingBtn = document.getElementById('closeOnboardingBtn');
+      var backToConsentBtn = document.getElementById('backToConsentBtn');
+      var popiaContinueBtn = document.getElementById('popiaContinueBtn');
+      var popiaConsent = document.getElementById('popiaConsent');
+      var popiaError = document.getElementById('popiaError');
+      var step1 = document.getElementById('step1');
+      var step2 = document.getElementById('step2');
+
+      var businessName = document.getElementById('businessName');
+      var businessType = document.getElementById('businessType');
+      var otherBusinessType = document.getElementById('otherBusinessType');
+      var otherBusinessTypeGroup = document.getElementById('otherBusinessTypeGroup');
+      var primaryTransactions = document.getElementById('primaryTransactions');
+      var avgMonthlyRevenue = document.getElementById('avgMonthlyRevenue');
+      var businessLocation = document.getElementById('businessLocation');
+      var businessYears = document.getElementById('businessYears');
+      var businessNameError = document.getElementById('businessNameError');
+      var businessTypeError = document.getElementById('businessTypeError');
+      var otherBusinessTypeError = document.getElementById('otherBusinessTypeError');
+      var primaryTransactionsError = document.getElementById('primaryTransactionsError');
+      var avgMonthlyRevenueError = document.getElementById('avgMonthlyRevenueError');
+      var businessLocationError = document.getElementById('businessLocationError');
+      var businessYearsError = document.getElementById('businessYearsError');
+
+      var startOnboardingBtn = document.getElementById('startOnboardingBtn');
+      var quickOnboardingBtn = document.getElementById('quickOnboardingBtn');
+      var profileProgress = document.getElementById('profileProgress');
+      var progressText = document.getElementById('progressText');
+      var onboardingMessage = document.getElementById('onboardingMessage');
+      var onboardingTitle = document.getElementById('onboardingTitle');
+
+      // Bank Connection Modal
+      var bankConnectionModal = document.getElementById('bankConnectionModal');
+      var bankConnectionForm = document.getElementById('bankConnectionForm');
+      var bankConnectionSubmitBtn = document.getElementById('bankConnectionSubmitBtn');
+      var closeBankConnectionBtn = document.getElementById('closeBankConnectionBtn');
+      var bankAccountNumber = document.getElementById('bankAccountNumber');
+      var bankName = document.getElementById('bankName');
+      var otherBankGroup = document.getElementById('otherBankGroup');
+      var otherBankName = document.getElementById('otherBankName');
+      var bankConsent = document.getElementById('bankConsent');
+      var bankAccountError = document.getElementById('bankAccountError');
+      var bankNameError = document.getElementById('bankNameError');
+      var otherBankNameError = document.getElementById('otherBankNameError');
+      var bankConsentError = document.getElementById('bankConsentError');
+
+      // Yoco Connection Modal
+      var yocoConnectionModal = document.getElementById('yocoConnectionModal');
+      var yocoConnectionForm = document.getElementById('yocoConnectionForm');
+      var yocoConnectionSubmitBtn = document.getElementById('yocoConnectionSubmitBtn');
+      var closeYocoConnectionBtn = document.getElementById('closeYocoConnectionBtn');
+      var yocoApiKey = document.getElementById('yocoApiKey');
+      var yocoDeviceName = document.getElementById('yocoDeviceName');
+      var yocoConsent = document.getElementById('yocoConsent');
+      var yocoApiKeyError = document.getElementById('yocoApiKeyError');
+      var yocoConsentError = document.getElementById('yocoConsentError');
+
+      var connectBankFromCard = document.getElementById('connectBankFromCard');
+      var connectYocoFromCard = document.getElementById('connectYocoFromCard');
+      var quickConnectBankBtn = document.getElementById('quickConnectBankBtn');
+      var quickConnectYocoBtn = document.getElementById('quickConnectYocoBtn');
+
+      // Connection modal elements
+      var connectionIcon = document.getElementById('connectionIcon');
+      var connectionTitle = document.getElementById('connectionTitle');
+      var connectionSub = document.getElementById('connectionSub');
+      var connectionStatusIcon = document.getElementById('connectionStatusIcon');
+      var connectionProgressRing = document.getElementById('connectionProgressRing');
+      var connectionStatusText = document.getElementById('connectionStatusText');
+      var connectionStatusSub = document.getElementById('connectionStatusSub');
+      var connectionDetails = document.getElementById('connectionDetails');
+      var connectionDataCount = document.getElementById('connectionDataCount');
+      var connectionDetailStatus = document.getElementById('connectionDetailStatus');
+      var connectionTime = document.getElementById('connectionTime');
 
       // ===== FUNCTIONS =====
+
       function openModal() {
-        console.log('Opening signup modal');
         formState.style.display = 'block';
         successState.classList.remove('active');
-        form.reset();
-        document.querySelectorAll('.error-text').forEach(el => el.classList.remove('visible'));
-        document.querySelectorAll('input').forEach(el => el.classList.remove('error'));
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
-        modal.classList.add('active');
+        signupModal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        setTimeout(function() {
-          if (nameInput) nameInput.focus();
-        }, 200);
+        if (nameInput) setTimeout(function() { nameInput.focus(); }, 200);
       }
 
       function closeModal() {
-        console.log('Closing signup modal');
-        modal.classList.remove('active');
+        signupModal.classList.remove('active');
         document.body.style.overflow = '';
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
       }
 
       function showDashboard(name) {
-        console.log('Showing dashboard for:', name);
         landingPage.style.display = 'none';
         profileDashboard.classList.add('active');
-        mainFooter.style.display = 'none';
         if (userFullName) userFullName.textContent = name;
 
+        isLoggedIn = true;
+        navSignupBtn.style.display = 'none';
+        navUser.classList.add('active');
+        if (navUserName) navUserName.textContent = currentUser.name;
+        if (userAvatar) userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
+
+        var dashboardSkeleton = document.getElementById('dashboardSkeleton');
+        var dashboardContent = document.getElementById('dashboardContent');
         if (dashboardSkeleton) dashboardSkeleton.style.display = 'grid';
         if (dashboardContent) dashboardContent.style.display = 'none';
 
         setTimeout(function() {
           if (dashboardSkeleton) dashboardSkeleton.style.display = 'none';
           if (dashboardContent) dashboardContent.style.display = 'grid';
-
-          if (!currentUser.profileComplete) {
-            if (userEcoScore) userEcoScore.textContent = '--';
-            if (userIncome) userIncome.textContent = '--';
-            if (userStatus) userStatus.textContent = 'Welcome to your BridgeID dashboard. Let\'s set up your profile.';
-          } else {
-            if (userEcoScore) userEcoScore.textContent = '86%';
-            if (userIncome) userIncome.textContent = 'R28,500';
-            if (userStatus) userStatus.textContent = 'Your BridgeID is active and ready to use.';
-          }
-
-          updateOnboardingCard();
-          if (signupTime) signupTime.textContent = 'Just now';
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          updateDashboard();
         }, 2000);
-      }
 
-      function showLanding() {
-        console.log('Showing landing page');
-        if (landingPage) landingPage.style.display = 'block';
-        if (profileDashboard) profileDashboard.classList.remove('active');
-        if (mainFooter) mainFooter.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      function updateOnboardingCard() {
-        if (currentUser.profileComplete) {
-          const infoH3 = document.querySelector('.onboarding-card .info h3');
-          if (infoH3) infoH3.textContent = '✅ Profile complete!';
-          if (onboardingMessage) onboardingMessage.textContent = 'Your business profile is fully set up.';
-          if (progressFill) progressFill.style.width = '100%';
-          if (progressText) progressText.textContent = '100%';
+      window.showLanding = function() {
+        landingPage.style.display = 'block';
+        profileDashboard.classList.remove('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      function updateDashboard() {
+        var hasBank = connectionState.bank.connected;
+        var hasYoco = connectionState.yoco.connected;
+        var hasBusiness = currentUser && currentUser.profileComplete;
+
+        // Calculate progress
+        var progress = 10; // Account created
+        if (hasBusiness) progress += 70; // Business profile = 80%
+        if (hasBank) progress += 10; // Bank connected = 90%
+        if (hasYoco) progress += 10; // Yoco connected = 100%
+
+        if (profileProgress) profileProgress.style.width = progress + '%';
+        if (progressText) progressText.textContent = progress + '%';
+
+        // Update onboarding card
+        if (progress >= 100) {
+          if (onboardingTitle) onboardingTitle.textContent = '✅ Profile complete!';
+          if (onboardingMessage) onboardingMessage.textContent = 'Your BridgeID is fully set up and ready to use.';
           if (startOnboardingBtn) {
             startOnboardingBtn.textContent = '✓ Complete';
             startOnboardingBtn.disabled = true;
             startOnboardingBtn.style.opacity = '0.5';
           }
+          if (userStatus) userStatus.textContent = '🎉 Your BridgeID is active and ready to use!';
+        } else if (hasBusiness) {
+          if (onboardingTitle) onboardingTitle.textContent = '📋 Connect your accounts';
+          if (onboardingMessage) onboardingMessage.textContent = 'Connect your bank and Yoco to unlock your full EcoScore';
+          if (userStatus) userStatus.textContent = '📈 Great progress! Connect your accounts to unlock your full EcoScore.';
         } else {
-          const infoH3 = document.querySelector('.onboarding-card .info h3');
-          if (infoH3) infoH3.textContent = '📋 Finish setting up your profile';
+          if (onboardingTitle) onboardingTitle.textContent = '📋 Finish setting up your profile';
           if (onboardingMessage) onboardingMessage.textContent = 'Tell us about your business to unlock your full EcoScore';
-          const progress = currentUser.popiaConsent ? 30 : 10;
-          if (progressFill) progressFill.style.width = progress + '%';
-          if (progressText) progressText.textContent = progress + '%';
-          if (startOnboardingBtn) {
-            startOnboardingBtn.textContent = '→ Complete Profile';
-            startOnboardingBtn.disabled = false;
-            startOnboardingBtn.style.opacity = '1';
+        }
+
+        // Update connected accounts
+        var count = 0;
+        var names = [];
+        if (hasBank) { count++;
+          names.push('Bank'); }
+        if (hasYoco) { count++;
+          names.push('Yoco'); }
+        if (connectedCount) connectedCount.textContent = count;
+        if (connectedAccountsList) {
+          connectedAccountsList.textContent = count > 0 ? names.join(' · ') : 'Connect your first account';
+          connectedAccountsList.style.color = count > 0 ? '#00ff88' : '#888';
+        }
+
+        // Update card buttons
+        var bankCardBtn = document.getElementById('connectBankFromCard');
+        var yocoCardBtn = document.getElementById('connectYocoFromCard');
+        if (bankCardBtn) {
+          if (hasBank) {
+            bankCardBtn.textContent = '✅ Bank Connected';
+            bankCardBtn.className = 'btn-small connected-btn';
+          } else {
+            bankCardBtn.textContent = '🏛️ Connect Bank';
+            bankCardBtn.className = 'btn-small';
+          }
+        }
+        if (yocoCardBtn) {
+          if (hasYoco) {
+            yocoCardBtn.textContent = '✅ Yoco Connected';
+            yocoCardBtn.className = 'btn-small connected-btn';
+          } else {
+            yocoCardBtn.textContent = '🧾 Connect Yoco';
+            yocoCardBtn.className = 'btn-small';
+          }
+        }
+
+        // Calculate EcoScore if we have data
+        if (hasBank || hasYoco) {
+          var scoreResult = EcoScoreEngine.calculateScore(
+            hasBank ? connectionState.bank.data : null,
+            hasYoco ? connectionState.yoco.data : null
+          );
+          connectionState.ecoScore = scoreResult;
+
+          if (userEcoScore) userEcoScore.textContent = scoreResult.score + '%';
+          if (ecoScoreChange) {
+            ecoScoreChange.textContent = 'Calculated from ' + (hasBank ? 'Bank' : '') + (hasBank && hasYoco ? ' + ' :
+              '') + (hasYoco ? 'Yoco' : '') + ' data';
+            ecoScoreChange.className = 'card-change positive';
+          }
+
+          var income = scoreResult.income || 28500;
+          if (userIncome) userIncome.textContent = 'R' + income.toLocaleString();
+          if (incomeChange) {
+            incomeChange.textContent = hasBank ? 'From bank transactions' : 'Estimated';
+            incomeChange.className = 'card-change';
+          }
+
+          var growth = EcoScoreEngine.getGrowthReadiness(scoreResult.score);
+          if (growthReadiness) growthReadiness.textContent = growth.level;
+          if (growthReadinessDesc) {
+            growthReadinessDesc.textContent = growth.desc;
+            growthReadinessDesc.className = 'card-change positive';
+          }
+        } else {
+          if (userEcoScore) userEcoScore.textContent = '--';
+          if (ecoScoreChange) {
+            ecoScoreChange.textContent = 'Connect accounts to calculate';
+            ecoScoreChange.className = 'card-change';
+          }
+          if (userIncome) userIncome.textContent = '--';
+          if (incomeChange) {
+            incomeChange.textContent = 'Connect accounts to see';
+            incomeChange.className = 'card-change';
+          }
+          if (growthReadiness) growthReadiness.textContent = '--';
+          if (growthReadinessDesc) {
+            growthReadinessDesc.textContent = 'Connect accounts to unlock';
+            growthReadinessDesc.className = 'card-change';
           }
         }
       }
 
-      function openOnboarding() {
-        console.log('Opening onboarding');
-        if (step1) step1.classList.add('active');
-        if (step2) step2.classList.remove('active');
-        if (popiaConsent) popiaConsent.checked = false;
-        if (popiaContinueBtn) popiaContinueBtn.disabled = true;
-        if (popiaError) popiaError.classList.remove('visible');
-
-        if (onboardingForm) onboardingForm.reset();
-        document.querySelectorAll('#onboardingModal .error-text').forEach(function(el) {
-          el.classList.remove('visible');
+      function openConnectionModal() {
+        connectionModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        return new Promise(function(resolve) {
+          connectionModal._resolve = resolve;
         });
-        document.querySelectorAll('#onboardingModal input, #onboardingModal select').forEach(function(el) {
-          el.classList.remove('error');
-        });
-        if (onboardingSubmitBtn) {
-          onboardingSubmitBtn.classList.remove('loading');
-          onboardingSubmitBtn.disabled = false;
-        }
+      }
 
-        if (onboardingModal) {
-          onboardingModal.classList.add('active');
-          document.body.style.overflow = 'hidden';
+      function closeConnectionModal() {
+        connectionModal.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(function() {
+          if (connectionDetails) connectionDetails.style.display = 'none';
+          if (connectionDoneBtn) connectionDoneBtn.style.display = 'none';
+          if (connectionProgressRing) connectionProgressRing.style.display = 'block';
+          if (connectionStatusIcon) connectionStatusIcon.textContent = '⏳';
+          if (connectionStatusText) connectionStatusText.textContent = 'Initiating connection...';
+          if (connectionStatusSub) connectionStatusSub.textContent = 'This may take a few seconds';
+        }, 300);
+      }
+
+      function updateConnectionStatus(step, data) {
+        var steps = {
+          'init': { icon: '⏳', text: 'Initiating connection...', sub: 'This may take a few seconds' },
+          'auth': { icon: '🔐', text: 'Authenticating...', sub: 'Verifying your credentials' },
+          'fetching': { icon: '📥', text: 'Retrieving data...', sub: 'Fetching your financial information' },
+          'processing': { icon: '🧠', text: 'Processing data...', sub: 'Analyzing your financial behavior' },
+          'done': { icon: '✅', text: 'Connection successful!', sub: 'Your data has been securely retrieved' }
+        };
+        var stepInfo = steps[step] || steps['init'];
+        if (connectionStatusIcon) connectionStatusIcon.textContent = stepInfo.icon;
+        if (connectionStatusText) connectionStatusText.textContent = stepInfo.text;
+        if (connectionStatusSub) connectionStatusSub.textContent = stepInfo.sub;
+
+        if (step === 'done') {
+          if (connectionProgressRing) connectionProgressRing.style.display = 'none';
+          if (connectionDetails) connectionDetails.style.display = 'block';
+          if (connectionDoneBtn) connectionDoneBtn.style.display = 'block';
+          if (data) {
+            if (connectionDataCount) connectionDataCount.textContent = data.count + ' items';
+            if (connectionDetailStatus) connectionDetailStatus.textContent = '✓ Complete';
+            if (connectionTime) connectionTime.textContent = data.time || 'Just now';
+          }
+          if (connectionModal._resolve) {
+            connectionModal._resolve(data);
+            connectionModal._resolve = null;
+          }
         }
       }
 
-      function closeOnboarding() {
-        console.log('Closing onboarding');
-        if (onboardingModal) {
-          onboardingModal.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-        if (onboardingSubmitBtn) {
-          onboardingSubmitBtn.classList.remove('loading');
-          onboardingSubmitBtn.disabled = false;
-        }
+      // ===== CONNECT BANK =====
+      function openBankConnection() {
+        bankConnectionModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        bankConnectionForm.reset();
+        bankConsent.checked = false;
+        if (otherBankGroup) otherBankGroup.style.display = 'none';
+        if (bankAccountError) bankAccountError.classList.remove('visible');
+        if (bankNameError) bankNameError.classList.remove('visible');
+        if (otherBankNameError) otherBankNameError.classList.remove('visible');
+        if (bankConsentError) bankConsentError.classList.remove('visible');
+        bankConnectionSubmitBtn.classList.remove('loading');
+        bankConnectionSubmitBtn.disabled = false;
+        setTimeout(function() { if (bankAccountNumber) bankAccountNumber.focus(); }, 200);
       }
 
-      // ===== ATTACH EVENT LISTENERS =====
+      function closeBankConnection() {
+        bankConnectionModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
 
-      // Open buttons
-      openBtns.forEach(function(btn) {
-        if (btn) {
-          btn.addEventListener('click', openModal);
-        }
+      if (closeBankConnectionBtn) {
+        closeBankConnectionBtn.addEventListener('click', closeBankConnection);
+      }
+      bankConnectionModal.addEventListener('click', function(e) {
+        if (e.target === bankConnectionModal) closeBankConnection();
       });
 
-      // Close signup
-      if (closeBtn) {
-        closeBtn.addEventListener('click', closeModal);
-      }
-
-      // Click outside modal
-      if (modal) {
-        modal.addEventListener('click', function(e) {
-          if (e.target === modal) closeModal();
+      // Bank: Other bank input
+      if (bankName) {
+        bankName.addEventListener('change', function() {
+          if (this.value === 'other') {
+            if (otherBankGroup) otherBankGroup.style.display = 'block';
+            if (otherBankName) otherBankName.required = true;
+          } else {
+            if (otherBankGroup) otherBankGroup.style.display = 'none';
+            if (otherBankName) {
+              otherBankName.required = false;
+              otherBankName.value = '';
+            }
+            if (otherBankNameError) otherBankNameError.classList.remove('visible');
+          }
         });
       }
 
-      // Escape key
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          if (modal && modal.classList.contains('active')) closeModal();
-          if (onboardingModal && onboardingModal.classList.contains('active')) closeOnboarding();
+      // Bank: Validate form
+      function validateBankForm() {
+        var isValid = true;
+
+        if (!bankAccountNumber.value.trim()) {
+          bankAccountNumber.classList.add('error');
+          bankAccountError.textContent = 'Please enter your bank account number';
+          bankAccountError.classList.add('visible');
+          isValid = false;
+        } else {
+          bankAccountNumber.classList.remove('error');
+          bankAccountError.classList.remove('visible');
         }
+
+        if (!bankName.value) {
+          bankName.classList.add('error');
+          bankNameError.textContent = 'Please select your bank';
+          bankNameError.classList.add('visible');
+          isValid = false;
+        } else {
+          bankName.classList.remove('error');
+          bankNameError.classList.remove('visible');
+        }
+
+        if (bankName.value === 'other' && !otherBankName.value.trim()) {
+          otherBankName.classList.add('error');
+          otherBankNameError.textContent = 'Please specify your bank';
+          otherBankNameError.classList.add('visible');
+          isValid = false;
+        } else {
+          otherBankName.classList.remove('error');
+          otherBankNameError.classList.remove('visible');
+        }
+
+        if (!bankConsent.checked) {
+          bankConsentError.classList.add('visible');
+          isValid = false;
+        } else {
+          bankConsentError.classList.remove('visible');
+        }
+
+        return isValid;
+      }
+
+      if (bankConnectionForm) {
+        bankConnectionForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          if (!validateBankForm()) return;
+
+          var bankNameValue = bankName.value;
+          if (bankNameValue === 'other') {
+            bankNameValue = otherBankName.value.trim();
+          }
+
+          bankConnectionSubmitBtn.classList.add('loading');
+          bankConnectionSubmitBtn.disabled = true;
+
+          // Close bank modal and show connection progress
+          closeBankConnection();
+
+          setTimeout(function() {
+            openConnectionModal().then(function() {
+              connectionState.bank.connected = true;
+              connectionState.bank.data = {
+                transactions: [{ amount: 8500 }],
+                accountName: bankNameValue + ' Account',
+                accountNumber: bankAccountNumber.value.trim()
+              };
+              updateDashboard();
+              addActivity('🏛️', 'Bank connected — ' + bankNameValue + ' Account linked');
+              alert('✅ Bank connected successfully!');
+            });
+
+            setTimeout(function() { updateConnectionStatus('auth'); }, 500);
+            setTimeout(function() { updateConnectionStatus('fetching'); }, 1500);
+            setTimeout(function() { updateConnectionStatus('processing'); }, 2500);
+
+            EcoBridgeAPI.connectBank(bankAccountNumber.value.trim(), bankNameValue)
+              .then(function(result) {
+                connectionState.bank.data = result.data;
+                updateConnectionStatus('done', {
+                  count: result.data.transactions.length,
+                  time: new Date().toLocaleTimeString()
+                });
+                bankConnectionSubmitBtn.classList.remove('loading');
+                bankConnectionSubmitBtn.disabled = false;
+              })
+              .catch(function() {
+                if (connectionStatusText) connectionStatusText.textContent = '❌ Connection failed';
+                if (connectionStatusSub) connectionStatusSub.textContent = 'Please try again';
+                if (connectionProgressRing) connectionProgressRing.style.display = 'none';
+                bankConnectionSubmitBtn.classList.remove('loading');
+                bankConnectionSubmitBtn.disabled = false;
+              });
+          }, 300);
+        });
+      }
+
+      // ===== CONNECT YOCO =====
+      function openYocoConnection() {
+        yocoConnectionModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        yocoConnectionForm.reset();
+        yocoConsent.checked = false;
+        if (yocoApiKeyError) yocoApiKeyError.classList.remove('visible');
+        if (yocoConsentError) yocoConsentError.classList.remove('visible');
+        yocoConnectionSubmitBtn.classList.remove('loading');
+        yocoConnectionSubmitBtn.disabled = false;
+        setTimeout(function() { if (yocoApiKey) yocoApiKey.focus(); }, 200);
+      }
+
+      function closeYocoConnection() {
+        yocoConnectionModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (closeYocoConnectionBtn) {
+        closeYocoConnectionBtn.addEventListener('click', closeYocoConnection);
+      }
+      yocoConnectionModal.addEventListener('click', function(e) {
+        if (e.target === yocoConnectionModal) closeYocoConnection();
       });
+
+      // Yoco: Validate form
+      function validateYocoForm() {
+        var isValid = true;
+
+        if (!yocoApiKey.value.trim()) {
+          yocoApiKey.classList.add('error');
+          yocoApiKeyError.textContent = 'Please enter your Yoco API key';
+          yocoApiKeyError.classList.add('visible');
+          isValid = false;
+        } else {
+          yocoApiKey.classList.remove('error');
+          yocoApiKeyError.classList.remove('visible');
+        }
+
+        if (!yocoConsent.checked) {
+          yocoConsentError.classList.add('visible');
+          isValid = false;
+        } else {
+          yocoConsentError.classList.remove('visible');
+        }
+
+        return isValid;
+      }
+
+      if (yocoConnectionForm) {
+        yocoConnectionForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          if (!validateYocoForm()) return;
+
+          var deviceName = yocoDeviceName.value.trim() || 'Yoco Point (Main)';
+
+          yocoConnectionSubmitBtn.classList.add('loading');
+          yocoConnectionSubmitBtn.disabled = true;
+
+          closeYocoConnection();
+
+          setTimeout(function() {
+            openConnectionModal().then(function() {
+              connectionState.yoco.connected = true;
+              connectionState.yoco.data = {
+                transactions: [{ amount: 850 }],
+                deviceName: deviceName
+              };
+              updateDashboard();
+              addActivity('🧾', 'Yoco connected — ' + deviceName + ' linked');
+              alert('✅ Yoco connected successfully!');
+            });
+
+            setTimeout(function() { updateConnectionStatus('auth'); }, 500);
+            setTimeout(function() { updateConnectionStatus('fetching'); }, 1500);
+            setTimeout(function() { updateConnectionStatus('processing'); }, 2500);
+
+            EcoBridgeAPI.connectYoco(yocoApiKey.value.trim(), deviceName)
+              .then(function(result) {
+                connectionState.yoco.data = result.data;
+                updateConnectionStatus('done', {
+                  count: result.data.transactions.length,
+                  time: new Date().toLocaleTimeString()
+                });
+                yocoConnectionSubmitBtn.classList.remove('loading');
+                yocoConnectionSubmitBtn.disabled = false;
+              })
+              .catch(function() {
+                if (connectionStatusText) connectionStatusText.textContent = '❌ Connection failed';
+                if (connectionStatusSub) connectionStatusSub.textContent = 'Please check your API key';
+                if (connectionProgressRing) connectionProgressRing.style.display = 'none';
+                yocoConnectionSubmitBtn.classList.remove('loading');
+                yocoConnectionSubmitBtn.disabled = false;
+              });
+          }, 300);
+        });
+      }
+
+      // ===== ACTIVITY LOG =====
+      function addActivity(icon, text) {
+        var activityList = document.getElementById('activityList');
+        if (!activityList) return;
+
+        var newActivity = document.createElement('div');
+        newActivity.className = 'activity-item';
+        newActivity.innerHTML =
+          '<div class="activity-left"><div class="activity-icon">' + icon +
+          '</div><div class="activity-text"><strong>' + text + '</strong></div></div><div class="activity-time">Just now</div>';
+        activityList.insertBefore(newActivity, activityList.children[0]);
+      }
 
       // ===== SIGNUP VALIDATION =====
       function validateName(value) {
-        var trimmed = value.trim();
-        var parts = trimmed.split(/\s+/);
+        var parts = value.trim().split(/\s+/);
         return parts.length >= 2 && parts.every(function(p) { return p.length >= 2; });
       }
 
@@ -1990,9 +2719,6 @@
           input.classList.add('error');
           errorEl.textContent = errorMsg;
           errorEl.classList.add('visible');
-        } else if (!isValid && value.trim() === '') {
-          input.classList.remove('error');
-          errorEl.classList.remove('visible');
         } else {
           input.classList.remove('error');
           errorEl.classList.remove('visible');
@@ -2000,101 +2726,27 @@
         return isValid || value.trim() === '';
       }
 
-      // Signup input events
-      if (nameInput) {
-        nameInput.addEventListener('blur', function() {
-          validateField(this, nameError, validateName, 'Please enter your full name (first and last)');
-        });
-        nameInput.addEventListener('input', function() {
-          if (this.value.trim() === '') {
-            this.classList.remove('error');
-            if (nameError) nameError.classList.remove('visible');
-          } else if (!validateName(this.value)) {
-            this.classList.add('error');
-            if (nameError) {
-              nameError.textContent = 'Please enter your full name (first and last)';
-              nameError.classList.add('visible');
-            }
-          } else {
-            this.classList.remove('error');
-            if (nameError) nameError.classList.remove('visible');
-          }
-        });
-      }
-
-      if (contactInput) {
-        contactInput.addEventListener('blur', function() {
-          validateField(this, contactError, validateContact, 'Please enter a valid phone or email');
-        });
-        contactInput.addEventListener('input', function() {
-          if (this.value.trim() === '') {
-            this.classList.remove('error');
-            if (contactError) contactError.classList.remove('visible');
-          } else if (!validateContact(this.value)) {
-            this.classList.add('error');
-            if (contactError) {
-              contactError.textContent = 'Please enter a valid phone or email';
-              contactError.classList.add('visible');
-            }
-          } else {
-            this.classList.remove('error');
-            if (contactError) contactError.classList.remove('visible');
-          }
-        });
-      }
-
-      if (passwordInput) {
-        passwordInput.addEventListener('blur', function() {
-          validateField(this, passwordError, validatePassword, 'Password must be at least 8 characters');
-        });
-        passwordInput.addEventListener('input', function() {
-          if (this.value.trim() === '') {
-            this.classList.remove('error');
-            if (passwordError) passwordError.classList.remove('visible');
-          } else if (!validatePassword(this.value)) {
-            this.classList.add('error');
-            if (passwordError) {
-              passwordError.textContent = 'Password must be at least 8 characters';
-              passwordError.classList.add('visible');
-            }
-          } else {
-            this.classList.remove('error');
-            if (passwordError) passwordError.classList.remove('visible');
-          }
-        });
-      }
-
-      // ===== SIGNUP SUBMISSION =====
-      if (form) {
-        form.addEventListener('submit', function(e) {
+      // ===== SIGNUP =====
+      if (signupForm) {
+        signupForm.addEventListener('submit', function(e) {
           e.preventDefault();
 
-          var isNameValid = validateField(nameInput, nameError, validateName, 'Please enter your full name (first and last)');
-          var isContactValid = validateField(contactInput, contactError, validateContact, 'Please enter a valid phone or email');
-          var isPasswordValid = validateField(passwordInput, passwordError, validatePassword, 'Password must be at least 8 characters');
+          var isNameValid = validateField(nameInput, nameError, validateName, 'Please enter your full name');
+          var isContactValid = validateField(contactInput, contactError, validateContact,
+            'Please enter a valid phone or email');
+          var isPasswordValid = validateField(passwordInput, passwordError, validatePassword,
+            'Password must be at least 8 characters');
 
           if (!nameInput.value.trim() || !contactInput.value.trim() || !passwordInput.value.trim()) {
-            if (!nameInput.value.trim()) {
-              nameInput.classList.add('error');
-              if (nameError) {
-                nameError.textContent = 'Name is required';
-                nameError.classList.add('visible');
-              }
-            }
-            if (!contactInput.value.trim()) {
-              contactInput.classList.add('error');
-              if (contactError) {
-                contactError.textContent = 'Phone or email is required';
-                contactError.classList.add('visible');
-              }
-            }
-            if (!passwordInput.value.trim()) {
-              passwordInput.classList.add('error');
-              if (passwordError) {
-                passwordError.textContent = 'Password is required';
-                passwordError.classList.add('visible');
-              }
-            }
+            if (!nameInput.value.trim()) { nameInput.classList.add('error');
+              nameError.textContent = 'Name is required';
+              nameError.classList.add('visible'); }
+            if (!contactInput.value.trim()) { contactInput.classList.add('error');
+              contactError.textContent = 'Contact is required';
+              contactError.classList.add('visible'); }
+            if (!passwordInput.value.trim()) { passwordInput.classList.add('error');
+              passwordError.textContent = 'Password is required';
+              passwordError.classList.add('visible'); }
             return;
           }
 
@@ -2104,7 +2756,6 @@
           var nameParts = fullName.split(/\s+/);
           currentUser.name = nameParts[0] || 'User';
           currentUser.surname = nameParts.slice(1).join(' ') || '';
-          currentUser.contact = contactInput.value.trim();
 
           submitBtn.classList.add('loading');
           submitBtn.disabled = true;
@@ -2124,34 +2775,61 @@
       // ===== GO TO DASHBOARD =====
       if (goToDashboardBtn) {
         goToDashboardBtn.addEventListener('click', function() {
-          var fullName = currentUser.name + (currentUser.surname ? ' ' + currentUser.surname : '');
+          var fullName = currentUser.name + ' ' + currentUser.surname;
           closeModal();
           showDashboard(fullName);
         });
       }
 
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && successState && successState.classList.contains('active')) {
-          if (goToDashboardBtn) goToDashboardBtn.click();
-        }
-      });
+      // ===== ONBOARDING =====
+      function openOnboarding() {
+        if (step1) step1.classList.add('active');
+        if (step2) step2.classList.remove('active');
+        if (popiaConsent) popiaConsent.checked = false;
+        if (popiaContinueBtn) popiaContinueBtn.disabled = true;
+        if (popiaError) popiaError.classList.remove('visible');
+        if (otherBusinessTypeGroup) otherBusinessTypeGroup.style.display = 'none';
+        if (otherBusinessType) otherBusinessType.value = '';
 
-      // ===== ONBOARDING EVENTS =====
-      if (startOnboardingBtn) {
-        startOnboardingBtn.addEventListener('click', openOnboarding);
-      }
-      if (quickOnboardingBtn) {
-        quickOnboardingBtn.addEventListener('click', openOnboarding);
-      }
-      if (closeOnboardingBtn) {
-        closeOnboardingBtn.addEventListener('click', closeOnboarding);
-      }
-
-      if (onboardingModal) {
-        onboardingModal.addEventListener('click', function(e) {
-          if (e.target === onboardingModal) closeOnboarding();
+        if (onboardingForm) onboardingForm.reset();
+        document.querySelectorAll('#onboardingModal .error-text').forEach(function(el) {
+          el.classList.remove('visible');
         });
+        document.querySelectorAll('#onboardingModal input, #onboardingModal select').forEach(function(el) {
+          el.classList.remove('error');
+        });
+        if (onboardingSubmitBtn) {
+          onboardingSubmitBtn.classList.remove('loading');
+          onboardingSubmitBtn.disabled = false;
+        }
+
+        if (onboardingModal) {
+          onboardingModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
       }
+
+      function closeOnboarding() {
+        if (onboardingModal) {
+          onboardingModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+        if (onboardingSubmitBtn) {
+          onboardingSubmitBtn.classList.remove('loading');
+          onboardingSubmitBtn.disabled = false;
+        }
+      }
+
+      window.openOnboarding = openOnboarding;
+      window.closeOnboarding = closeOnboarding;
+
+      if (startOnboardingBtn) startOnboardingBtn.addEventListener('click', openOnboarding);
+      if (quickOnboardingBtn) quickOnboardingBtn.addEventListener('click', openOnboarding);
+      if (closeOnboardingBtn) closeOnboardingBtn.addEventListener('click', closeOnboarding);
+
+      onboardingModal.addEventListener('click', function(e) {
+        if (e.target === onboardingModal) closeOnboarding();
+      });
 
       // ===== POPIA CONSENT =====
       if (popiaConsent) {
@@ -2159,20 +2837,13 @@
           if (this.checked) {
             if (popiaContinueBtn) popiaContinueBtn.disabled = false;
             if (popiaError) popiaError.classList.remove('visible');
-            currentUser.popiaConsent = true;
-            if (progressFill) progressFill.style.width = '30%';
-            if (progressText) progressText.textContent = '30%';
           } else {
             if (popiaContinueBtn) popiaContinueBtn.disabled = true;
             if (popiaError) popiaError.classList.add('visible');
-            currentUser.popiaConsent = false;
-            if (progressFill) progressFill.style.width = '10%';
-            if (progressText) progressText.textContent = '10%';
           }
         });
       }
 
-      // ===== POPIA CONTINUE =====
       if (popiaContinueBtn) {
         popiaContinueBtn.addEventListener('click', function() {
           if (popiaConsent && popiaConsent.checked) {
@@ -2185,11 +2856,27 @@
         });
       }
 
-      // ===== BACK TO CONSENT =====
       if (backToConsentBtn) {
         backToConsentBtn.addEventListener('click', function() {
           if (step2) step2.classList.remove('active');
           if (step1) step1.classList.add('active');
+        });
+      }
+
+      // ===== OTHER BUSINESS TYPE =====
+      if (businessType) {
+        businessType.addEventListener('change', function() {
+          if (this.value === 'other') {
+            if (otherBusinessTypeGroup) otherBusinessTypeGroup.style.display = 'block';
+            if (otherBusinessType) otherBusinessType.required = true;
+          } else {
+            if (otherBusinessTypeGroup) otherBusinessTypeGroup.style.display = 'none';
+            if (otherBusinessType) {
+              otherBusinessType.required = false;
+              otherBusinessType.value = '';
+            }
+            if (otherBusinessTypeError) otherBusinessTypeError.classList.remove('visible');
+          }
         });
       }
 
@@ -2294,6 +2981,18 @@
               msg: 'Please select how long you\'ve been in business' }
           ];
 
+          if (businessType.value === 'other') {
+            if (!otherBusinessType.value.trim()) {
+              otherBusinessType.classList.add('error');
+              otherBusinessTypeError.textContent = 'Please specify your business type';
+              otherBusinessTypeError.classList.add('visible');
+              isValid = false;
+            } else {
+              otherBusinessType.classList.remove('error');
+              otherBusinessTypeError.classList.remove('visible');
+            }
+          }
+
           fields.forEach(function(field) {
             if (!field.validator(field.el.value)) {
               field.el.classList.add('error');
@@ -2308,8 +3007,13 @@
 
           if (!isValid) return;
 
+          var businessTypeValue = businessType.value;
+          if (businessTypeValue === 'other') {
+            businessTypeValue = otherBusinessType.value.trim();
+          }
+
           currentUser.businessName = businessName.value.trim();
-          currentUser.businessType = businessType.value;
+          currentUser.businessType = businessTypeValue;
           currentUser.primaryTransactions = primaryTransactions.value;
           currentUser.avgMonthlyRevenue = avgMonthlyRevenue.value;
           currentUser.businessLocation = businessLocation.value.trim();
@@ -2324,47 +3028,69 @@
             onboardingSubmitBtn.disabled = false;
             closeOnboarding();
 
-            if (userEcoScore) userEcoScore.textContent = '86%';
-            if (userIncome) userIncome.textContent = 'R28,500';
-            if (userStatus) userStatus.textContent = 'Your BridgeID is active and ready to use.';
-            updateOnboardingCard();
+            // Remove pending activity
+            var pendingActivity = document.getElementById('pendingProfileActivity');
+            if (pendingActivity) pendingActivity.remove();
 
-            var activityList = document.querySelector('.activity-list');
-            if (activityList) {
-              var newActivity = document.createElement('div');
-              newActivity.className = 'activity-item';
-              newActivity.innerHTML = `
-                <div class="activity-left">
-                  <div class="activity-icon">📋</div>
-                  <div class="activity-text"><strong>Profile completed</strong> — Business information added</div>
-                </div>
-                <div class="activity-time">Just now</div>
-              `;
-              activityList.insertBefore(newActivity, activityList.children[1]);
+            addActivity('📋', 'Profile completed — Business information added');
 
-              // Remove pending activity if it exists
-              var pendingItems = activityList.querySelectorAll('.activity-item');
-              if (pendingItems.length > 2 && pendingItems[2]) {
-                if (pendingItems[2].querySelector('.activity-text') &&
-                    pendingItems[2].querySelector('.activity-text').textContent.includes('pending')) {
-                  pendingItems[2].remove();
-                }
-              }
-            }
+            // Update dashboard - this will show 80%
+            updateDashboard();
 
+            // Show custom alert
             alert('✅ Profile complete!\n\nWelcome ' + currentUser.name + '! Your business "' + currentUser
-              .businessName + '" has been registered.\n\nEcoScore: 86%\nReady to connect with lenders.');
+              .businessName + '" has been registered.\n\n📊 Progress: 80% complete\n🔗 Next: Connect your accounts to reach 100% and unlock your EcoScore.');
+
           }, 2000);
         });
       }
 
-      // ===== EXPOSE GLOBAL FUNCTIONS =====
-      window.openModal = openModal;
-      window.closeModal = closeModal;
-      window.showDashboard = showDashboard;
-      window.showLanding = showLanding;
-      window.openOnboarding = openOnboarding;
-      window.closeOnboarding = closeOnboarding;
+      // ===== CONNECT BUTTONS =====
+      var bankConnectBtns = [quickConnectBankBtn, connectBankFromCard];
+      bankConnectBtns.forEach(function(btn) {
+        if (btn) {
+          btn.addEventListener('click', function() {
+            if (!connectionState.bank.connected) openBankConnection();
+            else alert('✅ Bank is already connected!');
+          });
+        }
+      });
+
+      var yocoConnectBtns = [quickConnectYocoBtn, connectYocoFromCard];
+      yocoConnectBtns.forEach(function(btn) {
+        if (btn) {
+          btn.addEventListener('click', function() {
+            if (!connectionState.yoco.connected) openYocoConnection();
+            else alert('✅ Yoco is already connected!');
+          });
+        }
+      });
+
+      // ===== EVENT LISTENERS =====
+      if (getStartedBtn) getStartedBtn.addEventListener('click', openModal);
+      if (joinNetworkBtn) joinNetworkBtn.addEventListener('click', openModal);
+      if (navSignupBtn) navSignupBtn.addEventListener('click', openModal);
+      if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+
+      signupModal.addEventListener('click', function(e) {
+        if (e.target === signupModal) closeModal();
+      });
+
+      closeConnectionBtn.addEventListener('click', closeConnectionModal);
+      connectionDoneBtn.addEventListener('click', closeConnectionModal);
+      connectionModal.addEventListener('click', function(e) {
+        if (e.target === connectionModal) closeConnectionModal();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          if (signupModal.classList.contains('active')) closeModal();
+          if (connectionModal.classList.contains('active')) closeConnectionModal();
+          if (onboardingModal.classList.contains('active')) closeOnboarding();
+          if (bankConnectionModal.classList.contains('active')) closeBankConnection();
+          if (yocoConnectionModal.classList.contains('active')) closeYocoConnection();
+        }
+      });
 
       console.log('🌿 EcoBridge EC initialized successfully!');
 
