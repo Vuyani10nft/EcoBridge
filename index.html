@@ -2191,32 +2191,37 @@
         }
       },
 
-      // Step 2: Create a consent
-      createConsent: async function(clientToken) {
-        try {
-          const response = await fetch(`${this.baseUrl}/account-access-consents`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${clientToken}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              permissions: ['ReadAccountsBasic', 'ReadBalances', 'ReadTransactionsBasic'],
-              expirationDateTime: '2026-12-31T23:59:59Z'
-            })
-          });
-          if (!response.ok) {
-            const error = await response.json();
-            throw new Error(`Consent creation error: ${JSON.stringify(error)}`);
-          }
-          const data = await response.json();
-          return data.ConsentId;
-        } catch (error) {
-          console.error('createConsent failed:', error);
-          throw error;
-        }
+    // Step 2: Create a consent
+createConsent: async function(clientToken) {
+  try {
+    const response = await fetch(`${this.baseUrl}/account-access-consents`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${clientToken}`,
+        'Content-Type': 'application/json'
       },
-
+      body: JSON.stringify({
+        permissions: [
+          'ReadAccountsBasic',
+          'ReadBalances',
+          'ReadTransactionsBasic',
+          'ReadTransactionsCredits',
+          'ReadTransactionsDebits'
+        ],
+        expirationDateTime: '2026-12-31T23:59:59Z'
+      })
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`Consent creation error: ${JSON.stringify(error)}`);
+    }
+    const data = await response.json();
+    return data.ConsentId;
+  } catch (error) {
+    console.error('createConsent failed:', error);
+    throw error;
+  }
+},
       // Step 3: Get PSU authorisation URL
       getAuthorisationUrl: function(consentId) {
         return `${this.baseUrl}/psu/authorize/ui?consentId=${consentId}`;
