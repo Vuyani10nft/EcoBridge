@@ -196,6 +196,35 @@
       box-shadow: none;
     }
 
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+      pointer-events: none;
+    }
+
+    .btn .spinner-small {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-top-color: #0b0b0b;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .btn.loading .spinner-small {
+      display: inline-block;
+    }
+
+    .btn.loading .btn-text {
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     .hero-visual {
       flex: 1;
       min-width: 280px;
@@ -378,12 +407,27 @@
       background: #141414;
       border-radius: 24px;
       padding: 44px 40px 36px;
-      max-width: 460px;
+      max-width: 520px;
       width: 100%;
       border: 1px solid rgba(0, 255, 136, 0.15);
       box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
       position: relative;
       animation: fadeUp 0.35s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-box::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .modal-box::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .modal-box::-webkit-scrollbar-thumb {
+      background: #2a2a2a;
+      border-radius: 4px;
     }
 
     @keyframes fadeUp {
@@ -456,7 +500,9 @@
       margin-bottom: 6px;
     }
 
-    .modal-box input {
+    .modal-box input,
+    .modal-box select,
+    .modal-box textarea {
       width: 100%;
       padding: 14px 16px;
       background: #0d0d0d;
@@ -465,20 +511,42 @@
       color: white;
       font-size: 15px;
       transition: all 0.2s;
+      appearance: none;
     }
 
-    .modal-box input::placeholder {
+    .modal-box textarea {
+      resize: vertical;
+      min-height: 80px;
+      font-family: inherit;
+    }
+
+    .modal-box select {
+      cursor: pointer;
+    }
+
+    .modal-box select option {
+      background: #141414;
+      color: white;
+    }
+
+    .modal-box input::placeholder,
+    .modal-box select::placeholder,
+    .modal-box textarea::placeholder {
       color: #444;
     }
 
-    .modal-box input:focus {
+    .modal-box input:focus,
+    .modal-box select:focus,
+    .modal-box textarea:focus {
       outline: none;
       border-color: #00ff88;
       box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
       background: #111;
     }
 
-    .modal-box input.error {
+    .modal-box input.error,
+    .modal-box select.error,
+    .modal-box textarea.error {
       border-color: #ff4444;
       box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
     }
@@ -542,12 +610,6 @@
       display: none;
     }
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
     .modal-box .footnote {
       text-align: center;
       font-size: 13px;
@@ -564,74 +626,217 @@
       text-decoration: underline;
     }
 
-    .modal-box .divider {
+    /* ===== POPIA CONSENT STYLES ===== */
+    .popia-consent {
+      background: rgba(0, 255, 136, 0.03);
+      border: 1px solid rgba(0, 255, 136, 0.08);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+
+    .popia-consent .popia-header {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin: 20px 0;
-      color: #333;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .popia-consent .popia-header .shield-icon {
+      font-size: 24px;
+    }
+
+    .popia-consent .popia-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .popia-consent .popia-content {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.8;
+      max-height: 150px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .popia-consent .popia-content::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .popia-consent .popia-content::-webkit-scrollbar-thumb {
+      background: #2a2a2a;
+      border-radius: 4px;
+    }
+
+    .popia-consent .popia-content strong {
+      color: #ddd;
+    }
+
+    .popia-consent .popia-content ul {
+      margin: 8px 0 8px 20px;
+      list-style: disc;
+    }
+
+    .popia-consent .popia-content ul li {
+      margin-bottom: 4px;
+    }
+
+    .popia-consent .popia-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .popia-consent .popia-checkbox input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      margin-top: 2px;
+      accent-color: #00ff88;
+      cursor: pointer;
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      appearance: none;
+      -webkit-appearance: none;
+      position: relative;
+    }
+
+    .popia-consent .popia-checkbox input[type="checkbox"]:checked {
+      background: #00ff88;
+      border-color: #00ff88;
+    }
+
+    .popia-consent .popia-checkbox input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #0b0b0b;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .popia-consent .popia-checkbox label {
+      font-size: 14px;
+      color: #ccc;
+      cursor: pointer;
+      line-height: 1.5;
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+
+    .popia-consent .popia-checkbox label a {
+      color: #00ff88;
+      text-decoration: none;
+    }
+
+    .popia-consent .popia-checkbox label a:hover {
+      text-decoration: underline;
+    }
+
+    .popia-consent .popia-checkbox .checkbox-error {
+      color: #ff4444;
       font-size: 12px;
+      display: none;
+      margin-top: 4px;
     }
 
-    .modal-box .divider::before,
-    .modal-box .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #222;
+    .popia-consent .popia-checkbox .checkbox-error.visible {
+      display: block;
     }
 
-    .modal-box .social-btn {
-      width: 100%;
-      padding: 12px;
+    /* ===== ONBOARDING MODAL STEPS ===== */
+    .onboarding-step {
+      display: none;
+      animation: fadeUp 0.3s ease;
+    }
+
+    .onboarding-step.active {
+      display: block;
+    }
+
+    .onboarding-step .step-indicator {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .onboarding-step .step-indicator .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2a2a2a;
+      transition: all 0.3s;
+    }
+
+    .onboarding-step .step-indicator .dot.active {
+      background: #00ff88;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .onboarding-step .step-indicator .dot.done {
+      background: #00ff88;
+    }
+
+    .onboarding-step .step-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .onboarding-step .step-actions .btn-secondary {
       background: transparent;
       border: 1px solid #2a2a2a;
+      color: #aaa;
+      padding: 14px 24px;
       border-radius: 40px;
-      color: #ccc;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
       font-size: 14px;
+      flex: 1;
     }
 
-    .modal-box .social-btn:hover {
+    .onboarding-step .step-actions .btn-secondary:hover {
       border-color: #444;
-      background: rgba(255, 255, 255, 0.03);
+      color: #fff;
     }
 
-    /* ===== SUCCESS STATE ===== */
-    .modal-box .success-state {
-      display: none;
-      text-align: center;
-      padding: 20px 0;
-    }
-
-    .modal-box .success-state.active {
-      display: block;
-    }
-
-    .modal-box .success-state .check {
-      font-size: 56px;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .modal-box .success-state h3 {
-      font-size: 22px;
-      margin-bottom: 6px;
-    }
-
-    .modal-box .success-state p {
-      color: #888;
+    .onboarding-step .step-actions .btn-primary {
+      background: #00ff88;
+      border: none;
+      color: #0b0b0b;
+      padding: 14px 24px;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
       font-size: 14px;
+      flex: 2;
+    }
+
+    .onboarding-step .step-actions .btn-primary:hover {
+      background: #00e67a;
+      transform: scale(1.01);
+    }
+
+    .onboarding-step .step-actions .btn-primary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
     }
 
     /* ============================================================
-       PROFILE DASHBOARD (hidden by default)
+       PROFILE DASHBOARD
        ============================================================ */
     #profileDashboard {
       display: none;
@@ -684,9 +889,66 @@
       gap: 8px;
     }
 
+    /* ===== ONBOARDING CARD ===== */
+    .onboarding-card {
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.06), rgba(0, 255, 136, 0.01));
+      border: 1px solid rgba(0, 255, 136, 0.15);
+      border-radius: 20px;
+      padding: 32px 36px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .onboarding-card .info h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .onboarding-card .info p {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .onboarding-card .progress {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .onboarding-card .progress-bar {
+      width: 120px;
+      height: 4px;
+      background: #1a1a1a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .onboarding-card .progress-bar .fill {
+      height: 100%;
+      background: #00ff88;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .onboarding-card .progress-text {
+      color: #888;
+      font-size: 13px;
+    }
+
+    .onboarding-card .btn {
+      padding: 10px 24px;
+      font-size: 14px;
+    }
+
     .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 24px;
       margin-bottom: 40px;
     }
@@ -808,7 +1070,37 @@
       font-size: 14px;
     }
 
-    /* ===== HIDDEN CLASS FOR TOGGLE ===== */
+    /* ============================================================
+       SKELETON LOADER
+       ============================================================ */
+    .skeleton {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 12px;
+      animation: shimmer 1.5s ease-in-out infinite;
+      background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 25%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.04) 75%
+      );
+      background-size: 200% 100%;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    .skeleton-card {
+      height: 120px;
+      border-radius: 16px;
+    }
+
+    /* ===== HIDDEN CLASS ===== */
     .hidden {
       display: none !important;
     }
@@ -905,6 +1197,27 @@
         gap: 6px;
         padding: 14px 16px;
       }
+
+      .onboarding-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 20px;
+      }
+
+      .onboarding-card .progress {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .onboarding-step .step-actions {
+        flex-direction: column;
+      }
+
+      .onboarding-step .step-actions .btn-secondary,
+      .onboarding-step .step-actions .btn-primary {
+        flex: none;
+        width: 100%;
+      }
     }
 
     @media (max-width: 480px) {
@@ -929,6 +1242,15 @@
         padding: 6px 12px;
         font-size: 12px;
       }
+
+      .popia-consent {
+        padding: 16px;
+      }
+
+      .popia-consent .popia-content {
+        font-size: 12px;
+        max-height: 120px;
+      }
     }
   </style>
 </head>
@@ -948,10 +1270,9 @@
   </header>
 
   <!-- ============================================================
-  LANDING PAGE (visible by default)
+  LANDING PAGE
   ============================================================ -->
   <div id="landingPage">
-    <!-- HERO -->
     <section class="hero">
       <div class="hero-text">
         <div class="badge">🚀 Open Finance Identity</div>
@@ -1001,7 +1322,6 @@
       </div>
     </section>
 
-    <!-- PROBLEM SECTION -->
     <section class="section">
       <h2>The Credibility Gap</h2>
       <p class="subtitle">
@@ -1027,7 +1347,6 @@
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
     <section class="section">
       <h2>How EcoBridge Works</h2>
       <p class="subtitle">One portable identity, endless opportunities</p>
@@ -1050,30 +1369,6 @@
       </div>
     </section>
 
-    <!-- WHY ECOBRIDGE -->
-    <section class="section">
-      <h2>Why EcoBridge</h2>
-      <p class="subtitle">Built for the informal economy</p>
-      <div class="cards">
-        <div class="card">
-          <span class="icon">⚖️</span>
-          <h3>Fair Access</h3>
-          <p>No credit history required — we use alternative data to build trust.</p>
-        </div>
-        <div class="card">
-          <span class="icon">⚡</span>
-          <h3>Fast Decisions</h3>
-          <p>From days to minutes. Lenders get verified intelligence instantly.</p>
-        </div>
-        <div class="card">
-          <span class="icon">🛡️</span>
-          <h3>Data Ownership</h3>
-          <p>You control your data at all times. Revoke access anytime with OAuth2.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA SECTION -->
     <section class="cta-section">
       <h2>Ready to build your financial identity?</h2>
       <p>Join 50+ merchants already building their BridgeID</p>
@@ -1089,43 +1384,69 @@
   </div>
 
   <!-- ============================================================
-  PROFILE DASHBOARD (hidden by default)
+  PROFILE DASHBOARD
   ============================================================ -->
   <div id="profileDashboard">
     <div class="dashboard-header">
       <div class="greeting">
         <h1>👋 Hi there, <span id="userFullName">Amara Nkosi</span></h1>
-        <div class="sub">Welcome to your BridgeID dashboard. Your financial identity is being built.</div>
+        <div class="sub" id="userStatus">Welcome to your BridgeID dashboard. Let's set up your profile.</div>
       </div>
       <div class="badge-profile">
         <span>🪪</span> BridgeID: #EC-2026-0042
       </div>
     </div>
 
-    <div class="dashboard-grid">
-      <div class="dashboard-card">
-        <span class="card-icon">📊</span>
-        <div class="card-label">EcoScore</div>
-        <div class="card-value" id="userEcoScore">86%</div>
-        <div class="card-change positive">↑ 12% this month</div>
+    <!-- Onboarding Card -->
+    <div class="onboarding-card" id="onboardingCard">
+      <div class="info">
+        <h3>📋 Finish setting up your profile</h3>
+        <p id="onboardingMessage">Tell us about your business to unlock your full EcoScore</p>
       </div>
-      <div class="dashboard-card">
-        <span class="card-icon">💰</span>
-        <div class="card-label">Monthly Income</div>
-        <div class="card-value" id="userIncome">R28,500</div>
-        <div class="card-change positive">↑ 8% from last month</div>
+      <div class="progress">
+        <div class="progress-bar">
+          <div class="fill" id="profileProgress" style="width: 10%"></div>
+        </div>
+        <span class="progress-text" id="progressText">10%</span>
+        <button class="btn" id="startOnboardingBtn">
+          <span>→</span> Complete Profile
+        </button>
       </div>
-      <div class="dashboard-card">
-        <span class="card-icon">🏦</span>
-        <div class="card-label">Connected Accounts</div>
-        <div class="card-value">3</div>
-        <div class="card-change">FNB · Yoco · Cash</div>
+    </div>
+
+    <div class="dashboard-grid" id="dashboardGrid">
+      <div id="dashboardSkeleton" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; width:100%;">
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
       </div>
-      <div class="dashboard-card">
-        <span class="card-icon">📈</span>
-        <div class="card-label">Growth Readiness</div>
-        <div class="card-value" style="font-size:24px;">High</div>
-        <div class="card-change positive">Ready for funding</div>
+
+      <div id="dashboardContent" style="display:none; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; width:100%;">
+        <div class="dashboard-card">
+          <span class="card-icon">📊</span>
+          <div class="card-label">EcoScore</div>
+          <div class="card-value" id="userEcoScore">--</div>
+          <div class="card-change">Complete profile to calculate</div>
+        </div>
+        <div class="dashboard-card">
+          <span class="card-icon">💰</span>
+          <div class="card-label">Monthly Income</div>
+          <div class="card-value" id="userIncome">--</div>
+          <div class="card-change">Add your business details</div>
+        </div>
+        <div class="dashboard-card">
+          <span class="card-icon">🏦</span>
+          <div class="card-label">Connected Accounts</div>
+          <div class="card-value">0</div>
+          <div class="card-change">Connect your first account</div>
+        </div>
+        <div class="dashboard-card">
+          <span class="card-icon">📈</span>
+          <div class="card-label">Growth Readiness</div>
+          <div class="card-value" style="font-size:24px;">--</div>
+          <div class="card-change">Complete profile to unlock</div>
+        </div>
       </div>
     </div>
 
@@ -1134,44 +1455,30 @@
       <div class="activity-list">
         <div class="activity-item">
           <div class="activity-left">
-            <div class="activity-icon">🔗</div>
-            <div class="activity-text"><strong>Yoco POS</strong> connected</div>
-          </div>
-          <div class="activity-time">2 min ago</div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-left">
-            <div class="activity-icon">🏛️</div>
-            <div class="activity-text"><strong>FNB Business</strong> account linked</div>
-          </div>
-          <div class="activity-time">15 min ago</div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-left">
-            <div class="activity-icon">🧠</div>
-            <div class="activity-text"><strong>EcoScore</strong> updated to 86%</div>
-          </div>
-          <div class="activity-time">1 hour ago</div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-left">
             <div class="activity-icon">✅</div>
-            <div class="activity-text"><strong>BridgeID</strong> profile verified</div>
+            <div class="activity-text"><strong>Account created</strong> — Welcome to EcoBridge!</div>
           </div>
-          <div class="activity-time">2 hours ago</div>
+          <div class="activity-time" id="signupTime">Just now</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-left">
+            <div class="activity-icon">📋</div>
+            <div class="activity-text"><strong>Profile setup</strong> pending — Complete your business profile</div>
+          </div>
+          <div class="activity-time">Waiting</div>
         </div>
       </div>
     </div>
 
     <div class="quick-actions">
+      <button class="btn" id="quickOnboardingBtn">
+        <span>📋</span> Complete Profile
+      </button>
       <button class="btn" onclick="alert('🔗 Connecting to your bank...')">
         <span>🏛️</span> Connect Bank
       </button>
       <button class="btn" onclick="alert('🧾 Connecting to Yoco...')">
         <span>🧾</span> Connect Yoco
-      </button>
-      <button class="btn" onclick="alert('📱 Coming soon: MTN MoMo & Vodapay')">
-        <span>📱</span> Connect Mobile Wallet
       </button>
       <button class="btn btn-outline" onclick="showLanding()">
         <span>←</span> Back to Home
@@ -1181,9 +1488,7 @@
 
   <!-- ===== FOOTER ===== -->
   <footer id="mainFooter">
-    <div style="margin-bottom:12px;">
-      🌿 EcoBridge EC
-    </div>
+    <div style="margin-bottom:12px;">🌿 EcoBridge EC</div>
     <div style="margin-bottom:12px; color:#555; font-size:13px;">
       Building trusted financial identities for South Africa's informal economy.
     </div>
@@ -1203,55 +1508,38 @@
   ============================================================ -->
   <div class="modal-overlay" id="signupModal">
     <div class="modal-box">
-
-      <!-- Close button -->
-      <button class="modal-close" id="closeModalBtn" aria-label="Close modal">✕</button>
-
-      <!-- Normal form state -->
+      <button class="modal-close" id="closeModalBtn">✕</button>
       <div id="formState">
         <div class="modal-header">
           <span class="logo-icon">🌿</span>
           <h2>Create account</h2>
         </div>
         <div class="sub">Start building your financial identity today</div>
-
         <form id="signupForm" novalidate>
           <div class="input-group">
             <label for="signupName">Full name</label>
             <input type="text" id="signupName" placeholder="e.g. Amara Nkosi" required>
             <div class="error-text" id="nameError">Please enter your full name</div>
           </div>
-
           <div class="input-group">
             <label for="signupContact">Phone number or Email</label>
             <input type="text" id="signupContact" placeholder="+27 71 234 5678 or you@email.com" required>
             <div class="error-text" id="contactError">Please enter a valid phone or email</div>
           </div>
-
           <div class="input-group">
             <label for="signupPassword">Password</label>
             <input type="password" id="signupPassword" placeholder="Min 8 characters" required minlength="8">
             <div class="error-text" id="passwordError">Password must be at least 8 characters</div>
           </div>
-
           <button type="submit" class="btn-submit" id="submitBtn">
             <span class="btn-text">→ Sign up</span>
             <span class="spinner"></span>
           </button>
-
           <div class="footnote">
             By continuing you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>
           </div>
-
-          <div class="divider">or</div>
-
-          <button type="button" class="social-btn" onclick="alert('Google sign-in coming soon!')">
-            <span>🔵</span> Continue with Google
-          </button>
         </form>
       </div>
-
-      <!-- Success state (hidden initially) -->
       <div class="success-state" id="successState">
         <span class="check">✅</span>
         <h3>Account created!</h3>
@@ -1259,6 +1547,164 @@
         <button class="btn-submit" style="margin-top:20px;" id="goToDashboardBtn">
           Go to Dashboard →
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+  ONBOARDING MODAL (with POPIA)
+  ============================================================ -->
+  <div class="modal-overlay" id="onboardingModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeOnboardingBtn">✕</button>
+
+      <!-- Step 1: POPIA Consent -->
+      <div class="onboarding-step active" id="step1">
+        <div class="modal-header">
+          <span class="logo-icon">🛡️</span>
+          <h2>Privacy & Consent</h2>
+        </div>
+        <div class="sub">We take your data privacy seriously</div>
+
+        <div class="popia-consent">
+          <div class="popia-header">
+            <span class="shield-icon">🔒</span>
+            <h3>Protection of Personal Information Act (POPIA)</h3>
+          </div>
+
+          <div class="popia-content">
+            <p><strong>EcoBridge EC collects and processes your personal information in accordance with the Protection of Personal Information Act (POPIA) of South Africa.</strong></p>
+            <p style="margin-top:8px;">By providing your information, you consent to EcoBridge EC collecting, storing, and using your personal data for the following purposes:</p>
+            <ul>
+              <li><strong>Identity Verification:</strong> To create and maintain your BridgeID profile</li>
+              <li><strong>Financial Assessment:</strong> To calculate your EcoScore and assess creditworthiness</li>
+              <li><strong>Lender Matching:</strong> To connect you with appropriate financial service providers</li>
+              <li><strong>Service Improvement:</strong> To enhance our products and services</li>
+              <li><strong>Compliance:</strong> To meet regulatory and legal obligations</li>
+            </ul>
+            <p style="margin-top:8px;"><strong>Your rights under POPIA include:</strong></p>
+            <ul>
+              <li>The right to access your personal information</li>
+              <li>The right to request correction of inaccurate data</li>
+              <li>The right to withdraw consent at any time</li>
+              <li>The right to lodge a complaint with the Information Regulator</li>
+            </ul>
+            <p style="margin-top:8px; font-size:12px; color:#666;">
+              For more information, please read our full <a href="#" style="color:#00ff88; text-decoration:none;">Privacy Policy</a>.
+            </p>
+          </div>
+
+          <div class="popia-checkbox">
+            <input type="checkbox" id="popiaConsent">
+            <label for="popiaConsent">
+              I have read and understood the above information. I consent to EcoBridge EC collecting and processing my personal information in accordance with POPIA.
+            </label>
+          </div>
+          <div class="popia-checkbox" style="border-top:none; padding-top:0; margin-top:0;">
+            <div style="margin-left:32px;">
+              <div class="checkbox-error" id="popiaError">You must agree to the POPIA consent to continue</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn-secondary" onclick="closeOnboarding()">Back</button>
+          <button class="btn-primary" id="popiaContinueBtn" disabled>
+            Continue →
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Business Information -->
+      <div class="onboarding-step" id="step2">
+        <div class="modal-header">
+          <span class="logo-icon">📋</span>
+          <h2>Business Profile</h2>
+        </div>
+        <div class="sub">Tell us about your business to unlock your EcoScore</div>
+
+        <form id="onboardingForm" novalidate>
+          <div class="input-group">
+            <label for="businessName">Business name</label>
+            <input type="text" id="businessName" placeholder="e.g. Thabo's Spaza Shop" required>
+            <div class="error-text" id="businessNameError">Please enter your business name</div>
+          </div>
+
+          <div class="input-group">
+            <label for="businessType">Business type</label>
+            <select id="businessType" required>
+              <option value="">Select your business type</option>
+              <option value="spaza">Spaza Shop / Tuck Shop</option>
+              <option value="retail">Retail Store</option>
+              <option value="hair">Hair Salon / Barber</option>
+              <option value="food">Food / Restaurant</option>
+              <option value="wholesale">Wholesale / Distribution</option>
+              <option value="services">Services (cleaning, repairs, etc.)</option>
+              <option value="transport">Transport / Logistics</option>
+              <option value="agriculture">Agriculture / Farming</option>
+              <option value="other">Other</option>
+            </select>
+            <div class="error-text" id="businessTypeError">Please select your business type</div>
+          </div>
+
+          <div class="input-group">
+            <label for="primaryTransactions">Primary transaction method</label>
+            <select id="primaryTransactions" required>
+              <option value="">Select primary method</option>
+              <option value="cash">Cash</option>
+              <option value="bank">Bank Transfer / EFT</option>
+              <option value="pos">POS (Yoco / iKhokha)</option>
+              <option value="mobile">Mobile Wallet (MoMo / VodaPay)</option>
+              <option value="mixed">Mixed (multiple methods)</option>
+            </select>
+            <div class="error-text" id="primaryTransactionsError">Please select your primary transaction method</div>
+          </div>
+
+          <div class="input-group">
+            <label for="avgMonthlyRevenue">Average monthly revenue</label>
+            <select id="avgMonthlyRevenue" required>
+              <option value="">Select range</option>
+              <option value="under5000">Under R5,000</option>
+              <option value="5000-15000">R5,000 - R15,000</option>
+              <option value="15000-30000">R15,000 - R30,000</option>
+              <option value="30000-50000">R30,000 - R50,000</option>
+              <option value="50000-100000">R50,000 - R100,000</option>
+              <option value="over100000">Over R100,000</option>
+            </select>
+            <div class="error-text" id="avgMonthlyRevenueError">Please select your revenue range</div>
+          </div>
+
+          <div class="input-group">
+            <label for="businessLocation">Business location</label>
+            <input type="text" id="businessLocation" placeholder="e.g. Mdantsane, Eastern Cape" required>
+            <div class="error-text" id="businessLocationError">Please enter your business location</div>
+          </div>
+
+          <div class="input-group">
+            <label for="businessYears">How long have you been in business?</label>
+            <select id="businessYears" required>
+              <option value="">Select</option>
+              <option value="lessThan1">Less than 1 year</option>
+              <option value="1-2">1 - 2 years</option>
+              <option value="2-5">2 - 5 years</option>
+              <option value="5-10">5 - 10 years</option>
+              <option value="over10">Over 10 years</option>
+            </select>
+            <div class="error-text" id="businessYearsError">Please select how long you've been in business</div>
+          </div>
+
+          <div class="step-actions" style="margin-top:24px;">
+            <button type="button" class="btn-secondary" id="backToConsentBtn">← Back</button>
+            <button type="submit" class="btn-primary" id="onboardingSubmitBtn">
+              <span class="btn-text">✓ Complete Profile</span>
+              <span class="spinner"></span>
+            </button>
+          </div>
+
+          <div class="footnote" style="margin-top:12px;">
+            This helps us calculate your EcoScore and match you with the right lenders.
+          </div>
+        </form>
       </div>
 
     </div>
@@ -1272,29 +1718,66 @@
       'use strict';
 
       // ===== DOM REFS =====
+      // Signup modal
       const modal = document.getElementById('signupModal');
       const formState = document.getElementById('formState');
       const successState = document.getElementById('successState');
       const form = document.getElementById('signupForm');
       const submitBtn = document.getElementById('submitBtn');
       const goToDashboardBtn = document.getElementById('goToDashboardBtn');
-
       const nameInput = document.getElementById('signupName');
       const contactInput = document.getElementById('signupContact');
       const passwordInput = document.getElementById('signupPassword');
-
       const nameError = document.getElementById('nameError');
       const contactError = document.getElementById('contactError');
       const passwordError = document.getElementById('passwordError');
       const successMessage = document.getElementById('successMessage');
+      const closeBtn = document.getElementById('closeModalBtn');
 
-      // Dashboard elements
+      // Onboarding modal
+      const onboardingModal = document.getElementById('onboardingModal');
+      const onboardingForm = document.getElementById('onboardingForm');
+      const onboardingSubmitBtn = document.getElementById('onboardingSubmitBtn');
+      const closeOnboardingBtn = document.getElementById('closeOnboardingBtn');
+      const backToConsentBtn = document.getElementById('backToConsentBtn');
+      const popiaContinueBtn = document.getElementById('popiaContinueBtn');
+      const popiaConsent = document.getElementById('popiaConsent');
+      const popiaError = document.getElementById('popiaError');
+
+      // Step elements
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+
+      // Onboarding form fields
+      const businessName = document.getElementById('businessName');
+      const businessType = document.getElementById('businessType');
+      const primaryTransactions = document.getElementById('primaryTransactions');
+      const avgMonthlyRevenue = document.getElementById('avgMonthlyRevenue');
+      const businessLocation = document.getElementById('businessLocation');
+      const businessYears = document.getElementById('businessYears');
+      const businessNameError = document.getElementById('businessNameError');
+      const businessTypeError = document.getElementById('businessTypeError');
+      const primaryTransactionsError = document.getElementById('primaryTransactionsError');
+      const avgMonthlyRevenueError = document.getElementById('avgMonthlyRevenueError');
+      const businessLocationError = document.getElementById('businessLocationError');
+      const businessYearsError = document.getElementById('businessYearsError');
+
+      // Dashboard
       const landingPage = document.getElementById('landingPage');
       const profileDashboard = document.getElementById('profileDashboard');
       const userFullName = document.getElementById('userFullName');
+      const userStatus = document.getElementById('userStatus');
       const mainFooter = document.getElementById('mainFooter');
+      const dashboardSkeleton = document.getElementById('dashboardSkeleton');
+      const dashboardContent = document.getElementById('dashboardContent');
+      const userEcoScore = document.getElementById('userEcoScore');
+      const userIncome = document.getElementById('userIncome');
+      const progressFill = document.getElementById('profileProgress');
+      const progressText = document.getElementById('progressText');
+      const onboardingMessage = document.getElementById('onboardingMessage');
+      const signupTime = document.getElementById('signupTime');
 
-      // Buttons that open modal
+      // Buttons
       const openBtns = [
         document.getElementById('getStartedBtn'),
         document.getElementById('joinNetworkBtn'),
@@ -1303,32 +1786,34 @@
         document.getElementById('contactBtn')
       ];
 
-      const closeBtn = document.getElementById('closeModalBtn');
-
       // ===== USER DATA STORE =====
       let currentUser = {
         name: '',
         surname: '',
-        contact: ''
+        contact: '',
+        businessName: '',
+        businessType: '',
+        primaryTransactions: '',
+        avgMonthlyRevenue: '',
+        businessLocation: '',
+        businessYears: '',
+        profileComplete: false,
+        popiaConsent: false
       };
+
+      let signupTimestamp = new Date();
 
       // ===== HELPERS =====
       function openModal() {
-        // Reset to form state (hide success)
         formState.style.display = 'block';
         successState.classList.remove('active');
-        // Reset form
         form.reset();
-        // Clear errors
         document.querySelectorAll('.error-text').forEach(el => el.classList.remove('visible'));
         document.querySelectorAll('input').forEach(el => el.classList.remove('error'));
-        // Reset button
         submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
-        // Show modal
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        // Focus first input
         setTimeout(() => nameInput.focus(), 200);
       }
 
@@ -1340,14 +1825,32 @@
       }
 
       function showDashboard(name) {
-        // Hide landing page, show dashboard
         landingPage.style.display = 'none';
         profileDashboard.classList.add('active');
         mainFooter.style.display = 'none';
-        // Set user name
         userFullName.textContent = name;
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        dashboardSkeleton.style.display = 'grid';
+        dashboardContent.style.display = 'none';
+
+        setTimeout(() => {
+          dashboardSkeleton.style.display = 'none';
+          dashboardContent.style.display = 'grid';
+
+          if (!currentUser.profileComplete) {
+            userEcoScore.textContent = '--';
+            userIncome.textContent = '--';
+            userStatus.textContent = 'Welcome to your BridgeID dashboard. Let\'s set up your profile.';
+          } else {
+            userEcoScore.textContent = '86%';
+            userIncome.textContent = 'R28,500';
+            userStatus.textContent = 'Your BridgeID is active and ready to use.';
+          }
+
+          updateOnboardingCard();
+          signupTime.textContent = 'Just now';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 2000);
       }
 
       function showLanding() {
@@ -1357,38 +1860,77 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      // Make functions globally accessible for inline onclick
+      function updateOnboardingCard() {
+        if (currentUser.profileComplete) {
+          document.querySelector('.onboarding-card .info h3').textContent = '✅ Profile complete!';
+          onboardingMessage.textContent = 'Your business profile is fully set up.';
+          progressFill.style.width = '100%';
+          progressText.textContent = '100%';
+          const btn = document.getElementById('startOnboardingBtn');
+          btn.textContent = '✓ Complete';
+          btn.disabled = true;
+          btn.style.opacity = '0.5';
+        } else {
+          document.querySelector('.onboarding-card .info h3').textContent = '📋 Finish setting up your profile';
+          onboardingMessage.textContent = 'Tell us about your business to unlock your full EcoScore';
+          const progress = currentUser.popiaConsent ? 30 : 10;
+          progressFill.style.width = progress + '%';
+          progressText.textContent = progress + '%';
+          const btn = document.getElementById('startOnboardingBtn');
+          btn.textContent = '→ Complete Profile';
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        }
+      }
+
+      function openOnboarding() {
+        // Reset to step 1 (POPIA)
+        step1.classList.add('active');
+        step2.classList.remove('active');
+        popiaConsent.checked = false;
+        popiaContinueBtn.disabled = true;
+        popiaError.classList.remove('visible');
+
+        // Reset form fields
+        onboardingForm.reset();
+        document.querySelectorAll('#onboardingModal .error-text').forEach(el => el.classList.remove('visible'));
+        document.querySelectorAll('#onboardingModal input, #onboardingModal select').forEach(el => el.classList.remove('error'));
+        onboardingSubmitBtn.classList.remove('loading');
+        onboardingSubmitBtn.disabled = false;
+
+        onboardingModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeOnboarding() {
+        onboardingModal.classList.remove('active');
+        document.body.style.overflow = '';
+        onboardingSubmitBtn.classList.remove('loading');
+        onboardingSubmitBtn.disabled = false;
+      }
+
+      // Make functions globally accessible
       window.showLanding = showLanding;
       window.showDashboard = showDashboard;
+      window.openOnboarding = openOnboarding;
+      window.closeOnboarding = closeOnboarding;
 
-      // ===== EVENT LISTENERS: OPEN =====
-      openBtns.forEach(btn => {
-        if (btn) {
-          btn.addEventListener('click', openModal);
-        }
-      });
-
-      // ===== EVENT LISTENERS: CLOSE =====
+      // ===== SIGNUP MODAL EVENTS =====
+      openBtns.forEach(btn => { if (btn) btn.addEventListener('click', openModal); });
       closeBtn.addEventListener('click', closeModal);
 
-      // Click outside modal box
       modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-          closeModal();
-        }
+        if (e.target === modal) closeModal();
       });
 
-      // Escape key
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-          closeModal();
-        }
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        if (e.key === 'Escape' && onboardingModal.classList.contains('active')) closeOnboarding();
       });
 
-      // ===== VALIDATION HELPERS =====
+      // ===== SIGNUP VALIDATION =====
       function validateName(value) {
         const trimmed = value.trim();
-        // Must have at least 2 words (name and surname) with min 2 chars each
         const parts = trimmed.split(/\s+/);
         return parts.length >= 2 && parts.every(p => p.length >= 2);
       }
@@ -1421,15 +1963,12 @@
         return isValid || value.trim() === '';
       }
 
-      // ===== REAL-TIME VALIDATION =====
       nameInput.addEventListener('blur', function() {
         validateField(this, nameError, validateName, 'Please enter your full name (first and last)');
       });
-
       contactInput.addEventListener('blur', function() {
         validateField(this, contactError, validateContact, 'Please enter a valid phone or email');
       });
-
       passwordInput.addEventListener('blur', function() {
         validateField(this, passwordError, validatePassword, 'Password must be at least 8 characters');
       });
@@ -1476,64 +2015,43 @@
         }
       });
 
-      // ===== FORM SUBMISSION =====
+      // ===== SIGNUP SUBMISSION =====
       form.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Validate all fields
         const isNameValid = validateField(nameInput, nameError, validateName, 'Please enter your full name (first and last)');
         const isContactValid = validateField(contactInput, contactError, validateContact, 'Please enter a valid phone or email');
         const isPasswordValid = validateField(passwordInput, passwordError, validatePassword, 'Password must be at least 8 characters');
 
-        // Also check if fields are empty
         if (!nameInput.value.trim() || !contactInput.value.trim() || !passwordInput.value.trim()) {
-          if (!nameInput.value.trim()) {
-            nameInput.classList.add('error');
-            nameError.textContent = 'Name is required';
-            nameError.classList.add('visible');
-          }
-          if (!contactInput.value.trim()) {
-            contactInput.classList.add('error');
+          if (!nameInput.value.trim()) { nameInput.classList.add('error'); nameError.textContent = 'Name is required';
+            nameError.classList.add('visible'); }
+          if (!contactInput.value.trim()) { contactInput.classList.add('error');
             contactError.textContent = 'Phone or email is required';
-            contactError.classList.add('visible');
-          }
-          if (!passwordInput.value.trim()) {
-            passwordInput.classList.add('error');
+            contactError.classList.add('visible'); }
+          if (!passwordInput.value.trim()) { passwordInput.classList.add('error');
             passwordError.textContent = 'Password is required';
-            passwordError.classList.add('visible');
-          }
+            passwordError.classList.add('visible'); }
           return;
         }
 
-        if (!isNameValid || !isContactValid || !isPasswordValid) {
-          return;
-        }
+        if (!isNameValid || !isContactValid || !isPasswordValid) return;
 
-        // ===== STORE USER DATA =====
         const fullName = nameInput.value.trim();
         const nameParts = fullName.split(/\s+/);
         currentUser.name = nameParts[0] || 'User';
         currentUser.surname = nameParts.slice(1).join(' ') || '';
         currentUser.contact = contactInput.value.trim();
 
-        // ===== SIMULATE LOADING =====
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
 
-        // Simulate API call
         setTimeout(function() {
-          // Hide form, show success
           formState.style.display = 'none';
           successState.classList.add('active');
-
-          // Update success message
           successMessage.textContent = `Welcome ${fullName}! Your BridgeID is being built.`;
-
-          // Reset button
           submitBtn.classList.remove('loading');
           submitBtn.disabled = false;
-
-          console.log('✅ Signup successful:', currentUser);
         }, 1800);
       });
 
@@ -1541,18 +2059,213 @@
       goToDashboardBtn.addEventListener('click', function() {
         const fullName = currentUser.name + (currentUser.surname ? ' ' + currentUser.surname : '');
         closeModal();
-        // Show dashboard with user's name
         showDashboard(fullName);
       });
 
-      // ===== KEYBOARD SHORTCUT: Enter on success screen =====
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && successState.classList.contains('active')) {
           goToDashboardBtn.click();
         }
       });
 
-      console.log('🌿 EcoBridge ready – sign up to see your personalized dashboard!');
+      // ===== ONBOARDING EVENTS =====
+      document.getElementById('startOnboardingBtn').addEventListener('click', openOnboarding);
+      document.getElementById('quickOnboardingBtn').addEventListener('click', openOnboarding);
+      closeOnboardingBtn.addEventListener('click', closeOnboarding);
+
+      onboardingModal.addEventListener('click', function(e) {
+        if (e.target === onboardingModal) closeOnboarding();
+      });
+
+      // ===== POPIA CONSENT =====
+      popiaConsent.addEventListener('change', function() {
+        if (this.checked) {
+          popiaContinueBtn.disabled = false;
+          popiaError.classList.remove('visible');
+          currentUser.popiaConsent = true;
+          // Update progress
+          const progress = 30;
+          progressFill.style.width = progress + '%';
+          progressText.textContent = progress + '%';
+        } else {
+          popiaContinueBtn.disabled = true;
+          popiaError.classList.add('visible');
+          currentUser.popiaConsent = false;
+          const progress = 10;
+          progressFill.style.width = progress + '%';
+          progressText.textContent = progress + '%';
+        }
+      });
+
+      // ===== POPIA CONTINUE =====
+      popiaContinueBtn.addEventListener('click', function() {
+        if (popiaConsent.checked) {
+          step1.classList.remove('active');
+          step2.classList.add('active');
+          setTimeout(() => businessName.focus(), 300);
+        }
+      });
+
+      // ===== BACK TO CONSENT =====
+      backToConsentBtn.addEventListener('click', function() {
+        step2.classList.remove('active');
+        step1.classList.add('active');
+      });
+
+      // ===== ONBOARDING VALIDATION =====
+      function validateBusinessName(value) { return value.trim().length >= 2; }
+
+      function validateSelect(value) { return value !== ''; }
+
+      function validateLocation(value) { return value.trim().length >= 2; }
+
+      businessName.addEventListener('blur', function() {
+        if (!validateBusinessName(this.value) && this.value.trim() !== '') {
+          this.classList.add('error');
+          businessNameError.classList.add('visible');
+        } else {
+          this.classList.remove('error');
+          businessNameError.classList.remove('visible');
+        }
+      });
+
+      businessName.addEventListener('input', function() {
+        if (this.value.trim() === '') {
+          this.classList.remove('error');
+          businessNameError.classList.remove('visible');
+        } else if (!validateBusinessName(this.value)) {
+          this.classList.add('error');
+          businessNameError.classList.add('visible');
+        } else {
+          this.classList.remove('error');
+          businessNameError.classList.remove('visible');
+        }
+      });
+
+      businessLocation.addEventListener('blur', function() {
+        if (!validateLocation(this.value) && this.value.trim() !== '') {
+          this.classList.add('error');
+          businessLocationError.classList.add('visible');
+        } else {
+          this.classList.remove('error');
+          businessLocationError.classList.remove('visible');
+        }
+      });
+
+      businessLocation.addEventListener('input', function() {
+        if (this.value.trim() === '') {
+          this.classList.remove('error');
+          businessLocationError.classList.remove('visible');
+        } else if (!validateLocation(this.value)) {
+          this.classList.add('error');
+          businessLocationError.classList.add('visible');
+        } else {
+          this.classList.remove('error');
+          businessLocationError.classList.remove('visible');
+        }
+      });
+
+      ['businessType', 'primaryTransactions', 'avgMonthlyRevenue', 'businessYears'].forEach(id => {
+        const el = document.getElementById(id);
+        const errorEl = document.getElementById(id + 'Error');
+        el.addEventListener('change', function() {
+          if (this.value === '') {
+            this.classList.add('error');
+            errorEl.classList.add('visible');
+          } else {
+            this.classList.remove('error');
+            errorEl.classList.remove('visible');
+          }
+        });
+        el.addEventListener('blur', function() {
+          if (this.value === '') {
+            this.classList.add('error');
+            errorEl.classList.add('visible');
+          } else {
+            this.classList.remove('error');
+            errorEl.classList.remove('visible');
+          }
+        });
+      });
+
+      // ===== ONBOARDING SUBMISSION =====
+      onboardingForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let isValid = true;
+        const fields = [
+          { el: businessName, error: businessNameError, validator: validateBusinessName,
+            msg: 'Please enter your business name' },
+          { el: businessType, error: businessTypeError, validator: validateSelect,
+          msg: 'Please select your business type' },
+          { el: primaryTransactions, error: primaryTransactionsError, validator: validateSelect,
+            msg: 'Please select your primary transaction method' },
+          { el: avgMonthlyRevenue, error: avgMonthlyRevenueError, validator: validateSelect,
+            msg: 'Please select your revenue range' },
+          { el: businessLocation, error: businessLocationError, validator: validateLocation,
+            msg: 'Please enter your business location' },
+          { el: businessYears, error: businessYearsError, validator: validateSelect,
+            msg: 'Please select how long you\'ve been in business' }
+        ];
+
+        fields.forEach(field => {
+          if (!field.validator(field.el.value)) {
+            field.el.classList.add('error');
+            field.error.textContent = field.msg;
+            field.error.classList.add('visible');
+            isValid = false;
+          } else {
+            field.el.classList.remove('error');
+            field.error.classList.remove('visible');
+          }
+        });
+
+        if (!isValid) return;
+
+        currentUser.businessName = businessName.value.trim();
+        currentUser.businessType = businessType.value;
+        currentUser.primaryTransactions = primaryTransactions.value;
+        currentUser.avgMonthlyRevenue = avgMonthlyRevenue.value;
+        currentUser.businessLocation = businessLocation.value.trim();
+        currentUser.businessYears = businessYears.value;
+        currentUser.profileComplete = true;
+
+        onboardingSubmitBtn.classList.add('loading');
+        onboardingSubmitBtn.disabled = true;
+
+        setTimeout(function() {
+          onboardingSubmitBtn.classList.remove('loading');
+          onboardingSubmitBtn.disabled = false;
+          closeOnboarding();
+
+          userEcoScore.textContent = '86%';
+          userIncome.textContent = 'R28,500';
+          userStatus.textContent = 'Your BridgeID is active and ready to use.';
+          updateOnboardingCard();
+
+          const activityList = document.querySelector('.activity-list');
+          const newActivity = document.createElement('div');
+          newActivity.className = 'activity-item';
+          newActivity.innerHTML = `
+            <div class="activity-left">
+              <div class="activity-icon">📋</div>
+              <div class="activity-text"><strong>Profile completed</strong> — Business information added</div>
+            </div>
+            <div class="activity-time">Just now</div>
+          `;
+          activityList.insertBefore(newActivity, activityList.children[1]);
+
+          // Remove the pending activity
+          const pendingItems = document.querySelectorAll('.activity-item');
+          if (pendingItems.length > 2) {
+            pendingItems[2].remove();
+          }
+
+          alert(`✅ Profile complete!\n\nWelcome ${currentUser.name}! Your business "${currentUser.businessName}" has been registered.\n\nEcoScore: 86%\nReady to connect with lenders.`);
+        }, 2000);
+      });
+
+      console.log('🌿 EcoBridge ready – sign up and complete your profile with POPIA consent!');
     })();
   </script>
 
