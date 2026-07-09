@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoBridge EC · Sign up modal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <title>EcoBridge EC · Build your financial identity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -14,171 +14,360 @@
     }
 
     body {
-      background: #f8fafc;  /* much more white/light background */
-      color: #0b1a1a;
+      background: #0b0b0b;
+      color: white;
       line-height: 1.6;
     }
 
+    /* ===== NAVBAR ===== */
     header {
       display: flex;
       justify-content: space-between;
-      padding: 20px 60px;
+      padding: 16px 60px;
       align-items: center;
-      background: white;
-      border-bottom: 1px solid #e9edf2;
+      border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+      flex-wrap: wrap;
+      gap: 15px;
+      background: rgba(11, 11, 11, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .logo {
       font-weight: 800;
-      font-size: 20px;
-      color: #0d7a4a; /* deeper green for contrast on white */
+      font-size: 22px;
+      color: #00ff88;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .logo span {
+      color: white;
+      font-weight: 300;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
     nav a {
-      margin-left: 30px;
+      padding: 8px 18px;
       text-decoration: none;
-      color: #2c3e50;
+      color: #ccc;
       font-size: 14px;
       font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.2s;
     }
 
     nav a:hover {
-      color: #0d7a4a;
+      color: #00ff88;
+      background: rgba(0, 255, 136, 0.08);
     }
 
+    nav .nav-cta {
+      background: #00ff88;
+      color: #0b0b0b;
+      font-weight: 600;
+    }
+
+    nav .nav-cta:hover {
+      background: #00e67a;
+      color: #0b0b0b;
+    }
+
+    /* ===== HERO ===== */
     .hero {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 80px 60px;
-      background: white;
+      padding: 80px 60px 60px;
+      gap: 40px;
+      flex-wrap: wrap;
     }
 
     .hero-text {
       max-width: 600px;
+      flex: 1;
+    }
+
+    .hero-text .badge {
+      display: inline-block;
+      background: rgba(0, 255, 136, 0.12);
+      color: #00ff88;
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(0, 255, 136, 0.15);
     }
 
     .hero-text h1 {
       font-size: 50px;
       font-weight: 800;
       margin-bottom: 20px;
-      color: #0b1a1a;
+      line-height: 1.1;
     }
 
     .hero-text h1 span {
-      color: #0d7a4a;
+      color: #00ff88;
+      position: relative;
+    }
+
+    .hero-text h1 span::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #00ff88;
+      opacity: 0.3;
+      border-radius: 4px;
     }
 
     .hero-text p {
-      color: #2c3e50;
+      color: #aaa;
       margin-bottom: 30px;
-      font-size: 1.1rem;
+      font-size: 18px;
+      max-width: 480px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats .stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #888;
+      font-size: 14px;
+    }
+
+    .hero-stats .stat strong {
+      color: white;
+      font-size: 18px;
     }
 
     .btn {
-      padding: 14px 28px;
-      background: #0d7a4a;
+      padding: 14px 32px;
+      background: #00ff88;
       border: none;
       border-radius: 40px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       font-size: 1rem;
-      color: white;
-      transition: background 0.2s, transform 0.1s;
+      transition: all 0.2s;
+      color: #0b0b0b;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .btn:hover {
-      background: #0a5f39;
+      background: #00e67a;
       transform: scale(1.02);
+      box-shadow: 0 8px 30px rgba(0, 255, 136, 0.25);
     }
 
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: white;
+      margin-left: 12px;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #00ff88;
+      box-shadow: none;
+    }
+
+    .hero-visual {
+      flex: 1;
+      min-width: 280px;
+      max-width: 420px;
+      background: rgba(0, 255, 136, 0.04);
+      border-radius: 24px;
+      padding: 30px;
+      border: 1px solid rgba(0, 255, 136, 0.1);
+    }
+
+    .hero-visual .card-preview {
+      background: #121212;
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid #1a1a1a;
+    }
+
+    .hero-visual .card-preview .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #1a1a1a;
+      font-size: 14px;
+    }
+
+    .hero-visual .card-preview .row:last-child {
+      border-bottom: none;
+    }
+
+    .hero-visual .card-preview .label {
+      color: #666;
+    }
+
+    .hero-visual .card-preview .value {
+      color: #00ff88;
+      font-weight: 600;
+    }
+
+    .hero-visual .card-preview .badge-verified {
+      background: #00ff88;
+      color: #0b0b0b;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    /* ===== SECTIONS ===== */
     .section {
-      padding: 80px 60px;
+      padding: 80px 60px 40px;
       text-align: center;
-      background: white;
-      border-top: 1px solid #eef2f6;
     }
 
     .section h2 {
       font-size: 36px;
-      margin-bottom: 20px;
-      color: #0b1a1a;
+      margin-bottom: 16px;
+      font-weight: 700;
     }
 
-    .section p {
-      color: #2c3e50;
-      max-width: 700px;
-      margin: auto;
+    .section .subtitle {
+      color: #888;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      font-size: 17px;
     }
 
     .cards {
       display: flex;
       gap: 24px;
-      margin-top: 40px;
+      margin-top: 20px;
       justify-content: center;
       flex-wrap: wrap;
     }
 
     .card {
-      background: #f9fcff;
-      padding: 32px 24px;
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 32px 28px;
+      border-radius: 16px;
       width: 280px;
-      border: 1px solid #dce3ec;
-      box-shadow: 0 6px 14px rgba(0,20,10,0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s;
+      text-align: left;
+    }
+
+    .card:hover {
+      border-color: rgba(0, 255, 136, 0.2);
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .card .icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+      display: block;
     }
 
     .card h3 {
-      margin-bottom: 10px;
-      color: #0d7a4a;
+      margin-bottom: 8px;
+      color: #fff;
+      font-size: 18px;
     }
 
     .card p {
-      color: #2c3e50;
+      color: #888;
+      font-size: 14px;
+      line-height: 1.7;
     }
 
-    .cta {
+    /* ===== CTA SECTION ===== */
+    .cta-section {
       text-align: center;
-      padding: 100px 60px;
-      background: linear-gradient(145deg, #e5f5ed, #d0eee0);
-      color: #0b1a1a;
-      border-top: 1px solid #b8d5c4;
+      padding: 80px 60px;
+      margin: 40px 60px;
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(0, 255, 136, 0.02));
+      border-radius: 32px;
+      border: 1px solid rgba(0, 255, 136, 0.1);
     }
 
-    .cta h2 {
-      font-size: 40px;
-      margin-bottom: 20px;
-      color: #0b1a1a;
+    .cta-section h2 {
+      font-size: 38px;
+      margin-bottom: 16px;
     }
 
-    .cta .btn {
-      background: #0b1a1a;
-    }
-    .cta .btn:hover {
-      background: #1f3a3a;
+    .cta-section p {
+      color: #888;
+      margin-bottom: 30px;
+      font-size: 17px;
     }
 
+    .cta-section .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ===== FOOTER ===== */
     footer {
       text-align: center;
-      padding: 30px;
-      color: #5a6b7a;
-      background: white;
-      border-top: 1px solid #e9edf2;
+      padding: 40px 60px;
+      color: #444;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 14px;
     }
 
-    /* ----- modal overlay (light theme) ----- */
+    footer a {
+      color: #666;
+      text-decoration: none;
+      margin: 0 12px;
+    }
+
+    footer a:hover {
+      color: #00ff88;
+    }
+
+    /* ============================================================
+       MODAL STYLES
+       ============================================================ */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 1000;
+      padding: 20px;
     }
 
     .modal-overlay.active {
@@ -186,38 +375,76 @@
     }
 
     .modal-box {
-      background: #ffffff;
-      border-radius: 32px;
-      padding: 40px 35px;
-      max-width: 440px;
-      width: 90%;
-      border: 1px solid #cfddee;
-      box-shadow: 0 30px 60px rgba(0,20,10,0.15);
+      background: #141414;
+      border-radius: 24px;
+      padding: 44px 40px 36px;
+      max-width: 460px;
+      width: 100%;
+      border: 1px solid rgba(0, 255, 136, 0.15);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
       position: relative;
-      animation: fadeUp 0.3s ease;
+      animation: fadeUp 0.35s ease;
     }
 
     @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.97);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-box .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .modal-box .modal-header .logo-icon {
+      font-size: 28px;
     }
 
     .modal-box h2 {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 700;
-      margin-bottom: 6px;
-      color: #0b1a1a;
+      color: #fff;
     }
 
     .modal-box .sub {
-      color: #3e566b;
+      color: #888;
       font-size: 14px;
       margin-bottom: 28px;
-      border-left: 4px solid #0d7a4a;
-      padding-left: 14px;
-      background: #f2f9f5;
-      border-radius: 0 8px 8px 0;
-      padding: 8px 16px;
+      padding-left: 0;
+      border-left: none;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: #555;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      transition: all 0.2s;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+      transform: rotate(90deg);
+    }
+
+    .modal-box .input-group {
+      margin-bottom: 16px;
     }
 
     .modal-box label {
@@ -225,404 +452,1109 @@
       font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.3px;
-      color: #1a2e3f;
-      margin: 18px 0 6px;
+      color: #aaa;
+      margin-bottom: 6px;
     }
 
     .modal-box input {
       width: 100%;
       padding: 14px 16px;
-      background: #f4f8fe;
-      border: 1.5px solid #d7e0e9;
-      border-radius: 16px;
-      color: #0b1a1a;
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      color: white;
       font-size: 15px;
-      transition: border 0.2s, box-shadow 0.2s;
+      transition: all 0.2s;
+    }
+
+    .modal-box input::placeholder {
+      color: #444;
     }
 
     .modal-box input:focus {
       outline: none;
-      border-color: #0d7a4a;
-      box-shadow: 0 0 0 4px rgba(13, 122, 74, 0.10);
-      background: #ffffff;
+      border-color: #00ff88;
+      box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+      background: #111;
     }
 
-    /* validation styles */
-    .modal-box input.input-error {
-      border-color: #c73b3b;
-      background: #fff6f6;
-      box-shadow: 0 0 0 3px rgba(199, 59, 59, 0.08);
+    .modal-box input.error {
+      border-color: #ff4444;
+      box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
     }
-    .modal-box .error-msg {
-      color: #b92b2b;
+
+    .modal-box .error-text {
+      color: #ff4444;
       font-size: 12px;
-      font-weight: 500;
-      margin-top: 5px;
+      margin-top: 4px;
       display: none;
     }
-    .modal-box .error-msg.visible {
+
+    .modal-box .error-text.visible {
       display: block;
     }
 
     .modal-box .btn-submit {
       width: 100%;
-      margin-top: 28px;
+      margin-top: 24px;
       padding: 16px;
-      background: #0d7a4a;
+      background: #00ff88;
       border: none;
       border-radius: 40px;
       font-weight: 700;
       font-size: 16px;
-      color: white;
+      color: #0b0b0b;
       cursor: pointer;
-      transition: 0.2s;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
     .modal-box .btn-submit:hover {
-      background: #0a5f39;
+      background: #00e67a;
       transform: scale(1.01);
+      box-shadow: 0 8px 30px rgba(0, 255, 136, 0.2);
     }
 
-    .modal-close {
-      position: absolute;
-      top: 18px;
-      right: 22px;
-      background: transparent;
-      border: none;
-      color: #6c7e8f;
-      font-size: 28px;
-      line-height: 1;
-      cursor: pointer;
-      transition: 0.2s;
+    .modal-box .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
 
-    .modal-close:hover {
-      color: #0b1a1a;
-      transform: rotate(90deg);
+    .modal-box .btn-submit .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-top-color: #0b0b0b;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .modal-box .btn-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    .modal-box .btn-submit.loading .btn-text {
+      display: none;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .modal-box .footnote {
       text-align: center;
       font-size: 13px;
-      color: #5d7385;
+      color: #555;
       margin-top: 18px;
     }
 
-    @media (max-width: 700px) {
-      header, .hero {
-        flex-direction: column;
-        padding: 30px 20px;
+    .modal-box .footnote a {
+      color: #00ff88;
+      text-decoration: none;
+    }
+
+    .modal-box .footnote a:hover {
+      text-decoration: underline;
+    }
+
+    .modal-box .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 20px 0;
+      color: #333;
+      font-size: 12px;
+    }
+
+    .modal-box .divider::before,
+    .modal-box .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #222;
+    }
+
+    .modal-box .social-btn {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      border: 1px solid #2a2a2a;
+      border-radius: 40px;
+      color: #ccc;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .modal-box .social-btn:hover {
+      border-color: #444;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* ===== SUCCESS STATE ===== */
+    .modal-box .success-state {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .modal-box .success-state.active {
+      display: block;
+    }
+
+    .modal-box .success-state .check {
+      font-size: 56px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .modal-box .success-state h3 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .modal-box .success-state p {
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* ============================================================
+       PROFILE DASHBOARD (hidden by default)
+       ============================================================ */
+    #profileDashboard {
+      display: none;
+      padding: 40px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      animation: fadeUp 0.5s ease;
+    }
+
+    #profileDashboard.active {
+      display: block;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .dashboard-header .greeting h1 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .dashboard-header .greeting h1 span {
+      color: #00ff88;
+    }
+
+    .dashboard-header .greeting .sub {
+      color: #888;
+      font-size: 16px;
+    }
+
+    .dashboard-header .badge-profile {
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      padding: 8px 20px;
+      border-radius: 40px;
+      color: #00ff88;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .dashboard-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s;
+    }
+
+    .dashboard-card:hover {
+      border-color: rgba(0, 255, 136, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .dashboard-card .card-label {
+      color: #666;
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .dashboard-card .card-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #00ff88;
+    }
+
+    .dashboard-card .card-change {
+      font-size: 13px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .dashboard-card .card-change.positive {
+      color: #00ff88;
+    }
+
+    .dashboard-card .card-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .dashboard-section {
+      margin-bottom: 40px;
+    }
+
+    .dashboard-section h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .activity-list {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-item .activity-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .activity-item .activity-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 255, 136, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .activity-item .activity-text {
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .activity-item .activity-text strong {
+      color: #fff;
+    }
+
+    .activity-item .activity-time {
+      color: #555;
+      font-size: 12px;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .quick-actions .btn {
+      padding: 12px 24px;
+      font-size: 14px;
+    }
+
+    /* ===== HIDDEN CLASS FOR TOGGLE ===== */
+    .hidden {
+      display: none !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      header {
+        padding: 16px 24px;
       }
-      .hero-text h1 { font-size: 34px; }
-      .modal-box { padding: 30px 20px; }
+
+      .hero {
+        padding: 40px 24px 30px;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-text h1 {
+        font-size: 34px;
+      }
+
+      .hero-text p {
+        margin: 0 auto 24px;
+        font-size: 16px;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .hero-text .btn-group {
+        justify-content: center;
+      }
+
+      .btn-outline {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+
+      .section {
+        padding: 50px 24px 20px;
+      }
+
+      .section h2 {
+        font-size: 28px;
+      }
+
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 360px;
+        text-align: center;
+      }
+
+      .cta-section {
+        margin: 20px 16px;
+        padding: 50px 24px;
+      }
+
+      .cta-section h2 {
+        font-size: 28px;
+      }
+
+      footer {
+        padding: 30px 24px;
+      }
+
+      .modal-box {
+        padding: 32px 24px 28px;
+      }
+
+      .modal-box h2 {
+        font-size: 22px;
+      }
+
+      #profileDashboard {
+        padding: 20px 16px;
+      }
+
+      .dashboard-header .greeting h1 {
+        font-size: 28px;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .activity-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 14px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-text h1 {
+        font-size: 28px;
+      }
+
+      .hero-visual {
+        padding: 16px;
+      }
+
+      .hero-visual .card-preview {
+        padding: 16px;
+      }
+
+      .hero-visual .card-preview .row {
+        font-size: 12px;
+        padding: 8px 0;
+      }
+
+      nav a {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">EcoBridge</div>
-  <nav>
-    <a href="#">Product</a>
-    <a href="#">Developers</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
-  </nav>
-</header>
-
-<section class="hero">
-  <div class="hero-text">
-    <h1>Building <span>financial identity</span> for the informal economy</h1>
-    <p>
-      EcoBridge transforms fragmented financial data into a trusted business profile,
-      enabling faster, fairer access to capital.
-    </p>
-    <button class="btn" id="getStartedBtn">Get Started</button>
-  </div>
-</section>
-
-<section class="section">
-  <h2>The Problem</h2>
-  <p>
-    Millions of businesses generate real income but lack a verifiable financial identity.
-    Without trust, they are locked out of growth opportunities.
-  </p>
-</section>
-
-<section class="section">
-  <h2>How It Works</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Connect Data</h3>
-      <p>Securely connect bank, POS, and mobile wallet data.</p>
+  <!-- ===== NAVBAR ===== -->
+  <header>
+    <div class="logo" onclick="showLanding()">
+      🌿 EcoBridge<span>EC</span>
     </div>
-    <div class="card">
-      <h3>Build Identity</h3>
-      <p>We generate a verified business profile with real insights.</p>
-    </div>
-    <div class="card">
-      <h3>Unlock Capital</h3>
-      <p>Lenders access your profile and make faster decisions.</p>
-    </div>
-  </div>
-</section>
+    <nav>
+      <a href="#" onclick="showLanding()">BridgeID</a>
+      <a href="#" onclick="showLanding()">EcoScore</a>
+      <a href="#" onclick="showLanding()">For Lenders</a>
+      <a href="#" class="nav-cta" id="navSignupBtn">Sign Up</a>
+    </nav>
+  </header>
 
-<section class="section">
-  <h2>Why EcoBridge</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Fair Access</h3>
-      <p>No credit history required.</p>
-    </div>
-    <div class="card">
-      <h3>Fast Decisions</h3>
-      <p>From days to minutes.</p>
-    </div>
-    <div class="card">
-      <h3>Data Ownership</h3>
-      <p>You control your data at all times.</p>
-    </div>
-  </div>
-</section>
-
-<section class="cta">
-  <h2>Start building your financial identity today</h2>
-  <button class="btn" id="joinNetworkBtn">Join the Network</button>
-</section>
-
-<footer>
-  © 2026 EcoBridge EC. All rights reserved.
-</footer>
-
-<!-- ====== SIGNUP MODAL (with validation) ====== -->
-<div class="modal-overlay" id="signupModal">
-  <div class="modal-box">
-    <button class="modal-close" id="closeModalBtn">&times;</button>
-
-    <h2>Create account</h2>
-    <div class="sub">Start building your financial identity</div>
-
-    <form id="signupForm" novalidate>
-      <div class="input-group">
-        <label for="signupName">Name</label>
-        <input type="text" id="signupName" placeholder="e.g. Amara" required>
-        <div class="error-msg" id="nameError">Please enter your name (letters only).</div>
+  <!-- ============================================================
+  LANDING PAGE (visible by default)
+  ============================================================ -->
+  <div id="landingPage">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <div class="badge">🚀 Open Finance Identity</div>
+        <h1>Building <span>trusted identity</span> for the informal economy</h1>
+        <p>
+          EcoBridge transforms fragmented financial data into a verified business profile,
+          enabling faster, fairer access to capital.
+        </p>
+        <div class="hero-stats">
+          <div class="stat"><strong>50+</strong> pilot merchants</div>
+          <div class="stat"><strong>2</strong> lending partners</div>
+          <div class="stat"><strong>Yoco</strong> + Open Banking</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn" id="getStartedBtn">
+            <span>→</span> Get Started
+          </button>
+          <button class="btn btn-outline" id="learnMoreBtn">
+            Learn More
+          </button>
+        </div>
       </div>
 
-      <div class="input-group">
-        <label for="signupSurname">Surname</label>
-        <input type="text" id="signupSurname" placeholder="e.g. Nkosi" required>
-        <div class="error-msg" id="surnameError">Please enter your surname.</div>
+      <div class="hero-visual">
+        <div class="card-preview">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-weight:600;">🪪 BridgeID™</span>
+            <span class="badge-verified">✓ VERIFIED</span>
+          </div>
+          <div class="row">
+            <span class="label">Merchant Stability</span>
+            <span class="value">86%</span>
+          </div>
+          <div class="row">
+            <span class="label">Cash Flow Forecast</span>
+            <span class="value">+12%</span>
+          </div>
+          <div class="row">
+            <span class="label">Repayment Probability</span>
+            <span class="value">A-</span>
+          </div>
+          <div class="row">
+            <span class="label">Growth Readiness</span>
+            <span class="value">High</span>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="input-group">
-        <label for="signupContact">Phone number or Email</label>
-        <input type="text" id="signupContact" placeholder="+27 71 234 5678 or you@email.com" required>
-        <div class="error-msg" id="contactError">Enter a valid phone or email.</div>
+    <!-- PROBLEM SECTION -->
+    <section class="section">
+      <h2>The Credibility Gap</h2>
+      <p class="subtitle">
+        Millions of businesses generate real income but lack a verifiable financial identity.
+        Without trust, they are locked out of growth opportunities.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <span class="icon">📧</span>
+          <h3>Mailbox Effect</h3>
+          <p>Bank accounts used as pass-through — 33% withdraw funds immediately.</p>
+        </div>
+        <div class="card">
+          <span class="icon">💰</span>
+          <h3>Informal Credit</h3>
+          <p>Reliance on mashonisas and stokvels due to lack of formal credit history.</p>
+        </div>
+        <div class="card">
+          <span class="icon">📄</span>
+          <h3>Thin Credit Files</h3>
+          <p>No single institution sees the complete financial picture.</p>
+        </div>
       </div>
+    </section>
 
-      <div class="input-group">
-        <label for="signupPassword">Password</label>
-        <input type="password" id="signupPassword" placeholder="••••••••" required minlength="6">
-        <div class="error-msg" id="passwordError">Password must be at least 6 characters.</div>
+    <!-- HOW IT WORKS -->
+    <section class="section">
+      <h2>How EcoBridge Works</h2>
+      <p class="subtitle">One portable identity, endless opportunities</p>
+      <div class="cards">
+        <div class="card">
+          <span class="icon">🔗</span>
+          <h3>Connect Data</h3>
+          <p>Securely connect bank, POS, and mobile wallet data with explicit consent.</p>
+        </div>
+        <div class="card">
+          <span class="icon">🧠</span>
+          <h3>Build Identity</h3>
+          <p>Our EcoScore Engine generates a verified business profile with real insights.</p>
+        </div>
+        <div class="card">
+          <span class="icon">🚀</span>
+          <h3>Unlock Capital</h3>
+          <p>Lenders access your profile and make faster, fairer decisions in minutes.</p>
+        </div>
       </div>
+    </section>
 
-      <button type="submit" class="btn-submit">Sign up →</button>
-      <div class="footnote">By continuing you agree to our terms</div>
-    </form>
+    <!-- WHY ECOBRIDGE -->
+    <section class="section">
+      <h2>Why EcoBridge</h2>
+      <p class="subtitle">Built for the informal economy</p>
+      <div class="cards">
+        <div class="card">
+          <span class="icon">⚖️</span>
+          <h3>Fair Access</h3>
+          <p>No credit history required — we use alternative data to build trust.</p>
+        </div>
+        <div class="card">
+          <span class="icon">⚡</span>
+          <h3>Fast Decisions</h3>
+          <p>From days to minutes. Lenders get verified intelligence instantly.</p>
+        </div>
+        <div class="card">
+          <span class="icon">🛡️</span>
+          <h3>Data Ownership</h3>
+          <p>You control your data at all times. Revoke access anytime with OAuth2.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+      <h2>Ready to build your financial identity?</h2>
+      <p>Join 50+ merchants already building their BridgeID</p>
+      <div class="btn-group">
+        <button class="btn" id="joinNetworkBtn">
+          <span>🌿</span> Join the Network
+        </button>
+        <button class="btn btn-outline" id="contactBtn">
+          Talk to Sales
+        </button>
+      </div>
+    </section>
   </div>
-</div>
 
-<script>
-  (function() {
-    const modal = document.getElementById('signupModal');
-    const getStartedBtn = document.getElementById('getStartedBtn');
-    const joinNetworkBtn = document.getElementById('joinNetworkBtn');
-    const closeBtn = document.getElementById('closeModalBtn');
-    const form = document.getElementById('signupForm');
+  <!-- ============================================================
+  PROFILE DASHBOARD (hidden by default)
+  ============================================================ -->
+  <div id="profileDashboard">
+    <div class="dashboard-header">
+      <div class="greeting">
+        <h1>👋 Hi there, <span id="userFullName">Amara Nkosi</span></h1>
+        <div class="sub">Welcome to your BridgeID dashboard. Your financial identity is being built.</div>
+      </div>
+      <div class="badge-profile">
+        <span>🪪</span> BridgeID: #EC-2026-0042
+      </div>
+    </div>
 
-    // inputs & error containers
-    const nameInput = document.getElementById('signupName');
-    const surnameInput = document.getElementById('signupSurname');
-    const contactInput = document.getElementById('signupContact');
-    const passwordInput = document.getElementById('signupPassword');
+    <div class="dashboard-grid">
+      <div class="dashboard-card">
+        <span class="card-icon">📊</span>
+        <div class="card-label">EcoScore</div>
+        <div class="card-value" id="userEcoScore">86%</div>
+        <div class="card-change positive">↑ 12% this month</div>
+      </div>
+      <div class="dashboard-card">
+        <span class="card-icon">💰</span>
+        <div class="card-label">Monthly Income</div>
+        <div class="card-value" id="userIncome">R28,500</div>
+        <div class="card-change positive">↑ 8% from last month</div>
+      </div>
+      <div class="dashboard-card">
+        <span class="card-icon">🏦</span>
+        <div class="card-label">Connected Accounts</div>
+        <div class="card-value">3</div>
+        <div class="card-change">FNB · Yoco · Cash</div>
+      </div>
+      <div class="dashboard-card">
+        <span class="card-icon">📈</span>
+        <div class="card-label">Growth Readiness</div>
+        <div class="card-value" style="font-size:24px;">High</div>
+        <div class="card-change positive">Ready for funding</div>
+      </div>
+    </div>
 
-    const nameError = document.getElementById('nameError');
-    const surnameError = document.getElementById('surnameError');
-    const contactError = document.getElementById('contactError');
-    const passwordError = document.getElementById('passwordError');
+    <div class="dashboard-section">
+      <h3>Recent Activity</h3>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-left">
+            <div class="activity-icon">🔗</div>
+            <div class="activity-text"><strong>Yoco POS</strong> connected</div>
+          </div>
+          <div class="activity-time">2 min ago</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-left">
+            <div class="activity-icon">🏛️</div>
+            <div class="activity-text"><strong>FNB Business</strong> account linked</div>
+          </div>
+          <div class="activity-time">15 min ago</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-left">
+            <div class="activity-icon">🧠</div>
+            <div class="activity-text"><strong>EcoScore</strong> updated to 86%</div>
+          </div>
+          <div class="activity-time">1 hour ago</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-left">
+            <div class="activity-icon">✅</div>
+            <div class="activity-text"><strong>BridgeID</strong> profile verified</div>
+          </div>
+          <div class="activity-time">2 hours ago</div>
+        </div>
+      </div>
+    </div>
 
-    function openModal() {
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      // clear any previous validation styling
-      clearErrors();
-    }
+    <div class="quick-actions">
+      <button class="btn" onclick="alert('🔗 Connecting to your bank...')">
+        <span>🏛️</span> Connect Bank
+      </button>
+      <button class="btn" onclick="alert('🧾 Connecting to Yoco...')">
+        <span>🧾</span> Connect Yoco
+      </button>
+      <button class="btn" onclick="alert('📱 Coming soon: MTN MoMo & Vodapay')">
+        <span>📱</span> Connect Mobile Wallet
+      </button>
+      <button class="btn btn-outline" onclick="showLanding()">
+        <span>←</span> Back to Home
+      </button>
+    </div>
+  </div>
 
-    function closeModal() {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-      clearErrors();
-      form.reset();
-    }
+  <!-- ===== FOOTER ===== -->
+  <footer id="mainFooter">
+    <div style="margin-bottom:12px;">
+      🌿 EcoBridge EC
+    </div>
+    <div style="margin-bottom:12px; color:#555; font-size:13px;">
+      Building trusted financial identities for South Africa's informal economy.
+    </div>
+    <div>
+      <a href="#" onclick="showLanding()">Home</a>
+      <a href="#" onclick="showLanding()">BridgeID</a>
+      <a href="#" onclick="showLanding()">EcoScore</a>
+      <a href="#" onclick="showLanding()">Contact</a>
+    </div>
+    <div style="margin-top:16px; color:#333; font-size:12px;">
+      © 2026 EcoBridge EC · Open Finance · Eastern Cape
+    </div>
+  </footer>
 
-    function clearErrors() {
-      document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
-      document.querySelectorAll('.error-msg').forEach(el => el.classList.remove('visible'));
-    }
+  <!-- ============================================================
+  SIGNUP MODAL
+  ============================================================ -->
+  <div class="modal-overlay" id="signupModal">
+    <div class="modal-box">
 
-    // validation helpers
-    function validateName(name) {
-      return /^[a-zA-ZÀ-ÿ\s\-']{1,40}$/.test(name.trim());
-    }
+      <!-- Close button -->
+      <button class="modal-close" id="closeModalBtn" aria-label="Close modal">✕</button>
 
-    function validateSurname(surname) {
-      return /^[a-zA-ZÀ-ÿ\s\-']{1,40}$/.test(surname.trim());
-    }
+      <!-- Normal form state -->
+      <div id="formState">
+        <div class="modal-header">
+          <span class="logo-icon">🌿</span>
+          <h2>Create account</h2>
+        </div>
+        <div class="sub">Start building your financial identity today</div>
 
-    function validateContact(contact) {
-      const trimmed = contact.trim();
-      // simple email or phone (phone: at least 7 digits, optional + and spaces)
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const phonePattern = /^[\+\d\s\-()]{7,25}$/;
-      return emailPattern.test(trimmed) || phonePattern.test(trimmed);
-    }
+        <form id="signupForm" novalidate>
+          <div class="input-group">
+            <label for="signupName">Full name</label>
+            <input type="text" id="signupName" placeholder="e.g. Amara Nkosi" required>
+            <div class="error-text" id="nameError">Please enter your full name</div>
+          </div>
 
-    function validatePassword(pwd) {
-      return pwd.length >= 6;
-    }
+          <div class="input-group">
+            <label for="signupContact">Phone number or Email</label>
+            <input type="text" id="signupContact" placeholder="+27 71 234 5678 or you@email.com" required>
+            <div class="error-text" id="contactError">Please enter a valid phone or email</div>
+          </div>
 
-    // real-time input validation (blur / change)
-    function setFieldValidation(input, errorEl, validator, message) {
-      input.addEventListener('blur', function() {
-        const val = input.value;
-        if (val.trim() === '') {
-          input.classList.add('input-error');
-          errorEl.textContent = message || 'This field is required.';
-          errorEl.classList.add('visible');
-          return;
+          <div class="input-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" placeholder="Min 8 characters" required minlength="8">
+            <div class="error-text" id="passwordError">Password must be at least 8 characters</div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span class="btn-text">→ Sign up</span>
+            <span class="spinner"></span>
+          </button>
+
+          <div class="footnote">
+            By continuing you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>
+          </div>
+
+          <div class="divider">or</div>
+
+          <button type="button" class="social-btn" onclick="alert('Google sign-in coming soon!')">
+            <span>🔵</span> Continue with Google
+          </button>
+        </form>
+      </div>
+
+      <!-- Success state (hidden initially) -->
+      <div class="success-state" id="successState">
+        <span class="check">✅</span>
+        <h3>Account created!</h3>
+        <p id="successMessage">Welcome to EcoBridge. Your BridgeID is being built.</p>
+        <button class="btn-submit" style="margin-top:20px;" id="goToDashboardBtn">
+          Go to Dashboard →
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+  JAVASCRIPT
+  ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ===== DOM REFS =====
+      const modal = document.getElementById('signupModal');
+      const formState = document.getElementById('formState');
+      const successState = document.getElementById('successState');
+      const form = document.getElementById('signupForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const goToDashboardBtn = document.getElementById('goToDashboardBtn');
+
+      const nameInput = document.getElementById('signupName');
+      const contactInput = document.getElementById('signupContact');
+      const passwordInput = document.getElementById('signupPassword');
+
+      const nameError = document.getElementById('nameError');
+      const contactError = document.getElementById('contactError');
+      const passwordError = document.getElementById('passwordError');
+      const successMessage = document.getElementById('successMessage');
+
+      // Dashboard elements
+      const landingPage = document.getElementById('landingPage');
+      const profileDashboard = document.getElementById('profileDashboard');
+      const userFullName = document.getElementById('userFullName');
+      const mainFooter = document.getElementById('mainFooter');
+
+      // Buttons that open modal
+      const openBtns = [
+        document.getElementById('getStartedBtn'),
+        document.getElementById('joinNetworkBtn'),
+        document.getElementById('navSignupBtn'),
+        document.getElementById('learnMoreBtn'),
+        document.getElementById('contactBtn')
+      ];
+
+      const closeBtn = document.getElementById('closeModalBtn');
+
+      // ===== USER DATA STORE =====
+      let currentUser = {
+        name: '',
+        surname: '',
+        contact: ''
+      };
+
+      // ===== HELPERS =====
+      function openModal() {
+        // Reset to form state (hide success)
+        formState.style.display = 'block';
+        successState.classList.remove('active');
+        // Reset form
+        form.reset();
+        // Clear errors
+        document.querySelectorAll('.error-text').forEach(el => el.classList.remove('visible'));
+        document.querySelectorAll('input').forEach(el => el.classList.remove('error'));
+        // Reset button
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        // Show modal
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        // Focus first input
+        setTimeout(() => nameInput.focus(), 200);
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+
+      function showDashboard(name) {
+        // Hide landing page, show dashboard
+        landingPage.style.display = 'none';
+        profileDashboard.classList.add('active');
+        mainFooter.style.display = 'none';
+        // Set user name
+        userFullName.textContent = name;
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function showLanding() {
+        landingPage.style.display = 'block';
+        profileDashboard.classList.remove('active');
+        mainFooter.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Make functions globally accessible for inline onclick
+      window.showLanding = showLanding;
+      window.showDashboard = showDashboard;
+
+      // ===== EVENT LISTENERS: OPEN =====
+      openBtns.forEach(btn => {
+        if (btn) {
+          btn.addEventListener('click', openModal);
         }
-        if (!validator(val)) {
-          input.classList.add('input-error');
+      });
+
+      // ===== EVENT LISTENERS: CLOSE =====
+      closeBtn.addEventListener('click', closeModal);
+
+      // Click outside modal box
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      // ===== VALIDATION HELPERS =====
+      function validateName(value) {
+        const trimmed = value.trim();
+        // Must have at least 2 words (name and surname) with min 2 chars each
+        const parts = trimmed.split(/\s+/);
+        return parts.length >= 2 && parts.every(p => p.length >= 2);
+      }
+
+      function validateContact(value) {
+        const trimmed = value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^(\+27|0)[6-8][0-9]{8}$/;
+        return emailRegex.test(trimmed) || phoneRegex.test(trimmed);
+      }
+
+      function validatePassword(value) {
+        return value.length >= 8;
+      }
+
+      function validateField(input, errorEl, validator, errorMsg) {
+        const value = input.value;
+        const isValid = validator(value);
+        if (!isValid && value.trim() !== '') {
+          input.classList.add('error');
+          errorEl.textContent = errorMsg;
           errorEl.classList.add('visible');
+        } else if (!isValid && value.trim() === '') {
+          input.classList.remove('error');
+          errorEl.classList.remove('visible');
         } else {
-          input.classList.remove('input-error');
+          input.classList.remove('error');
           errorEl.classList.remove('visible');
         }
+        return isValid || value.trim() === '';
+      }
+
+      // ===== REAL-TIME VALIDATION =====
+      nameInput.addEventListener('blur', function() {
+        validateField(this, nameError, validateName, 'Please enter your full name (first and last)');
       });
-      input.addEventListener('input', function() {
-        // if error visible, re-check on input
-        if (errorEl.classList.contains('visible')) {
-          const val = input.value;
-          if (validator(val) && val.trim() !== '') {
-            input.classList.remove('input-error');
-            errorEl.classList.remove('visible');
-          }
+
+      contactInput.addEventListener('blur', function() {
+        validateField(this, contactError, validateContact, 'Please enter a valid phone or email');
+      });
+
+      passwordInput.addEventListener('blur', function() {
+        validateField(this, passwordError, validatePassword, 'Password must be at least 8 characters');
+      });
+
+      nameInput.addEventListener('input', function() {
+        if (this.value.trim() === '') {
+          this.classList.remove('error');
+          nameError.classList.remove('visible');
+        } else if (!validateName(this.value)) {
+          this.classList.add('error');
+          nameError.textContent = 'Please enter your full name (first and last)';
+          nameError.classList.add('visible');
+        } else {
+          this.classList.remove('error');
+          nameError.classList.remove('visible');
         }
       });
-    }
 
-    setFieldValidation(nameInput, nameError, validateName, 'Enter a valid name (letters only).');
-    setFieldValidation(surnameInput, surnameError, validateSurname, 'Enter a valid surname.');
-    setFieldValidation(contactInput, contactError, validateContact, 'Enter a valid phone number or email.');
-    setFieldValidation(passwordInput, passwordError, validatePassword, 'Password must be at least 6 characters.');
+      contactInput.addEventListener('input', function() {
+        if (this.value.trim() === '') {
+          this.classList.remove('error');
+          contactError.classList.remove('visible');
+        } else if (!validateContact(this.value)) {
+          this.classList.add('error');
+          contactError.textContent = 'Please enter a valid phone or email';
+          contactError.classList.add('visible');
+        } else {
+          this.classList.remove('error');
+          contactError.classList.remove('visible');
+        }
+      });
 
-    // open / close
-    getStartedBtn.addEventListener('click', openModal);
-    if (joinNetworkBtn) joinNetworkBtn.addEventListener('click', openModal);
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
-    });
+      passwordInput.addEventListener('input', function() {
+        if (this.value.trim() === '') {
+          this.classList.remove('error');
+          passwordError.classList.remove('visible');
+        } else if (!validatePassword(this.value)) {
+          this.classList.add('error');
+          passwordError.textContent = 'Password must be at least 8 characters';
+          passwordError.classList.add('visible');
+        } else {
+          this.classList.remove('error');
+          passwordError.classList.remove('visible');
+        }
+      });
 
-    // form submit with full validation
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+      // ===== FORM SUBMISSION =====
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-      // force validation on all fields
-      const name = nameInput.value.trim();
-      const surname = surnameInput.value.trim();
-      const contact = contactInput.value.trim();
-      const password = passwordInput.value;
+        // Validate all fields
+        const isNameValid = validateField(nameInput, nameError, validateName, 'Please enter your full name (first and last)');
+        const isContactValid = validateField(contactInput, contactError, validateContact, 'Please enter a valid phone or email');
+        const isPasswordValid = validateField(passwordInput, passwordError, validatePassword, 'Password must be at least 8 characters');
 
-      let isValid = true;
+        // Also check if fields are empty
+        if (!nameInput.value.trim() || !contactInput.value.trim() || !passwordInput.value.trim()) {
+          if (!nameInput.value.trim()) {
+            nameInput.classList.add('error');
+            nameError.textContent = 'Name is required';
+            nameError.classList.add('visible');
+          }
+          if (!contactInput.value.trim()) {
+            contactInput.classList.add('error');
+            contactError.textContent = 'Phone or email is required';
+            contactError.classList.add('visible');
+          }
+          if (!passwordInput.value.trim()) {
+            passwordInput.classList.add('error');
+            passwordError.textContent = 'Password is required';
+            passwordError.classList.add('visible');
+          }
+          return;
+        }
 
-      if (!validateName(name)) {
-        nameInput.classList.add('input-error');
-        nameError.textContent = 'Please enter a valid name (letters only).';
-        nameError.classList.add('visible');
-        isValid = false;
-      } else {
-        nameInput.classList.remove('input-error');
-        nameError.classList.remove('visible');
-      }
+        if (!isNameValid || !isContactValid || !isPasswordValid) {
+          return;
+        }
 
-      if (!validateSurname(surname)) {
-        surnameInput.classList.add('input-error');
-        surnameError.textContent = 'Please enter a valid surname.';
-        surnameError.classList.add('visible');
-        isValid = false;
-      } else {
-        surnameInput.classList.remove('input-error');
-        surnameError.classList.remove('visible');
-      }
+        // ===== STORE USER DATA =====
+        const fullName = nameInput.value.trim();
+        const nameParts = fullName.split(/\s+/);
+        currentUser.name = nameParts[0] || 'User';
+        currentUser.surname = nameParts.slice(1).join(' ') || '';
+        currentUser.contact = contactInput.value.trim();
 
-      if (!validateContact(contact)) {
-        contactInput.classList.add('input-error');
-        contactError.textContent = 'Enter a valid phone or email address.';
-        contactError.classList.add('visible');
-        isValid = false;
-      } else {
-        contactInput.classList.remove('input-error');
-        contactError.classList.remove('visible');
-      }
+        // ===== SIMULATE LOADING =====
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
 
-      if (!validatePassword(password)) {
-        passwordInput.classList.add('input-error');
-        passwordError.textContent = 'Password must be at least 6 characters.';
-        passwordError.classList.add('visible');
-        isValid = false;
-      } else {
-        passwordInput.classList.remove('input-error');
-        passwordError.classList.remove('visible');
-      }
+        // Simulate API call
+        setTimeout(function() {
+          // Hide form, show success
+          formState.style.display = 'none';
+          successState.classList.add('active');
 
-      if (!isValid) {
-        // scroll to first error
-        const firstError = document.querySelector('.input-error');
-        if (firstError) firstError.focus();
-        return;
-      }
+          // Update success message
+          successMessage.textContent = `Welcome ${fullName}! Your BridgeID is being built.`;
 
-      // success: show welcome and close
-      alert(`✅ Welcome, ${name} ${surname}!\nWe'll reach you at: ${contact}`);
-      closeModal();
-      form.reset();
-    });
+          // Reset button
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
 
-    // small extra: clear errors when modal closed
-    function clearErrorsOnClose() {
-      clearErrors();
-    }
-    // override close to clear errors
-    const originalClose = closeModal;
-    closeModal = function() {
-      originalClose();
-      clearErrors();
-    };
-    // rebind close
-    closeBtn.onclick = closeModal;
-    // also on overlay
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) closeModal();
-    });
+          console.log('✅ Signup successful:', currentUser);
+        }, 1800);
+      });
 
-    console.log('EcoBridge modal with validation ready.');
-  })();
-</script>
+      // ===== GO TO DASHBOARD =====
+      goToDashboardBtn.addEventListener('click', function() {
+        const fullName = currentUser.name + (currentUser.surname ? ' ' + currentUser.surname : '');
+        closeModal();
+        // Show dashboard with user's name
+        showDashboard(fullName);
+      });
+
+      // ===== KEYBOARD SHORTCUT: Enter on success screen =====
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && successState.classList.contains('active')) {
+          goToDashboardBtn.click();
+        }
+      });
+
+      console.log('🌿 EcoBridge ready – sign up to see your personalized dashboard!');
+    })();
+  </script>
 
 </body>
 </html>
