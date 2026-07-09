@@ -1,0 +1,20 @@
+{
+  "daily_sales": [
+    4200,
+    5100,
+    3900,
+    6000,
+    4700,
+    5400,
+    5800
+  ],
+  "weekly_sales": [
+    28000,
+    32100,
+    29950,
+    35600
+  ],
+  "monthly_revenue": 124500,
+  "sales_frequency": "steady",
+  "sales_trend": "up"
+}

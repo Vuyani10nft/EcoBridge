@@ -1,0 +1,13 @@
+{
+  "account_balance": 45890.25,
+  "transactions": [
+    {"date": "2026-06-01", "description": "POS cash deposit", "amount": 5400},
+    {"date": "2026-06-02", "description": "EFT from customer", "amount": 3200},
+    {"date": "2026-06-05", "description": "Yoco settlement", "amount": 1800},
+    {"date": "2026-06-07", "description": "Utility payment", "amount": -950},
+    {"date": "2026-06-10", "description": "Stock restock", "amount": -4200},
+    {"date": "2026-06-14", "description": "Cash sales", "amount": 6500},
+    {"date": "2026-06-17", "description": "Mobile wallet transfer", "amount": 2300},
+    {"date": "2026-06-22", "description": "Supplier refund", "amount": 1500}
+  ]
+}
