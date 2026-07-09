@@ -2274,22 +2274,111 @@ createConsent: async function(clientToken) {
       },
 
       // Step 6: Get accounts
-      getAccounts: async function(dataToken) {
-        try {
-          const response = await fetch(`${this.baseUrl}/accounts?limit=50`, {
-            headers: { 'Authorization': `Bearer ${dataToken}` }
-          });
-          if (!response.ok) {
-            const error = await response.json();
-            throw new Error(`Accounts fetch error: ${JSON.stringify(error)}`);
-          }
-          return await response.json();
-        } catch (error) {
-          console.error('getAccounts failed:', error);
-          throw error;
-        }
-      },
+getAccounts: async function(dataToken) {
+  try {
+    const response = await fetch(`${this.baseUrl}/accounts?limit=50`, {
+      headers: { 'Authorization': `Bearer ${dataToken}` }
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`Accounts fetch error: ${JSON.stringify(error)}`);
+    }
+    const data = await response.json();
+    console.log('📋 Accounts API response:', data); // ADD THIS to debug
+    return data;
+  } catch (error) {
+    console.error('getAccounts failed:', error);
+    throw error;
+  }
+},
 
+// Full connection flow - UPDATED
+connectBank: async function(accountNumber, bankName) {
+  try {
+    // Step 1: Get client token
+    const clientToken = await this.getClientToken();
+
+    // Step 2: Create consent
+    const consentId = await this.createConsent(clientToken);
+    this.consentStore[consentId] = { clientToken, bankName, accountNumber };
+
+    // Step 3: Get authorisation URL and open it for the user
+    const authUrl = this.getAuthorisationUrl(consentId);
+    const authWindow = window.open(authUrl, '_blank', 'width=600,height=700,scrollbars=yes');
+
+    // Step 4: Wait for the user to authorise
+    let status = await this.waitForAuthorisation(clientToken, consentId);
+
+    if (!status) {
+      throw new Error('Authorisation timed out or was rejected');
+    }
+
+    // Step 5: Get data token
+    const dataToken = await this.getDataToken(clientToken, consentId);
+
+    // Step 6: Get accounts
+    const accounts = await this.getAccounts(dataToken);
+    console.log('📋 Accounts received:', accounts); // ADD THIS
+
+    // 🔥 FIX: Check if accounts is an array and has items
+    if (!accounts) {
+      throw new Error('No accounts data returned from API');
+    }
+
+    // The API might return an array directly, or an object with an 'accounts' property
+    let accountList = accounts;
+    if (accounts.accounts && Array.isArray(accounts.accounts)) {
+      accountList = accounts.accounts;
+    } else if (!Array.isArray(accounts)) {
+      // If it's a single account object, wrap it in an array
+      accountList = [accounts];
+    }
+
+    if (!accountList || accountList.length === 0) {
+      throw new Error('No accounts found. Please authorise at least one account.');
+    }
+
+    // Use the first account
+    const firstAccount = accountList[0];
+    console.log('📋 First account:', firstAccount); // ADD THIS
+
+    // 🔥 FIX: Check if AccountId exists
+    if (!firstAccount.AccountId) {
+      // Try alternative property names
+      const accountId = firstAccount.id || firstAccount.accountId || firstAccount.AccountId;
+      if (!accountId) {
+        console.error('Account structure:', firstAccount);
+        throw new Error('Account ID not found in API response');
+      }
+      firstAccount.AccountId = accountId;
+    }
+
+    const transactions = await this.getTransactions(dataToken, firstAccount.AccountId);
+    console.log('📋 Transactions received:', transactions ? transactions.length : 0);
+
+    // Transform the data
+    const transformedTransactions = this.transformTransactions(transactions);
+
+    // Calculate monthly income
+    const monthlyIncome = this.calculateMonthlyIncome(transformedTransactions);
+
+    return {
+      success: true,
+      data: {
+        transactions: transformedTransactions,
+        accountName: `${bankName} Business Account (${firstAccount.AccountId})`,
+        accountNumber: accountNumber,
+        monthlyIncome: monthlyIncome,
+        accountId: firstAccount.AccountId,
+        consentId: consentId
+      }
+    };
+
+  } catch (error) {
+    console.error('Bank connection failed:', error);
+    return { success: false, error: error.message };
+  }
+}
       // Step 7: Get transactions for an account
       getTransactions: async function(dataToken, accountId) {
         try {
