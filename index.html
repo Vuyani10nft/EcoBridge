@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoBridge EC</title>
+  <title>EcoBridge EC · Sign up modal</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
     * {
@@ -14,132 +13,266 @@
       font-family: 'Inter', sans-serif;
     }
 
-```
-body {
-  background: #0b0b0b;
-  color: white;
-  line-height: 1.6;
-}
+    body {
+      background: #0b0b0b;
+      color: white;
+      line-height: 1.6;
+    }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 60px;
-  align-items: center;
-}
+    header {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 60px;
+      align-items: center;
+    }
 
-.logo {
-  font-weight: 800;
-  font-size: 20px;
-  color: #00ff88;
-}
+    .logo {
+      font-weight: 800;
+      font-size: 20px;
+      color: #00ff88;
+    }
 
-nav a {
-  margin-left: 30px;
-  text-decoration: none;
-  color: #ccc;
-  font-size: 14px;
-}
+    nav a {
+      margin-left: 30px;
+      text-decoration: none;
+      color: #ccc;
+      font-size: 14px;
+    }
 
-nav a:hover {
-  color: #00ff88;
-}
+    nav a:hover {
+      color: #00ff88;
+    }
 
-.hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 100px 60px;
-}
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 100px 60px;
+    }
 
-.hero-text {
-  max-width: 600px;
-}
+    .hero-text {
+      max-width: 600px;
+    }
 
-.hero-text h1 {
-  font-size: 50px;
-  font-weight: 800;
-  margin-bottom: 20px;
-}
+    .hero-text h1 {
+      font-size: 50px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
 
-.hero-text h1 span {
-  color: #00ff88;
-}
+    .hero-text h1 span {
+      color: #00ff88;
+    }
 
-.hero-text p {
-  color: #aaa;
-  margin-bottom: 30px;
-}
+    .hero-text p {
+      color: #aaa;
+      margin-bottom: 30px;
+    }
 
-.btn {
-  padding: 14px 28px;
-  background: #00ff88;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-}
+    .btn {
+      padding: 14px 28px;
+      background: #00ff88;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: opacity 0.2s;
+    }
 
-.btn:hover {
-  opacity: 0.8;
-}
+    .btn:hover {
+      opacity: 0.8;
+    }
 
-.section {
-  padding: 80px 60px;
-  text-align: center;
-}
+    .section {
+      padding: 80px 60px;
+      text-align: center;
+    }
 
-.section h2 {
-  font-size: 36px;
-  margin-bottom: 20px;
-}
+    .section h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
 
-.section p {
-  color: #aaa;
-  max-width: 700px;
-  margin: auto;
-}
+    .section p {
+      color: #aaa;
+      max-width: 700px;
+      margin: auto;
+    }
 
-.cards {
-  display: flex;
-  gap: 20px;
-  margin-top: 40px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+    .cards {
+      display: flex;
+      gap: 20px;
+      margin-top: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-.card {
-  background: rgba(255,255,255,0.05);
-  padding: 30px;
-  border-radius: 12px;
-  width: 280px;
-  border: 1px solid rgba(0,255,136,0.2);
-}
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 12px;
+      width: 280px;
+      border: 1px solid rgba(0,255,136,0.2);
+    }
 
-.card h3 {
-  margin-bottom: 10px;
-  color: #00ff88;
-}
+    .card h3 {
+      margin-bottom: 10px;
+      color: #00ff88;
+    }
 
-.cta {
-  text-align: center;
-  padding: 100px 60px;
-  background: linear-gradient(90deg, #00ff88, #00cc66);
-  color: black;
-}
+    .cta {
+      text-align: center;
+      padding: 100px 60px;
+      background: linear-gradient(90deg, #00ff88, #00cc66);
+      color: black;
+    }
 
-.cta h2 {
-  font-size: 40px;
-  margin-bottom: 20px;
-}
+    .cta h2 {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
 
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #666;
-}
-```
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+    }
 
+    /* ----- modal overlay ----- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;          /* hidden by default */
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #1a1a1a;
+      border-radius: 24px;
+      padding: 40px 35px;
+      max-width: 440px;
+      width: 90%;
+      border: 1px solid rgba(0, 255, 136, 0.25);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+      position: relative;
+      animation: fadeUp 0.3s ease;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-box h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .modal-box .sub {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 28px;
+      border-left: 3px solid #00ff88;
+      padding-left: 14px;
+    }
+
+    .modal-box label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      color: #ccc;
+      margin: 16px 0 6px;
+    }
+
+    .modal-box input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #121212;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      color: white;
+      font-size: 15px;
+      transition: border 0.2s;
+    }
+
+    .modal-box input:focus {
+      outline: none;
+      border-color: #00ff88;
+      box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.15);
+    }
+
+    .modal-box .input-group {
+      margin-bottom: 6px;
+    }
+
+    .modal-box .btn-submit {
+      width: 100%;
+      margin-top: 28px;
+      padding: 16px;
+      background: #00ff88;
+      border: none;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 16px;
+      color: #0b0b0b;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .modal-box .btn-submit:hover {
+      background: #00e67a;
+      transform: scale(1.01);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      background: transparent;
+      border: none;
+      color: #888;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+      transform: rotate(90deg);
+    }
+
+    .modal-box .footnote {
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+      margin-top: 18px;
+    }
+
+    /* tiny responsive */
+    @media (max-width: 700px) {
+      header, .hero {
+        flex-direction: column;
+        padding: 30px 20px;
+      }
+      .hero-text h1 { font-size: 34px; }
+      .modal-box { padding: 30px 20px; }
+    }
   </style>
 </head>
 <body>
@@ -161,7 +294,8 @@ footer {
       EcoBridge transforms fragmented financial data into a trusted business profile,
       enabling faster, fairer access to capital.
     </p>
-    <button class="btn">Get Started</button>
+    <!-- "Get Started" button → triggers modal -->
+    <button class="btn" id="getStartedBtn">Get Started</button>
   </div>
 </section>
 
@@ -211,12 +345,123 @@ footer {
 
 <section class="cta">
   <h2>Start building your financial identity today</h2>
-  <button class="btn">Join the Network</button>
+  <!-- second CTA button also opens the same modal (optional) -->
+  <button class="btn" id="joinNetworkBtn">Join the Network</button>
 </section>
 
 <footer>
   © 2026 EcoBridge EC. All rights reserved.
 </footer>
+
+<!-- ====== SIGNUP MODAL ====== -->
+<div class="modal-overlay" id="signupModal">
+  <div class="modal-box">
+    <!-- close button -->
+    <button class="modal-close" id="closeModalBtn">&times;</button>
+
+    <h2>Create account</h2>
+    <div class="sub">Start building your financial identity</div>
+
+    <!-- signup form fields: name, surname, phone/email, password -->
+    <form id="signupForm">
+      <div class="input-group">
+        <label for="signupName">Name</label>
+        <input type="text" id="signupName" placeholder="e.g. Amara" required>
+      </div>
+
+      <div class="input-group">
+        <label for="signupSurname">Surname</label>
+        <input type="text" id="signupSurname" placeholder="e.g. Nkosi" required>
+      </div>
+
+      <div class="input-group">
+        <label for="signupContact">Phone number or Email</label>
+        <input type="text" id="signupContact" placeholder="+27 71 234 5678 or you@email.com" required>
+      </div>
+
+      <div class="input-group">
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" placeholder="••••••••" required minlength="6">
+      </div>
+
+      <button type="submit" class="btn-submit">Sign up →</button>
+      <div class="footnote">By continuing you agree to our terms</div>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // DOM refs
+    const modal = document.getElementById('signupModal');
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    const joinNetworkBtn = document.getElementById('joinNetworkBtn');
+    const closeBtn = document.getElementById('closeModalBtn');
+
+    // helper: open modal
+    function openModal() {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden'; // prevent scroll
+    }
+
+    // helper: close modal
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // event listeners for open
+    getStartedBtn.addEventListener('click', openModal);
+    if (joinNetworkBtn) {
+      joinNetworkBtn.addEventListener('click', openModal);
+    }
+
+    // close via X button
+    closeBtn.addEventListener('click', closeModal);
+
+    // close if user clicks outside the modal box (on overlay)
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // close with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // handle form submit (demo)
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // grab field values (just for demo feedback)
+      const name = document.getElementById('signupName').value.trim();
+      const surname = document.getElementById('signupSurname').value.trim();
+      const contact = document.getElementById('signupContact').value.trim();
+      const password = document.getElementById('signupPassword').value.trim();
+
+      if (!name || !surname || !contact || password.length < 6) {
+        alert('Please fill in all fields correctly (password min 6 characters).');
+        return;
+      }
+
+      // simple success simulation
+      alert(`✅ Welcome, ${name} ${surname}!\nWe'll reach you at: ${contact}`);
+      // close modal after signup
+      closeModal();
+      // (optional) reset form
+      form.reset();
+    });
+
+    // extra: if any "Get Started" or "Join" inside dynamic content, we already cover.
+
+    console.log('EcoBridge modal ready – click Get Started or Join the Network');
+  })();
+</script>
 
 </body>
 </html>
