@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoBridge EC · Build your financial identity</title>
+  <!-- Google Fonts - using HTTPS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #0b0b0b;
+      color: white;
+      line-height: 1.6;
+    }
+
+    /* ===== NAVBAR ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 60px;
+      align-items: center;
+      border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+      flex-wrap: wrap;
+      gap: 15px;
+      background: rgba(11, 11, 11, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 22px;
+      color: #00ff88;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .logo span {
+      color: white;
+      font-weight: 300;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    nav a {
+      padding: 8px 18px;
+      text-decoration: none;
+      color: #ccc;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      color: #00ff88;
+      background: rgba(0, 255, 136, 0.08);
+    }
+
+    nav .nav-cta {
+      background: #00ff88;
+      color: #0b0b0b;
+      font-weight: 600;
+    }
+
+    nav .nav-cta:hover {
+      background: #00e67a;
+      color: #0b0b0b;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 80px 60px 60px;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      max-width: 600px;
+      flex: 1;
+    }
+
+    .hero-text .badge {
+      display: inline-block;
+      background: rgba(0, 255, 136, 0.12);
+      color: #00ff88;
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(0, 255, 136, 0.15);
+    }
+
+    .hero-text h1 {
+      font-size: 50px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .hero-text h1 span {
+      color: #00ff88;
+      position: relative;
+    }
+
+    .hero-text h1 span::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #00ff88;
+      opacity: 0.3;
+      border-radius: 4px;
+    }
+
+    .hero-text p {
+      color: #aaa;
+      margin-bottom: 30px;
+      font-size: 18px;
+      max-width: 480px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats .stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #888;
+      font-size: 14px;
+    }
+
+    .hero-stats .stat strong {
+      color: white;
+      font-size: 18px;
+    }
+
+    .btn {
+      padding: 14px 32px;
+      background: #00ff88;
+      border: none;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+      color: #0b0b0b;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn:hover {
+      background: #00e67a;
+      transform: scale(1.02);
+      box-shadow: 0 8px 30px rgba(0, 255, 136, 0.25);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: white;
+      margin-left: 12px;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #00ff88;
+      box-shadow: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+      pointer-events: none;
+    }
+
+    .btn .spinner-small {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-top-color: #0b0b0b;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .btn.loading .spinner-small {
+      display: inline-block;
+    }
+
+    .btn.loading .btn-text {
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-visual {
+      flex: 1;
+      min-width: 280px;
+      max-width: 420px;
+      background: rgba(0, 255, 136, 0.04);
+      border-radius: 24px;
+      padding: 30px;
+      border: 1px solid rgba(0, 255, 136, 0.1);
+    }
+
+    .hero-visual .card-preview {
+      background: #121212;
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid #1a1a1a;
+    }
+
+    .hero-visual .card-preview .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #1a1a1a;
+      font-size: 14px;
+    }
+
+    .hero-visual .card-preview .row:last-child {
+      border-bottom: none;
+    }
+
+    .hero-visual .card-preview .label {
+      color: #666;
+    }
+
+    .hero-visual .card-preview .value {
+      color: #00ff88;
+      font-weight: 600;
+    }
+
+    .hero-visual .card-preview .badge-verified {
+      background: #00ff88;
+      color: #0b0b0b;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      padding: 80px 60px 40px;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 36px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .section .subtitle {
+      color: #888;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      font-size: 17px;
+    }
+
+    .cards {
+      display: flex;
+      gap: 24px;
+      margin-top: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 32px 28px;
+      border-radius: 16px;
+      width: 280px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s;
+      text-align: left;
+    }
+
+    .card:hover {
+      border-color: rgba(0, 255, 136, 0.2);
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .card .icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .card p {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      text-align: center;
+      padding: 80px 60px;
+      margin: 40px 60px;
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(0, 255, 136, 0.02));
+      border-radius: 32px;
+      border: 1px solid rgba(0, 255, 136, 0.1);
+    }
+
+    .cta-section h2 {
+      font-size: 38px;
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      color: #888;
+      margin-bottom: 30px;
+      font-size: 17px;
+    }
+
+    .cta-section .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 40px 60px;
+      color: #444;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #666;
+      text-decoration: none;
+      margin: 0 12px;
+    }
+
+    footer a:hover {
+      color: #00ff88;
+    }
+
+    /* ============================================================
+       MODAL STYLES
+       ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #141414;
+      border-radius: 24px;
+      padding: 44px 40px 36px;
+      max-width: 520px;
+      width: 100%;
+      border: 1px solid rgba(0, 255, 136, 0.15);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+      position: relative;
+      animation: fadeUp 0.35s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-box::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .modal-box::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .modal-box::-webkit-scrollbar-thumb {
+      background: #2a2a2a;
+      border-radius: 4px;
+    }
+
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.97);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-box .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .modal-box .modal-header .logo-icon {
+      font-size: 28px;
+    }
+
+    .modal-box h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .modal-box .sub {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 28px;
+      padding-left: 0;
+      border-left: none;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: #555;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      transition: all 0.2s;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+      transform: rotate(90deg);
+    }
+
+    .modal-box .input-group {
+      margin-bottom: 16px;
+    }
+
+    .modal-box label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: #aaa;
+      margin-bottom: 6px;
+    }
+
+    .modal-box input,
+    .modal-box select,
+    .modal-box textarea {
+      width: 100%;
+      padding: 14px 16px;
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      color: white;
+      font-size: 15px;
+      transition: all 0.2s;
+      appearance: none;
+    }
+
+    .modal-box textarea {
+      resize: vertical;
+      min-height: 80px;
+      font-family: inherit;
+    }
+
+    .modal-box select {
+      cursor: pointer;
+    }
+
+    .modal-box select option {
+      background: #141414;
+      color: white;
+    }
+
+    .modal-box input::placeholder,
+    .modal-box select::placeholder,
+    .modal-box textarea::placeholder {
+      color: #444;
+    }
+
+    .modal-box input:focus,
+    .modal-box select:focus,
+    .modal-box textarea:focus {
+      outline: none;
+      border-color: #00ff88;
+      box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+      background: #111;
+    }
+
+    .modal-box input.error,
+    .modal-box select.error,
+    .modal-box textarea.error {
+      border-color: #ff4444;
+      box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
+    }
+
+    .modal-box .error-text {
+      color: #ff4444;
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .modal-box .error-text.visible {
+      display: block;
+    }
+
+    .modal-box .btn-submit {
+      width: 100%;
+      margin-top: 24px;
+      padding: 16px;
+      background: #00ff88;
+      border: none;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 16px;
+      color: #0b0b0b;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .modal-box .btn-submit:hover {
+      background: #00e67a;
+      transform: scale(1.01);
+      box-shadow: 0 8px 30px rgba(0, 255, 136, 0.2);
+    }
+
+    .modal-box .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .modal-box .btn-submit .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-top-color: #0b0b0b;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .modal-box .btn-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    .modal-box .btn-submit.loading .btn-text {
+      display: none;
+    }
+
+    .modal-box .footnote {
+      text-align: center;
+      font-size: 13px;
+      color: #555;
+      margin-top: 18px;
+    }
+
+    .modal-box .footnote a {
+      color: #00ff88;
+      text-decoration: none;
+    }
+
+    .modal-box .footnote a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== POPIA CONSENT STYLES ===== */
+    .popia-consent {
+      background: rgba(0, 255, 136, 0.03);
+      border: 1px solid rgba(0, 255, 136, 0.08);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+
+    .popia-consent .popia-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .popia-consent .popia-header .shield-icon {
+      font-size: 24px;
+    }
+
+    .popia-consent .popia-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .popia-consent .popia-content {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.8;
+      max-height: 150px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .popia-consent .popia-content::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .popia-consent .popia-content::-webkit-scrollbar-thumb {
+      background: #2a2a2a;
+      border-radius: 4px;
+    }
+
+    .popia-consent .popia-content strong {
+      color: #ddd;
+    }
+
+    .popia-consent .popia-content ul {
+      margin: 8px 0 8px 20px;
+      list-style: disc;
+    }
+
+    .popia-consent .popia-content ul li {
+      margin-bottom: 4px;
+    }
+
+    .popia-consent .popia-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .popia-consent .popia-checkbox input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      margin-top: 2px;
+      accent-color: #00ff88;
+      cursor: pointer;
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      appearance: none;
+      -webkit-appearance: none;
+      position: relative;
+    }
+
+    .popia-consent .popia-checkbox input[type="checkbox"]:checked {
+      background: #00ff88;
+      border-color: #00ff88;
+    }
+
+    .popia-consent .popia-checkbox input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #0b0b0b;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .popia-consent .popia-checkbox label {
+      font-size: 14px;
+      color: #ccc;
+      cursor: pointer;
+      line-height: 1.5;
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+
+    .popia-consent .popia-checkbox label a {
+      color: #00ff88;
+      text-decoration: none;
+    }
+
+    .popia-consent .popia-checkbox label a:hover {
+      text-decoration: underline;
+    }
+
+    .popia-consent .popia-checkbox .checkbox-error {
+      color: #ff4444;
+      font-size: 12px;
+      display: none;
+      margin-top: 4px;
+    }
+
+    .popia-consent .popia-checkbox .checkbox-error.visible {
+      display: block;
+    }
+
+    /* ===== ONBOARDING MODAL STEPS ===== */
+    .onboarding-step {
+      display: none;
+      animation: fadeUp 0.3s ease;
+    }
+
+    .onboarding-step.active {
+      display: block;
+    }
+
+    .onboarding-step .step-indicator {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .onboarding-step .step-indicator .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2a2a2a;
+      transition: all 0.3s;
+    }
+
+    .onboarding-step .step-indicator .dot.active {
+      background: #00ff88;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .onboarding-step .step-indicator .dot.done {
+      background: #00ff88;
+    }
+
+    .onboarding-step .step-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .onboarding-step .step-actions .btn-secondary {
+      background: transparent;
+      border: 1px solid #2a2a2a;
+      color: #aaa;
+      padding: 14px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .onboarding-step .step-actions .btn-secondary:hover {
+      border-color: #444;
+      color: #fff;
+    }
+
+    .onboarding-step .step-actions .btn-primary {
+      background: #00ff88;
+      border: none;
+      color: #0b0b0b;
+      padding: 14px 24px;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      flex: 2;
+    }
+
+    .onboarding-step .step-actions .btn-primary:hover {
+      background: #00e67a;
+      transform: scale(1.01);
+    }
+
+    .onboarding-step .step-actions .btn-primary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* ============================================================
+       PROFILE DASHBOARD
+       ============================================================ */
+    #profileDashboard {
+      display: none;
+      padding: 40px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      animation: fadeUp 0.5s ease;
+    }
+
+    #profileDashboard.active {
+      display: block;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .dashboard-header .greeting h1 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .dashboard-header .greeting h1 span {
+      color: #00ff88;
+    }
+
+    .dashboard-header .greeting .sub {
+      color: #888;
+      font-size: 16px;
+    }
+
+    .dashboard-header .badge-profile {
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      padding: 8px 20px;
+      border-radius: 40px;
+      color: #00ff88;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ===== ONBOARDING CARD ===== */
+    .onboarding-card {
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.06), rgba(0, 255, 136, 0.01));
+      border: 1px solid rgba(0, 255, 136, 0.15);
+      border-radius: 20px;
+      padding: 32px 36px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .onboarding-card .info h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .onboarding-card .info p {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .onboarding-card .progress {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .onboarding-card .progress-bar {
+      width: 120px;
+      height: 4px;
+      background: #1a1a1a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .onboarding-card .progress-bar .fill {
+      height: 100%;
+      background: #00ff88;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .onboarding-card .progress-text {
+      color: #888;
+      font-size: 13px;
+    }
+
+    .onboarding-card .btn {
+      padding: 10px 24px;
+      font-size: 14px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .dashboard-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s;
+    }
+
+    .dashboard-card:hover {
+      border-color: rgba(0, 255, 136, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .dashboard-card .card-label {
+      color: #666;
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .dashboard-card .card-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #00ff88;
+    }
+
+    .dashboard-card .card-change {
+      font-size: 13px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .dashboard-card .card-change.positive {
+      color: #00ff88;
+    }
+
+    .dashboard-card .card-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .dashboard-section {
+      margin-bottom: 40px;
+    }
+
+    .dashboard-section h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .activity-list {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-item .activity-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .activity-item .activity-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 255, 136, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .activity-item .activity-text {
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .activity-item .activity-text strong {
+      color: #fff;
+    }
+
+    .activity-item .activity-time {
+      color: #555;
+      font-size: 12px;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .quick-actions .btn {
+      padding: 12px 24px;
+      font-size: 14px;
+    }
+
+    /* ============================================================
+       SKELETON LOADER
+       ============================================================ */
+    .skeleton {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 12px;
+      animation: shimmer 1.5s ease-in-out infinite;
+      background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 25%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.04) 75%
+      );
+      background-size: 200% 100%;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    .skeleton-card {
+      height: 120px;
+      border-radius: 16px;
+    }
+
+    /* ===== HIDDEN CLASS ===== */
+    .hidden {
+      display: none !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      header {
+        padding: 16px 24px;
+      }
+
+      .hero {
+        padding: 40px 24px 30px;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-text h1 {
+        font-size: 34px;
+      }
+
+      .hero-text p {
+        margin: 0 auto 24px;
+        font-size: 16px;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .hero-text .btn-group {
+        justify-content: center;
+      }
+
+      .btn-outline {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+
+      .section {
+        padding: 50px 24px 20px;
+      }
+
+      .section h2 {
+        font-size: 28px;
+      }
+
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 360px;
+        text-align: center;
+      }
+
+      .cta-section {
+        margin: 20px 16px;
+        padding: 50px 24px;
+      }
+
+      .cta-section h2 {
+        font-size: 28px;
+      }
+
+      footer {
+        padding: 30px 24px;
+      }
+
+      .modal-box {
+        padding: 32px 24px 28px;
+      }
+
+      .modal-box h2 {
+        font-size: 22px;
+      }
+
+      #profileDashboard {
+        padding: 20px 16px;
+      }
+
+      .dashboard-header .greeting h1 {
+        font-size: 28px;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .activity-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 14px 16px;
+      }
+
+      .onboarding-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 20px;
+      }
+
+      .onboarding-card .progress {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .onboarding-step .step-actions {
+        flex-direction: column;
+      }
+
+      .onboarding-step .step-actions .btn-secondary,
+      .onboarding-step .step-actions .btn-primary {
+        flex: none;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-text h1 {
+        font-size: 28px;
+      }
+
+      .hero-visual {
+        padding: 16px;
+      }
+
+      .hero-visual .card-preview {
+        padding: 16px;
+      }
+
+      .hero-visual .card-preview .row {
+        font-size: 12px;
+        padding: 8px 0;
+      }
+
+      nav a {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+
+      .popia-consent {
+        padding: 16px;
+      }
+
+      .popia-consent .popia-content {
+        font-size: 12px;
+        max-height: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <header>
+    <div class="logo" onclick="showLanding()">
+      🌿 EcoBridge<span>EC</span>
+    </div>
+    <nav>
+      <a href="#" onclick="showLanding()">BridgeID</a>
+      <a href="#" onclick="showLanding()">EcoScore</a>
+      <a href="#" onclick="showLanding()">For Lenders</a>
+      <a href="#" class="nav-cta" id="navSignupBtn">Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- ============================================================
+  LANDING PAGE
+  ============================================================ -->
+  <div id="landingPage">
+    <section class="hero">
+      <div class="hero-text">
+        <div class="badge">🚀 Open Finance Identity</div>
+        <h1>Building <span>trusted identity</span> for the informal economy</h1>
+        <p>
+          EcoBridge transforms fragmented financial data into a verified business profile,
+          enabling faster, fairer access to capital.
+        </p>
+        <div class="hero-stats">
+          <div class="stat"><strong>50+</strong> pilot merchants</div>
+          <div class="stat"><strong>2</strong> lending partners</div>
+          <div class="stat"><strong>Yoco</strong> + Open Banking</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn" id="getStartedBtn">
+            <span>→</span> Get Started
+          </button>
+          <button class="btn btn-outline" id="learnMoreBtn">
+            Learn More
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="card-preview">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-weight:600;">🪪 BridgeID™</span>
+            <span class="badge-verified">✓ VERIFIED</span>
+          </div>
+          <div class="row">
+            <span class="label">Merchant Stability</span>
+            <span class="value">86%</span>
+          </div>
+          <div class="row">
+            <span class="label">Cash Flow Forecast</span>
+            <span class="value">+12%</span>
+          </div>
+          <div class="row">
+            <span class="label">Repayment Probability</span>
+            <span class="value">A-</span>
+          </div>
+          <div class="row">
+            <span class="label">Growth Readiness</span>
+            <span class="value">High</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>The Credibility Gap</h2>
+      <p class="subtitle">
+        Millions of businesses generate real income but lack a verifiable financial identity.
+        Without trust, they are locked out of growth opportunities.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <span class="icon">📧</span>
+          <h3>Mailbox Effect</h3>
+          <p>Bank accounts used as pass-through — 33% withdraw funds immediately.</p>
+        </div>
+        <div class="card">
+          <span class="icon">💰</span>
+          <h3>Informal Credit</h3>
+          <p>Reliance on mashonisas and stokvels due to lack of formal credit history.</p>
+        </div>
+        <div class="card">
+          <span class="icon">📄</span>
+          <h3>Thin Credit Files</h3>
+          <p>No single institution sees the complete financial picture.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>How EcoBridge Works</h2>
+      <p class="subtitle">One portable identity, endless opportunities</p>
+      <div class="cards">
+        <div class="card">
+          <span class="icon">🔗</span>
+          <h3>Connect Data</h3>
+          <p>Securely connect bank, POS, and mobile wallet data with explicit consent.</p>
+        </div>
+        <div class="card">
+          <span class="icon">🧠</span>
+          <h3>Build Identity</h3>
+          <p>Our EcoScore Engine generates a verified business profile with real insights.</p>
+        </div>
+        <div class="card">
+          <span class="icon">🚀</span>
+          <h3>Unlock Capital</h3>
+          <p>Lenders access your profile and make faster, fairer decisions in minutes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <h2>Ready to build your financial identity?</h2>
+      <p>Join 50+ merchants already building their BridgeID</p>
+      <div class="btn-group">
+        <button class="btn" id="joinNetworkBtn">
+          <span>🌿</span> Join the Network
+        </button>
+        <button class="btn btn-outline" id="contactBtn">
+          Talk to Sales
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+  PROFILE DASHBOARD
+  ============================================================ -->
+  <div id="profileDashboard">
+    <div class="dashboard-header">
+      <div class="greeting">
+        <h1>👋 Hi there, <span id="userFullName">Amara Nkosi</span></h1>
+        <div class="sub" id="userStatus">Welcome to your BridgeID dashboard. Let's set up your profile.</div>
+      </div>
+      <div class="badge-profile">
+        <span>🪪</span> BridgeID: #EC-2026-0042
+      </div>
+    </div>
+
+    <!-- Onboarding Card -->
+    <div class="onboarding-card" id="onboardingCard">
+      <div class="info">
+        <h3>📋 Finish setting up your profile</h3>
+        <p id="onboardingMessage">Tell us about your business to unlock your full EcoScore</p>
+      </div>
+      <div class="progress">
+        <div class="progress-bar">
+          <div class="fill" id="profileProgress" style="width: 10%"></div>
+        </div>
+        <span class="progress-text" id="progressText">10%</span>
+        <button class="btn" id="startOnboardingBtn">
+          <span>→</span> Complete Profile
+        </button>
+      </div>
+    </div>
+
+    <div class="dashboard-grid" id="dashboardGrid">
+      <div id="dashboardSkeleton" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; width:100%;">
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+      </div>
+
+      <div id="dashboardContent" style="display:none; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; width:100%;">
+        <div class="dashboard-card">
+          <span class="card-icon">📊</span>
+          <div class="card-label">EcoScore</div>
+          <div class="card-value" id="userEcoScore">--</div>
+          <div class="card-change">Complete profile to calculate</div>
+        </div>
+        <div class="dashboard-card">
+          <span class="card-icon">💰</span>
+          <div class="card-label">Monthly Income</div>
+          <div class="card-value" id="userIncome">--</div>
+          <div class="card-change">Add your business details</div>
+        </div>
+        <div class="dashboard-card">
+          <span class="card-icon">🏦</span>
+          <div class="card-label">Connected Accounts</div>
+          <div class="card-value">0</div>
+          <div class="card-change">Connect your first account</div>
+        </div>
+        <div class="dashboard-card">
+          <span class="card-icon">📈</span>
+          <div class="card-label">Growth Readiness</div>
+          <div class="card-value" style="font-size:24px;">--</div>
+          <div class="card-change">Complete profile to unlock</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-section">
+      <h3>Recent Activity</h3>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-left">
+            <div class="activity-icon">✅</div>
+            <div class="activity-text"><strong>Account created</strong> — Welcome to EcoBridge!</div>
+          </div>
+          <div class="activity-time" id="signupTime">Just now</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-left">
+            <div class="activity-icon">📋</div>
+            <div class="activity-text"><strong>Profile setup</strong> pending — Complete your business profile</div>
+          </div>
+          <div class="activity-time">Waiting</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <button class="btn" id="quickOnboardingBtn">
+        <span>📋</span> Complete Profile
+      </button>
+      <button class="btn" onclick="alert('🔗 Connecting to your bank...')">
+        <span>🏛️</span> Connect Bank
+      </button>
+      <button class="btn" onclick="alert('🧾 Connecting to Yoco...')">
+        <span>🧾</span> Connect Yoco
+      </button>
+      <button class="btn btn-outline" onclick="showLanding()">
+        <span>←</span> Back to Home
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="mainFooter">
+    <div style="margin-bottom:12px;">🌿 EcoBridge EC</div>
+    <div style="margin-bottom:12px; color:#555; font-size:13px;">
+      Building trusted financial identities for South Africa's informal economy.
+    </div>
+    <div>
+      <a href="#" onclick="showLanding()">Home</a>
+      <a href="#" onclick="showLanding()">BridgeID</a>
+      <a href="#" onclick="showLanding()">EcoScore</a>
+      <a href="#" onclick="showLanding()">Contact</a>
+    </div>
+    <div style="margin-top:16px; color:#333; font-size:12px;">
+      © 2026 EcoBridge EC · Open Finance · Eastern Cape
+    </div>
+  </footer>
+
+  <!-- ============================================================
+  SIGNUP MODAL
+  ============================================================ -->
+  <div class="modal-overlay" id="signupModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeModalBtn">✕</button>
+      <div id="formState">
+        <div class="modal-header">
+          <span class="logo-icon">🌿</span>
+          <h2>Create account</h2>
+        </div>
+        <div class="sub">Start building your financial identity today</div>
+        <form id="signupForm" novalidate>
+          <div class="input-group">
+            <label for="signupName">Full name</label>
+            <input type="text" id="signupName" placeholder="e.g. Amara Nkosi" required>
+            <div class="error-text" id="nameError">Please enter your full name</div>
+          </div>
+          <div class="input-group">
+            <label for="signupContact">Phone number or Email</label>
+            <input type="text" id="signupContact" placeholder="+27 71 234 5678 or you@email.com" required>
+            <div class="error-text" id="contactError">Please enter a valid phone or email</div>
+          </div>
+          <div class="input-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" placeholder="Min 8 characters" required minlength="8">
+            <div class="error-text" id="passwordError">Password must be at least 8 characters</div>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span class="btn-text">→ Sign up</span>
+            <span class="spinner"></span>
+          </button>
+          <div class="footnote">
+            By continuing you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>
+          </div>
+        </form>
+      </div>
+      <div class="success-state" id="successState">
+        <span class="check">✅</span>
+        <h3>Account created!</h3>
+        <p id="successMessage">Welcome to EcoBridge. Your BridgeID is being built.</p>
+        <button class="btn-submit" style="margin-top:20px;" id="goToDashboardBtn">
+          Go to Dashboard →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+  ONBOARDING MODAL
+  ============================================================ -->
+  <div class="modal-overlay" id="onboardingModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeOnboardingBtn">✕</button>
+
+      <!-- Step 1: POPIA Consent -->
+      <div class="onboarding-step active" id="step1">
+        <div class="modal-header">
+          <span class="logo-icon">🛡️</span>
+          <h2>Privacy & Consent</h2>
+        </div>
+        <div class="sub">We take your data privacy seriously</div>
+
+        <div class="popia-consent">
+          <div class="popia-header">
+            <span class="shield-icon">🔒</span>
+            <h3>Protection of Personal Information Act (POPIA)</h3>
+          </div>
+
+          <div class="popia-content">
+            <p><strong>EcoBridge EC collects and processes your personal information in accordance with the Protection of Personal Information Act (POPIA) of South Africa.</strong></p>
+            <p style="margin-top:8px;">By providing your information, you consent to EcoBridge EC collecting, storing, and using your personal data for the following purposes:</p>
+            <ul>
+              <li><strong>Identity Verification:</strong> To create and maintain your BridgeID profile</li>
+              <li><strong>Financial Assessment:</strong> To calculate your EcoScore and assess creditworthiness</li>
+              <li><strong>Lender Matching:</strong> To connect you with appropriate financial service providers</li>
+              <li><strong>Service Improvement:</strong> To enhance our products and services</li>
+              <li><strong>Compliance:</strong> To meet regulatory and legal obligations</li>
+            </ul>
+            <p style="margin-top:8px;"><strong>Your rights under POPIA include:</strong></p>
+            <ul>
+              <li>The right to access your personal information</li>
+              <li>The right to request correction of inaccurate data</li>
+              <li>The right to withdraw consent at any time</li>
+              <li>The right to lodge a complaint with the Information Regulator</li>
+            </ul>
+            <p style="margin-top:8px; font-size:12px; color:#666;">
+              For more information, please read our full <a href="#" style="color:#00ff88; text-decoration:none;">Privacy Policy</a>.
+            </p>
+          </div>
+
+          <div class="popia-checkbox">
+            <input type="checkbox" id="popiaConsent">
+            <label for="popiaConsent">
+              I have read and understood the above information. I consent to EcoBridge EC collecting and processing my personal information in accordance with POPIA.
+            </label>
+          </div>
+          <div class="popia-checkbox" style="border-top:none; padding-top:0; margin-top:0;">
+            <div style="margin-left:32px;">
+              <div class="checkbox-error" id="popiaError">You must agree to the POPIA consent to continue</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn-secondary" onclick="closeOnboarding()">Back</button>
+          <button class="btn-primary" id="popiaContinueBtn" disabled>
+            Continue →
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Business Information -->
+      <div class="onboarding-step" id="step2">
+        <div class="modal-header">
+          <span class="logo-icon">📋</span>
+          <h2>Business Profile</h2>
+        </div>
+        <div class="sub">Tell us about your business to unlock your EcoScore</div>
+
+        <form id="onboardingForm" novalidate>
+          <div class="input-group">
+            <label for="businessName">Business name</label>
+            <input type="text" id="businessName" placeholder="e.g. Thabo's Spaza Shop" required>
+            <div class="error-text" id="businessNameError">Please enter your business name</div>
+          </div>
+
+          <div class="input-group">
+            <label for="businessType">Business type</label>
+            <select id="businessType" required>
+              <option value="">Select your business type</option>
+              <option value="spaza">Spaza Shop / Tuck Shop</option>
+              <option value="retail">Retail Store</option>
+              <option value="hair">Hair Salon / Barber</option>
+              <option value="food">Food / Restaurant</option>
+              <option value="wholesale">Wholesale / Distribution</option>
+              <option value="services">Services (cleaning, repairs, etc.)</option>
+              <option value="transport">Transport / Logistics</option>
+              <option value="agriculture">Agriculture / Farming</option>
+              <option value="other">Other</option>
+            </select>
+            <div class="error-text" id="businessTypeError">Please select your business type</div>
+          </div>
+
+          <div class="input-group">
+            <label for="primaryTransactions">Primary transaction method</label>
+            <select id="primaryTransactions" required>
+              <option value="">Select primary method</option>
+              <option value="cash">Cash</option>
+              <option value="bank">Bank Transfer / EFT</option>
+              <option value="pos">POS (Yoco / iKhokha)</option>
+              <option value="mobile">Mobile Wallet (MoMo / VodaPay)</option>
+              <option value="mixed">Mixed (multiple methods)</option>
+            </select>
+            <div class="error-text" id="primaryTransactionsError">Please select your primary transaction method</div>
+          </div>
+
+          <div class="input-group">
+            <label for="avgMonthlyRevenue">Average monthly revenue</label>
+            <select id="avgMonthlyRevenue" required>
+              <option value="">Select range</option>
+              <option value="under5000">Under R5,000</option>
+              <option value="5000-15000">R5,000 - R15,000</option>
+              <option value="15000-30000">R15,000 - R30,000</option>
+              <option value="30000-50000">R30,000 - R50,000</option>
+              <option value="50000-100000">R50,000 - R100,000</option>
+              <option value="over100000">Over R100,000</option>
+            </select>
+            <div class="error-text" id="avgMonthlyRevenueError">Please select your revenue range</div>
+          </div>
+
+          <div class="input-group">
+            <label for="businessLocation">Business location</label>
+            <input type="text" id="businessLocation" placeholder="e.g. Mdantsane, Eastern Cape" required>
+            <div class="error-text" id="businessLocationError">Please enter your business location</div>
+          </div>
+
+          <div class="input-group">
+            <label for="businessYears">How long have you been in business?</label>
+            <select id="businessYears" required>
+              <option value="">Select</option>
+              <option value="lessThan1">Less than 1 year</option>
+              <option value="1-2">1 - 2 years</option>
+              <option value="2-5">2 - 5 years</option>
+              <option value="5-10">5 - 10 years</option>
+              <option value="over10">Over 10 years</option>
+            </select>
+            <div class="error-text" id="businessYearsError">Please select how long you've been in business</div>
+          </div>
+
+          <div class="step-actions" style="margin-top:24px;">
+            <button type="button" class="btn-secondary" id="backToConsentBtn">← Back</button>
+            <button type="submit" class="btn-primary" id="onboardingSubmitBtn">
+              <span class="btn-text">✓ Complete Profile</span>
+              <span class="spinner"></span>
+            </button>
+          </div>
+
+          <div class="footnote" style="margin-top:12px;">
+            This helps us calculate your EcoScore and match you with the right lenders.
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+  JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // Wrap everything in a single function to avoid conflicts
+    (function() {
+      'use strict';
+
+      console.log('🌿 EcoBridge EC initializing...');
+
+      // ===== DOM REFS =====
+      const modal = document.getElementById('signupModal');
+      const formState = document.getElementById('formState');
+      const successState = document.getElementById('successState');
+      const form = document.getElementById('signupForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const goToDashboardBtn = document.getElementById('goToDashboardBtn');
+      const nameInput = document.getElementById('signupName');
+      const contactInput = document.getElementById('signupContact');
+      const passwordInput = document.getElementById('signupPassword');
+      const nameError = document.getElementById('nameError');
+      const contactError = document.getElementById('contactError');
+      const passwordError = document.getElementById('passwordError');
+      const successMessage = document.getElementById('successMessage');
+      const closeBtn = document.getElementById('closeModalBtn');
+
+      const onboardingModal = document.getElementById('onboardingModal');
+      const onboardingForm = document.getElementById('onboardingForm');
+      const onboardingSubmitBtn = document.getElementById('onboardingSubmitBtn');
+      const closeOnboardingBtn = document.getElementById('closeOnboardingBtn');
+      const backToConsentBtn = document.getElementById('backToConsentBtn');
+      const popiaContinueBtn = document.getElementById('popiaContinueBtn');
+      const popiaConsent = document.getElementById('popiaConsent');
+      const popiaError = document.getElementById('popiaError');
+
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+
+      const businessName = document.getElementById('businessName');
+      const businessType = document.getElementById('businessType');
+      const primaryTransactions = document.getElementById('primaryTransactions');
+      const avgMonthlyRevenue = document.getElementById('avgMonthlyRevenue');
+      const businessLocation = document.getElementById('businessLocation');
+      const businessYears = document.getElementById('businessYears');
+      const businessNameError = document.getElementById('businessNameError');
+      const businessTypeError = document.getElementById('businessTypeError');
+      const primaryTransactionsError = document.getElementById('primaryTransactionsError');
+      const avgMonthlyRevenueError = document.getElementById('avgMonthlyRevenueError');
+      const businessLocationError = document.getElementById('businessLocationError');
+      const businessYearsError = document.getElementById('businessYearsError');
+
+      const landingPage = document.getElementById('landingPage');
+      const profileDashboard = document.getElementById('profileDashboard');
+      const userFullName = document.getElementById('userFullName');
+      const userStatus = document.getElementById('userStatus');
+      const mainFooter = document.getElementById('mainFooter');
+      const dashboardSkeleton = document.getElementById('dashboardSkeleton');
+      const dashboardContent = document.getElementById('dashboardContent');
+      const userEcoScore = document.getElementById('userEcoScore');
+      const userIncome = document.getElementById('userIncome');
+      const progressFill = document.getElementById('profileProgress');
+      const progressText = document.getElementById('progressText');
+      const onboardingMessage = document.getElementById('onboardingMessage');
+      const signupTime = document.getElementById('signupTime');
+
+      const startOnboardingBtn = document.getElementById('startOnboardingBtn');
+      const quickOnboardingBtn = document.getElementById('quickOnboardingBtn');
+
+      // Open buttons
+      const openBtns = [
+        document.getElementById('getStartedBtn'),
+        document.getElementById('joinNetworkBtn'),
+        document.getElementById('navSignupBtn'),
+        document.getElementById('learnMoreBtn'),
+        document.getElementById('contactBtn')
+      ];
+
+      // ===== USER DATA =====
+      let currentUser = {
+        name: 'Amara',
+        surname: 'Nkosi',
+        contact: '',
+        businessName: '',
+        businessType: '',
+        primaryTransactions: '',
+        avgMonthlyRevenue: '',
+        businessLocation: '',
+        businessYears: '',
+        profileComplete: false,
+        popiaConsent: false
+      };
+
+      let signupTimestamp = new Date();
+
+      // ===== FUNCTIONS =====
+      function openModal() {
+        console.log('Opening signup modal');
+        formState.style.display = 'block';
+        successState.classList.remove('active');
+        form.reset();
+        document.querySelectorAll('.error-text').forEach(el => el.classList.remove('visible'));
+        document.querySelectorAll('input').forEach(el => el.classList.remove('error'));
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setTimeout(function() {
+          if (nameInput) nameInput.focus();
+        }, 200);
+      }
+
+      function closeModal() {
+        console.log('Closing signup modal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+
+      function showDashboard(name) {
+        console.log('Showing dashboard for:', name);
+        landingPage.style.display = 'none';
+        profileDashboard.classList.add('active');
+        mainFooter.style.display = 'none';
+        if (userFullName) userFullName.textContent = name;
+
+        if (dashboardSkeleton) dashboardSkeleton.style.display = 'grid';
+        if (dashboardContent) dashboardContent.style.display = 'none';
+
+        setTimeout(function() {
+          if (dashboardSkeleton) dashboardSkeleton.style.display = 'none';
+          if (dashboardContent) dashboardContent.style.display = 'grid';
+
+          if (!currentUser.profileComplete) {
+            if (userEcoScore) userEcoScore.textContent = '--';
+            if (userIncome) userIncome.textContent = '--';
+            if (userStatus) userStatus.textContent = 'Welcome to your BridgeID dashboard. Let\'s set up your profile.';
+          } else {
+            if (userEcoScore) userEcoScore.textContent = '86%';
+            if (userIncome) userIncome.textContent = 'R28,500';
+            if (userStatus) userStatus.textContent = 'Your BridgeID is active and ready to use.';
+          }
+
+          updateOnboardingCard();
+          if (signupTime) signupTime.textContent = 'Just now';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 2000);
+      }
+
+      function showLanding() {
+        console.log('Showing landing page');
+        if (landingPage) landingPage.style.display = 'block';
+        if (profileDashboard) profileDashboard.classList.remove('active');
+        if (mainFooter) mainFooter.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function updateOnboardingCard() {
+        if (currentUser.profileComplete) {
+          const infoH3 = document.querySelector('.onboarding-card .info h3');
+          if (infoH3) infoH3.textContent = '✅ Profile complete!';
+          if (onboardingMessage) onboardingMessage.textContent = 'Your business profile is fully set up.';
+          if (progressFill) progressFill.style.width = '100%';
+          if (progressText) progressText.textContent = '100%';
+          if (startOnboardingBtn) {
+            startOnboardingBtn.textContent = '✓ Complete';
+            startOnboardingBtn.disabled = true;
+            startOnboardingBtn.style.opacity = '0.5';
+          }
+        } else {
+          const infoH3 = document.querySelector('.onboarding-card .info h3');
+          if (infoH3) infoH3.textContent = '📋 Finish setting up your profile';
+          if (onboardingMessage) onboardingMessage.textContent = 'Tell us about your business to unlock your full EcoScore';
+          const progress = currentUser.popiaConsent ? 30 : 10;
+          if (progressFill) progressFill.style.width = progress + '%';
+          if (progressText) progressText.textContent = progress + '%';
+          if (startOnboardingBtn) {
+            startOnboardingBtn.textContent = '→ Complete Profile';
+            startOnboardingBtn.disabled = false;
+            startOnboardingBtn.style.opacity = '1';
+          }
+        }
+      }
+
+      function openOnboarding() {
+        console.log('Opening onboarding');
+        if (step1) step1.classList.add('active');
+        if (step2) step2.classList.remove('active');
+        if (popiaConsent) popiaConsent.checked = false;
+        if (popiaContinueBtn) popiaContinueBtn.disabled = true;
+        if (popiaError) popiaError.classList.remove('visible');
+
+        if (onboardingForm) onboardingForm.reset();
+        document.querySelectorAll('#onboardingModal .error-text').forEach(function(el) {
+          el.classList.remove('visible');
+        });
+        document.querySelectorAll('#onboardingModal input, #onboardingModal select').forEach(function(el) {
+          el.classList.remove('error');
+        });
+        if (onboardingSubmitBtn) {
+          onboardingSubmitBtn.classList.remove('loading');
+          onboardingSubmitBtn.disabled = false;
+        }
+
+        if (onboardingModal) {
+          onboardingModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeOnboarding() {
+        console.log('Closing onboarding');
+        if (onboardingModal) {
+          onboardingModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+        if (onboardingSubmitBtn) {
+          onboardingSubmitBtn.classList.remove('loading');
+          onboardingSubmitBtn.disabled = false;
+        }
+      }
+
+      // ===== ATTACH EVENT LISTENERS =====
+
+      // Open buttons
+      openBtns.forEach(function(btn) {
+        if (btn) {
+          btn.addEventListener('click', openModal);
+        }
+      });
+
+      // Close signup
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+      }
+
+      // Click outside modal
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      // Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          if (modal && modal.classList.contains('active')) closeModal();
+          if (onboardingModal && onboardingModal.classList.contains('active')) closeOnboarding();
+        }
+      });
+
+      // ===== SIGNUP VALIDATION =====
+      function validateName(value) {
+        var trimmed = value.trim();
+        var parts = trimmed.split(/\s+/);
+        return parts.length >= 2 && parts.every(function(p) { return p.length >= 2; });
+      }
+
+      function validateContact(value) {
+        var trimmed = value.trim();
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var phoneRegex = /^(\+27|0)[6-8][0-9]{8}$/;
+        return emailRegex.test(trimmed) || phoneRegex.test(trimmed);
+      }
+
+      function validatePassword(value) {
+        return value.length >= 8;
+      }
+
+      function validateField(input, errorEl, validator, errorMsg) {
+        var value = input.value;
+        var isValid = validator(value);
+        if (!isValid && value.trim() !== '') {
+          input.classList.add('error');
+          errorEl.textContent = errorMsg;
+          errorEl.classList.add('visible');
+        } else if (!isValid && value.trim() === '') {
+          input.classList.remove('error');
+          errorEl.classList.remove('visible');
+        } else {
+          input.classList.remove('error');
+          errorEl.classList.remove('visible');
+        }
+        return isValid || value.trim() === '';
+      }
+
+      // Signup input events
+      if (nameInput) {
+        nameInput.addEventListener('blur', function() {
+          validateField(this, nameError, validateName, 'Please enter your full name (first and last)');
+        });
+        nameInput.addEventListener('input', function() {
+          if (this.value.trim() === '') {
+            this.classList.remove('error');
+            if (nameError) nameError.classList.remove('visible');
+          } else if (!validateName(this.value)) {
+            this.classList.add('error');
+            if (nameError) {
+              nameError.textContent = 'Please enter your full name (first and last)';
+              nameError.classList.add('visible');
+            }
+          } else {
+            this.classList.remove('error');
+            if (nameError) nameError.classList.remove('visible');
+          }
+        });
+      }
+
+      if (contactInput) {
+        contactInput.addEventListener('blur', function() {
+          validateField(this, contactError, validateContact, 'Please enter a valid phone or email');
+        });
+        contactInput.addEventListener('input', function() {
+          if (this.value.trim() === '') {
+            this.classList.remove('error');
+            if (contactError) contactError.classList.remove('visible');
+          } else if (!validateContact(this.value)) {
+            this.classList.add('error');
+            if (contactError) {
+              contactError.textContent = 'Please enter a valid phone or email';
+              contactError.classList.add('visible');
+            }
+          } else {
+            this.classList.remove('error');
+            if (contactError) contactError.classList.remove('visible');
+          }
+        });
+      }
+
+      if (passwordInput) {
+        passwordInput.addEventListener('blur', function() {
+          validateField(this, passwordError, validatePassword, 'Password must be at least 8 characters');
+        });
+        passwordInput.addEventListener('input', function() {
+          if (this.value.trim() === '') {
+            this.classList.remove('error');
+            if (passwordError) passwordError.classList.remove('visible');
+          } else if (!validatePassword(this.value)) {
+            this.classList.add('error');
+            if (passwordError) {
+              passwordError.textContent = 'Password must be at least 8 characters';
+              passwordError.classList.add('visible');
+            }
+          } else {
+            this.classList.remove('error');
+            if (passwordError) passwordError.classList.remove('visible');
+          }
+        });
+      }
+
+      // ===== SIGNUP SUBMISSION =====
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          var isNameValid = validateField(nameInput, nameError, validateName, 'Please enter your full name (first and last)');
+          var isContactValid = validateField(contactInput, contactError, validateContact, 'Please enter a valid phone or email');
+          var isPasswordValid = validateField(passwordInput, passwordError, validatePassword, 'Password must be at least 8 characters');
+
+          if (!nameInput.value.trim() || !contactInput.value.trim() || !passwordInput.value.trim()) {
+            if (!nameInput.value.trim()) {
+              nameInput.classList.add('error');
+              if (nameError) {
+                nameError.textContent = 'Name is required';
+                nameError.classList.add('visible');
+              }
+            }
+            if (!contactInput.value.trim()) {
+              contactInput.classList.add('error');
+              if (contactError) {
+                contactError.textContent = 'Phone or email is required';
+                contactError.classList.add('visible');
+              }
+            }
+            if (!passwordInput.value.trim()) {
+              passwordInput.classList.add('error');
+              if (passwordError) {
+                passwordError.textContent = 'Password is required';
+                passwordError.classList.add('visible');
+              }
+            }
+            return;
+          }
+
+          if (!isNameValid || !isContactValid || !isPasswordValid) return;
+
+          var fullName = nameInput.value.trim();
+          var nameParts = fullName.split(/\s+/);
+          currentUser.name = nameParts[0] || 'User';
+          currentUser.surname = nameParts.slice(1).join(' ') || '';
+          currentUser.contact = contactInput.value.trim();
+
+          submitBtn.classList.add('loading');
+          submitBtn.disabled = true;
+
+          setTimeout(function() {
+            formState.style.display = 'none';
+            successState.classList.add('active');
+            if (successMessage) {
+              successMessage.textContent = 'Welcome ' + fullName + '! Your BridgeID is being built.';
+            }
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+          }, 1800);
+        });
+      }
+
+      // ===== GO TO DASHBOARD =====
+      if (goToDashboardBtn) {
+        goToDashboardBtn.addEventListener('click', function() {
+          var fullName = currentUser.name + (currentUser.surname ? ' ' + currentUser.surname : '');
+          closeModal();
+          showDashboard(fullName);
+        });
+      }
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && successState && successState.classList.contains('active')) {
+          if (goToDashboardBtn) goToDashboardBtn.click();
+        }
+      });
+
+      // ===== ONBOARDING EVENTS =====
+      if (startOnboardingBtn) {
+        startOnboardingBtn.addEventListener('click', openOnboarding);
+      }
+      if (quickOnboardingBtn) {
+        quickOnboardingBtn.addEventListener('click', openOnboarding);
+      }
+      if (closeOnboardingBtn) {
+        closeOnboardingBtn.addEventListener('click', closeOnboarding);
+      }
+
+      if (onboardingModal) {
+        onboardingModal.addEventListener('click', function(e) {
+          if (e.target === onboardingModal) closeOnboarding();
+        });
+      }
+
+      // ===== POPIA CONSENT =====
+      if (popiaConsent) {
+        popiaConsent.addEventListener('change', function() {
+          if (this.checked) {
+            if (popiaContinueBtn) popiaContinueBtn.disabled = false;
+            if (popiaError) popiaError.classList.remove('visible');
+            currentUser.popiaConsent = true;
+            if (progressFill) progressFill.style.width = '30%';
+            if (progressText) progressText.textContent = '30%';
+          } else {
+            if (popiaContinueBtn) popiaContinueBtn.disabled = true;
+            if (popiaError) popiaError.classList.add('visible');
+            currentUser.popiaConsent = false;
+            if (progressFill) progressFill.style.width = '10%';
+            if (progressText) progressText.textContent = '10%';
+          }
+        });
+      }
+
+      // ===== POPIA CONTINUE =====
+      if (popiaContinueBtn) {
+        popiaContinueBtn.addEventListener('click', function() {
+          if (popiaConsent && popiaConsent.checked) {
+            if (step1) step1.classList.remove('active');
+            if (step2) step2.classList.add('active');
+            setTimeout(function() {
+              if (businessName) businessName.focus();
+            }, 300);
+          }
+        });
+      }
+
+      // ===== BACK TO CONSENT =====
+      if (backToConsentBtn) {
+        backToConsentBtn.addEventListener('click', function() {
+          if (step2) step2.classList.remove('active');
+          if (step1) step1.classList.add('active');
+        });
+      }
+
+      // ===== ONBOARDING VALIDATION =====
+      function validateBusinessName(value) { return value.trim().length >= 2; }
+
+      function validateSelect(value) { return value !== ''; }
+
+      function validateLocation(value) { return value.trim().length >= 2; }
+
+      if (businessName) {
+        businessName.addEventListener('blur', function() {
+          if (!validateBusinessName(this.value) && this.value.trim() !== '') {
+            this.classList.add('error');
+            if (businessNameError) businessNameError.classList.add('visible');
+          } else {
+            this.classList.remove('error');
+            if (businessNameError) businessNameError.classList.remove('visible');
+          }
+        });
+        businessName.addEventListener('input', function() {
+          if (this.value.trim() === '') {
+            this.classList.remove('error');
+            if (businessNameError) businessNameError.classList.remove('visible');
+          } else if (!validateBusinessName(this.value)) {
+            this.classList.add('error');
+            if (businessNameError) businessNameError.classList.add('visible');
+          } else {
+            this.classList.remove('error');
+            if (businessNameError) businessNameError.classList.remove('visible');
+          }
+        });
+      }
+
+      if (businessLocation) {
+        businessLocation.addEventListener('blur', function() {
+          if (!validateLocation(this.value) && this.value.trim() !== '') {
+            this.classList.add('error');
+            if (businessLocationError) businessLocationError.classList.add('visible');
+          } else {
+            this.classList.remove('error');
+            if (businessLocationError) businessLocationError.classList.remove('visible');
+          }
+        });
+        businessLocation.addEventListener('input', function() {
+          if (this.value.trim() === '') {
+            this.classList.remove('error');
+            if (businessLocationError) businessLocationError.classList.remove('visible');
+          } else if (!validateLocation(this.value)) {
+            this.classList.add('error');
+            if (businessLocationError) businessLocationError.classList.add('visible');
+          } else {
+            this.classList.remove('error');
+            if (businessLocationError) businessLocationError.classList.remove('visible');
+          }
+        });
+      }
+
+      ['businessType', 'primaryTransactions', 'avgMonthlyRevenue', 'businessYears'].forEach(function(id) {
+        var el = document.getElementById(id);
+        var errorEl = document.getElementById(id + 'Error');
+        if (el && errorEl) {
+          el.addEventListener('change', function() {
+            if (this.value === '') {
+              this.classList.add('error');
+              errorEl.classList.add('visible');
+            } else {
+              this.classList.remove('error');
+              errorEl.classList.remove('visible');
+            }
+          });
+          el.addEventListener('blur', function() {
+            if (this.value === '') {
+              this.classList.add('error');
+              errorEl.classList.add('visible');
+            } else {
+              this.classList.remove('error');
+              errorEl.classList.remove('visible');
+            }
+          });
+        }
+      });
+
+      // ===== ONBOARDING SUBMISSION =====
+      if (onboardingForm) {
+        onboardingForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          var isValid = true;
+          var fields = [
+            { el: businessName, error: businessNameError, validator: validateBusinessName,
+              msg: 'Please enter your business name' },
+            { el: businessType, error: businessTypeError, validator: validateSelect,
+            msg: 'Please select your business type' },
+            { el: primaryTransactions, error: primaryTransactionsError, validator: validateSelect,
+              msg: 'Please select your primary transaction method' },
+            { el: avgMonthlyRevenue, error: avgMonthlyRevenueError, validator: validateSelect,
+              msg: 'Please select your revenue range' },
+            { el: businessLocation, error: businessLocationError, validator: validateLocation,
+              msg: 'Please enter your business location' },
+            { el: businessYears, error: businessYearsError, validator: validateSelect,
+              msg: 'Please select how long you\'ve been in business' }
+          ];
+
+          fields.forEach(function(field) {
+            if (!field.validator(field.el.value)) {
+              field.el.classList.add('error');
+              field.error.textContent = field.msg;
+              field.error.classList.add('visible');
+              isValid = false;
+            } else {
+              field.el.classList.remove('error');
+              field.error.classList.remove('visible');
+            }
+          });
+
+          if (!isValid) return;
+
+          currentUser.businessName = businessName.value.trim();
+          currentUser.businessType = businessType.value;
+          currentUser.primaryTransactions = primaryTransactions.value;
+          currentUser.avgMonthlyRevenue = avgMonthlyRevenue.value;
+          currentUser.businessLocation = businessLocation.value.trim();
+          currentUser.businessYears = businessYears.value;
+          currentUser.profileComplete = true;
+
+          onboardingSubmitBtn.classList.add('loading');
+          onboardingSubmitBtn.disabled = true;
+
+          setTimeout(function() {
+            onboardingSubmitBtn.classList.remove('loading');
+            onboardingSubmitBtn.disabled = false;
+            closeOnboarding();
+
+            if (userEcoScore) userEcoScore.textContent = '86%';
+            if (userIncome) userIncome.textContent = 'R28,500';
+            if (userStatus) userStatus.textContent = 'Your BridgeID is active and ready to use.';
+            updateOnboardingCard();
+
+            var activityList = document.querySelector('.activity-list');
+            if (activityList) {
+              var newActivity = document.createElement('div');
+              newActivity.className = 'activity-item';
+              newActivity.innerHTML = `
+                <div class="activity-left">
+                  <div class="activity-icon">📋</div>
+                  <div class="activity-text"><strong>Profile completed</strong> — Business information added</div>
+                </div>
+                <div class="activity-time">Just now</div>
+              `;
+              activityList.insertBefore(newActivity, activityList.children[1]);
+
+              // Remove pending activity if it exists
+              var pendingItems = activityList.querySelectorAll('.activity-item');
+              if (pendingItems.length > 2 && pendingItems[2]) {
+                if (pendingItems[2].querySelector('.activity-text') &&
+                    pendingItems[2].querySelector('.activity-text').textContent.includes('pending')) {
+                  pendingItems[2].remove();
+                }
+              }
+            }
+
+            alert('✅ Profile complete!\n\nWelcome ' + currentUser.name + '! Your business "' + currentUser
+              .businessName + '" has been registered.\n\nEcoScore: 86%\nReady to connect with lenders.');
+          }, 2000);
+        });
+      }
+
+      // ===== EXPOSE GLOBAL FUNCTIONS =====
+      window.openModal = openModal;
+      window.closeModal = closeModal;
+      window.showDashboard = showDashboard;
+      window.showLanding = showLanding;
+      window.openOnboarding = openOnboarding;
+      window.closeOnboarding = closeOnboarding;
+
+      console.log('🌿 EcoBridge EC initialized successfully!');
+
+    })();
+  </script>
+
+</body>
+</html>
