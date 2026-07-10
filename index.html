@@ -7,9 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' https://open-banking-ais.onrender.com; connect-src 'self' https://open-banking-ais.onrender.com;">
   <style>
-    /* ... all existing styles remain the same ... */
+    /* All CSS remains the same */
     * {
       margin: 0;
       padding: 0;
@@ -1469,13 +1468,13 @@
 
   <!-- ===== NAVBAR ===== -->
   <header>
-    <div class="logo" onclick="window.showLanding()">
+    <div class="logo" id="logoLink">
       🌿 EcoBridge<span>EC</span>
     </div>
     <nav>
-      <a href="#" onclick="window.showLanding()">BridgeID</a>
-      <a href="#" onclick="window.showLanding()">EcoScore</a>
-      <a href="#" onclick="window.showLanding()">For Lenders</a>
+      <a href="#" id="navBridgeId">BridgeID</a>
+      <a href="#" id="navEcoScore">EcoScore</a>
+      <a href="#" id="navForLenders">For Lenders</a>
       <a href="#" class="nav-cta" id="navSignupBtn">Sign Up</a>
       <div class="nav-user" id="navUser">
         <div class="avatar" id="userAvatar">A</div>
@@ -1484,9 +1483,7 @@
     </nav>
   </header>
 
-  <!-- ============================================================
-  LANDING PAGE
-  ============================================================ -->
+  <!-- ===== LANDING PAGE ===== -->
   <div id="landingPage">
     <section class="hero">
       <div class="hero-text">
@@ -1598,9 +1595,7 @@
     </section>
   </div>
 
-  <!-- ============================================================
-  PROFILE DASHBOARD
-  ============================================================ -->
+  <!-- ===== PROFILE DASHBOARD ===== -->
   <div id="profileDashboard">
     <div class="dashboard-header">
       <div class="greeting">
@@ -1699,15 +1694,13 @@
       <button class="btn" id="quickConnectYocoBtn">
         <span>🧾</span> Connect Yoco
       </button>
-      <button class="btn btn-outline" onclick="window.showLanding()">
+      <button class="btn btn-outline" id="backToHomeBtn">
         <span>←</span> Back to Home
       </button>
     </div>
   </div>
 
-  <!-- ============================================================
-  LENDERS SECTION
-  ============================================================ -->
+  <!-- ===== LENDERS SECTION ===== -->
   <div id="lendersSection">
     <h3 style="color:#fff; margin-bottom:16px;">🔗 Matched Lenders</h3>
     <p style="color:#666; margin-bottom:16px;" id="lendersMessage">Connect your accounts to get matched with lenders.</p>
@@ -1721,19 +1714,17 @@
       Building trusted financial identities for South Africa's informal economy.
     </div>
     <div>
-      <a href="#" onclick="window.showLanding()">Home</a>
-      <a href="#" onclick="window.showLanding()">BridgeID</a>
-      <a href="#" onclick="window.showLanding()">EcoScore</a>
-      <a href="#" onclick="window.showLanding()">Contact</a>
+      <a href="#" id="footerHome">Home</a>
+      <a href="#" id="footerBridgeId">BridgeID</a>
+      <a href="#" id="footerEcoScore">EcoScore</a>
+      <a href="#" id="footerContact">Contact</a>
     </div>
     <div style="margin-top:16px; color:#333; font-size:12px;">
       © 2026 EcoBridge EC · Open Finance · Eastern Cape
     </div>
   </footer>
 
-  <!-- ============================================================
-  SIGNUP MODAL
-  ============================================================ -->
+  <!-- ===== SIGNUP MODAL ===== -->
   <div class="modal-overlay" id="signupModal">
     <div class="modal-box">
       <button class="modal-close" id="closeModalBtn">✕</button>
@@ -1788,9 +1779,7 @@
     </div>
   </div>
 
-  <!-- ============================================================
-  ONBOARDING MODAL
-  ============================================================ -->
+  <!-- ===== ONBOARDING MODAL ===== -->
   <div class="modal-overlay" id="onboardingModal">
     <div class="modal-box">
       <button class="modal-close" id="closeOnboardingBtn">✕</button>
@@ -1845,7 +1834,7 @@
         </div>
 
         <div class="step-actions">
-          <button class="btn-secondary" onclick="window.closeOnboarding()">Back</button>
+          <button class="btn-secondary" id="onboardingBackBtn">Back</button>
           <button class="btn-primary" id="popiaContinueBtn" disabled>
             Continue →
           </button>
@@ -1959,9 +1948,7 @@
     </div>
   </div>
 
-  <!-- ============================================================
-  BANK CONNECTION MODAL
-  ============================================================ -->
+  <!-- ===== BANK CONNECTION MODAL ===== -->
   <div class="modal-overlay" id="bankConnectionModal">
     <div class="modal-box">
       <button class="modal-close" id="closeBankConnectionBtn">✕</button>
@@ -2028,9 +2015,7 @@
     </div>
   </div>
 
-  <!-- ============================================================
-  YOCO CONNECTION MODAL
-  ============================================================ -->
+  <!-- ===== YOCO CONNECTION MODAL ===== -->
   <div class="modal-overlay" id="yocoConnectionModal">
     <div class="modal-box">
       <button class="modal-close" id="closeYocoConnectionBtn">✕</button>
@@ -2083,9 +2068,7 @@
     </div>
   </div>
 
-  <!-- ============================================================
-  CONNECTION PROGRESS MODAL
-  ============================================================ -->
+  <!-- ===== CONNECTION PROGRESS MODAL ===== -->
   <div class="modal-overlay connection-modal" id="connectionModal">
     <div class="modal-box">
       <button class="modal-close" id="closeConnectionBtn">✕</button>
@@ -2126,7 +2109,7 @@
   </div>
 
   <!-- ============================================================
-  JAVASCRIPT
+  JAVASCRIPT - ALL EVENT LISTENERS ATTACHED HERE
   ============================================================ -->
   <script>
     // ============================================================
@@ -2250,13 +2233,11 @@
     // REAL OPEN BANKING AIS API INTEGRATION
     // ============================================================
     const EcoBridgeAPI = {
-      // Configuration - use the sandbox URL from FinHubSA
       baseUrl: 'https://open-banking-ais.onrender.com',
       clientId: 'demo-client',
       clientSecret: 'demo-secret',
       consentStore: {},
 
-      // Step 1: Get a client token
       getClientToken: async function() {
         try {
           const response = await fetch(`${this.baseUrl}/connect/mtls/token`, {
@@ -2283,7 +2264,6 @@
         }
       },
 
-      // Step 2: Create a consent - FIXED: Added credit and debit permissions
       createConsent: async function(clientToken) {
         try {
           const response = await fetch(`${this.baseUrl}/account-access-consents`, {
@@ -2315,12 +2295,10 @@
         }
       },
 
-      // Step 3: Get PSU authorisation URL
       getAuthorisationUrl: function(consentId) {
         return `${this.baseUrl}/psu/authorize/ui?consentId=${consentId}`;
       },
 
-      // Step 4: Check consent status
       checkConsentStatus: async function(clientToken, consentId) {
         try {
           const response = await fetch(`${this.baseUrl}/account-access-consents/${consentId}`, {
@@ -2336,7 +2314,6 @@
         }
       },
 
-      // Step 5: Get a data access token bound to consent
       getDataToken: async function(clientToken, consentId) {
         try {
           const response = await fetch(`${this.baseUrl}/connect/mtls/token`, {
@@ -2365,7 +2342,6 @@
         }
       },
 
-      // Step 6: Get accounts - FIXED: Better handling of response format
       getAccounts: async function(dataToken) {
         try {
           const response = await fetch(`${this.baseUrl}/accounts?limit=50`, {
@@ -2384,7 +2360,6 @@
         }
       },
 
-      // Step 7: Get transactions for an account
       getTransactions: async function(dataToken, accountId) {
         try {
           const response = await fetch(`${this.baseUrl}/accounts/${accountId}/transactions?limit=100`, {
@@ -2401,44 +2376,32 @@
         }
       },
 
-      // Full connection flow - FIXED: Better account handling
       connectBank: async function(accountNumber, bankName) {
         try {
-          // Step 1: Get client token
           const clientToken = await this.getClientToken();
-
-          // Step 2: Create consent
           const consentId = await this.createConsent(clientToken);
           this.consentStore[consentId] = { clientToken, bankName, accountNumber };
 
-          // Step 3: Get authorisation URL and open it for the user
           const authUrl = this.getAuthorisationUrl(consentId);
-          const authWindow = window.open(authUrl, '_blank', 'width=600,height=700,scrollbars=yes');
+          window.open(authUrl, '_blank', 'width=600,height=700,scrollbars=yes');
 
-          // Step 4: Wait for the user to authorise
           let status = await this.waitForAuthorisation(clientToken, consentId);
 
           if (!status) {
             throw new Error('Authorisation timed out or was rejected');
           }
 
-          // Step 5: Get data token
           const dataToken = await this.getDataToken(clientToken, consentId);
-
-          // Step 6: Get accounts
           const accountsData = await this.getAccounts(dataToken);
           console.log('📋 Accounts data:', accountsData);
 
-          // Handle different response formats
           let accountList = accountsData;
           if (accountsData && accountsData.accounts && Array.isArray(accountsData.accounts)) {
             accountList = accountsData.accounts;
           } else if (accountsData && typeof accountsData === 'object' && !Array.isArray(accountsData)) {
-            // If it's a single account object, wrap it
             if (accountsData.AccountId || accountsData.id) {
               accountList = [accountsData];
             } else {
-              // Try to find any array property
               const keys = Object.keys(accountsData);
               for (const key of keys) {
                 if (Array.isArray(accountsData[key]) && accountsData[key].length > 0) {
@@ -2454,11 +2417,9 @@
             throw new Error('No accounts found. Please authorise at least one account.');
           }
 
-          // Use the first account
           const firstAccount = accountList[0];
           console.log('📋 First account:', firstAccount);
 
-          // Find the AccountId
           let accountId = firstAccount.AccountId || firstAccount.id || firstAccount.accountId;
           if (!accountId) {
             console.error('No AccountId found in:', firstAccount);
@@ -2468,10 +2429,7 @@
           const transactions = await this.getTransactions(dataToken, accountId);
           console.log('📋 Transactions received:', transactions ? transactions.length : 0);
 
-          // Transform the data to match our existing format
           const transformedTransactions = this.transformTransactions(transactions);
-
-          // Calculate monthly income
           const monthlyIncome = this.calculateMonthlyIncome(transformedTransactions);
 
           return {
@@ -2492,7 +2450,6 @@
         }
       },
 
-      // Helper: Transform API transaction format to our format
       transformTransactions: function(apiTransactions) {
         if (!apiTransactions || !Array.isArray(apiTransactions)) {
           return [];
@@ -2502,7 +2459,6 @@
           var type = 'debit';
           var description = t.Description || t.description || 'Transaction';
 
-          // Determine if credit or debit
           if (t.CreditAmount && parseFloat(t.CreditAmount) > 0) {
             amount = parseFloat(t.CreditAmount);
             type = 'credit';
@@ -2531,7 +2487,6 @@
         });
       },
 
-      // Helper: Calculate monthly income from transactions
       calculateMonthlyIncome: function(transactions) {
         if (!transactions || !Array.isArray(transactions)) {
           return 0;
@@ -2542,10 +2497,9 @@
         return Math.round(total);
       },
 
-      // Helper: Wait for user to authorise with polling
       waitForAuthorisation: async function(clientToken, consentId) {
         let attempts = 0;
-        const maxAttempts = 60; // 60 * 3 seconds = 3 minutes
+        const maxAttempts = 60;
 
         return new Promise(function(resolve) {
           const checkStatus = async function() {
@@ -2584,7 +2538,6 @@
         });
       },
 
-      // Fallback: Use synthetic data when API fails
       useFallbackData: function(bankName) {
         var summary = SpazaData.getMonthlySummary();
         return {
@@ -2661,7 +2614,6 @@
           }
         }
 
-        // Use business tenure from user profile if available - FIXED: Use window.currentUser
         if (window.currentUser && window.currentUser.businessYears) {
           var tenureMap = {
             'lessThan1': 40,
@@ -2744,16 +2696,16 @@
     };
 
     // ============================================================
-    // MAIN APP
+    // MAIN APP - ALL EVENTS ATTACHED HERE
     // ============================================================
-    (function() {
+    document.addEventListener('DOMContentLoaded', function() {
       'use strict';
 
       console.log('🌿 EcoBridge EC initializing...');
       console.log('🔗 Using Open Banking AIS API: https://open-banking-ais.onrender.com');
 
+      // ===== STATE =====
       var currentUser = { name: 'Thabo', surname: 'Mbeki' };
-      // Make currentUser globally accessible for EcoScoreEngine
       window.currentUser = currentUser;
 
       var connectionState = {
@@ -2870,6 +2822,7 @@
       var connectYocoFromCard = document.getElementById('connectYocoFromCard');
       var quickConnectBankBtn = document.getElementById('quickConnectBankBtn');
       var quickConnectYocoBtn = document.getElementById('quickConnectYocoBtn');
+      var backToHomeBtn = document.getElementById('backToHomeBtn');
 
       var connectionIcon = document.getElementById('connectionIcon');
       var connectionTitle = document.getElementById('connectionTitle');
@@ -2883,46 +2836,14 @@
       var connectionDetailStatus = document.getElementById('connectionDetailStatus');
       var connectionTime = document.getElementById('connectionTime');
 
-      // ===== GLOBAL FUNCTIONS (exposed for onclick) =====
-      window.showLanding = function() {
+      // ===== FUNCTIONS =====
+
+      function showLanding() {
         landingPage.style.display = 'block';
         profileDashboard.classList.remove('active');
         lendersSection.classList.remove('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      };
-
-      window.closeOnboarding = function() {
-        if (onboardingModal) {
-          onboardingModal.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-        if (onboardingSubmitBtn) {
-          onboardingSubmitBtn.classList.remove('loading');
-          onboardingSubmitBtn.disabled = false;
-        }
-      };
-
-      window.applyForLender = function(lenderId) {
-        var lender = connectionState.lenders.find(function(l) { return l.id === lenderId; });
-        if (lender) {
-          alert('✅ Application submitted!\n\nLender: ' + lender.name + '\nAmount: Up to ' + lender.maxAmount + '\nRate: ' +
-            lender.rate + '\n\nThe lender will review your BridgeID and contact you soon.');
-          addActivity('📝', 'Applied for ' + lender.name);
-        }
-      };
-
-      window.viewLenderDetails = function(lenderId) {
-        var lender = connectionState.lenders.find(function(l) { return l.id === lenderId; });
-        if (lender) {
-          alert('📋 Lender Details\n\nName: ' + lender.name + '\nMax Amount: ' + lender.maxAmount + '\nRate: ' + lender.rate +
-            '\nDescription: ' + lender.description + '\n\nMatch Score: ' + lender.matchScore + '%\n' + (lender.qualified ?
-              '✅ You qualify!' : '❌ Need ' + lender.scoreNeeded + '%+ EcoScore'));
-        }
-      };
-
-      window.openOnboarding = openOnboarding;
-
-      // ===== FUNCTIONS =====
+      }
 
       function openModal() {
         formState.style.display = 'block';
@@ -2935,6 +2856,44 @@
       function closeModal() {
         signupModal.classList.remove('active');
         document.body.style.overflow = '';
+      }
+
+      function openOnboarding() {
+        if (step1) step1.classList.add('active');
+        if (step2) step2.classList.remove('active');
+        if (popiaConsent) popiaConsent.checked = false;
+        if (popiaContinueBtn) popiaContinueBtn.disabled = true;
+        if (popiaError) popiaError.classList.remove('visible');
+        if (otherBusinessTypeGroup) otherBusinessTypeGroup.style.display = 'none';
+        if (otherBusinessType) otherBusinessType.value = '';
+
+        if (onboardingForm) onboardingForm.reset();
+        document.querySelectorAll('#onboardingModal .error-text').forEach(function(el) {
+          el.classList.remove('visible');
+        });
+        document.querySelectorAll('#onboardingModal input, #onboardingModal select').forEach(function(el) {
+          el.classList.remove('error');
+        });
+        if (onboardingSubmitBtn) {
+          onboardingSubmitBtn.classList.remove('loading');
+          onboardingSubmitBtn.disabled = false;
+        }
+
+        if (onboardingModal) {
+          onboardingModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeOnboarding() {
+        if (onboardingModal) {
+          onboardingModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+        if (onboardingSubmitBtn) {
+          onboardingSubmitBtn.classList.remove('loading');
+          onboardingSubmitBtn.disabled = false;
+        }
       }
 
       function showDashboard(name) {
@@ -2968,7 +2927,6 @@
         var hasYoco = connectionState.yoco.connected;
         var hasBusiness = currentUser && currentUser.profileComplete;
 
-        // Calculate progress
         var progress = 10;
         if (hasBusiness) progress += 70;
         if (hasBank) progress += 10;
@@ -2977,7 +2935,6 @@
         if (profileProgress) profileProgress.style.width = progress + '%';
         if (progressText) progressText.textContent = progress + '%';
 
-        // Update onboarding card
         if (progress >= 100) {
           if (onboardingTitle) onboardingTitle.textContent = '✅ Profile complete!';
           if (onboardingMessage) onboardingMessage.textContent = 'Your BridgeID is fully set up and ready to use.';
@@ -2996,7 +2953,6 @@
           if (onboardingMessage) onboardingMessage.textContent = 'Tell us about your business to unlock your full EcoScore';
         }
 
-        // Update connected accounts
         var count = 0;
         var names = [];
         if (hasBank) { count++;
@@ -3009,7 +2965,6 @@
           connectedAccountsList.style.color = count > 0 ? '#00ff88' : '#888';
         }
 
-        // Update card buttons
         var bankCardBtn = document.getElementById('connectBankFromCard');
         var yocoCardBtn = document.getElementById('connectYocoFromCard');
         if (bankCardBtn) {
@@ -3031,7 +2986,6 @@
           }
         }
 
-        // Calculate EcoScore if we have data
         if (hasBank || hasYoco) {
           var scoreResult = EcoScoreEngine.calculateScore(
             hasBank ? connectionState.bank.data : null,
@@ -3063,7 +3017,6 @@
             growthReadinessDesc.className = 'card-change positive';
           }
 
-          // Show lenders
           matchAndShowLenders(scoreResult.score);
 
         } else {
@@ -3118,8 +3071,8 @@
               '<span>📌 ' + lender.description + '</span>' +
               '</div>' +
               '<div class="lender-actions">' +
-              '<button class="btn-small btn-primary-small" onclick="window.applyForLender(' + lender.id + ')">Apply with BridgeID</button>' +
-              '<button class="btn-small btn-outline-small" onclick="window.viewLenderDetails(' + lender.id + ')">Details</button>' +
+              '<button class="btn-small btn-primary-small" data-lender-id="' + lender.id + '" data-action="apply">Apply with BridgeID</button>' +
+              '<button class="btn-small btn-outline-small" data-lender-id="' + lender.id + '" data-action="details">Details</button>' +
               '</div>' +
               '</div>';
           }
@@ -3129,6 +3082,39 @@
           html = '<div style="color:#666; padding:20px; text-align:center;">Connect your accounts to see lender matches.</div>';
         }
         lendersGrid.innerHTML = html;
+
+        // Attach event listeners to lender buttons
+        lendersGrid.querySelectorAll('[data-action="apply"]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var lenderId = parseInt(this.getAttribute('data-lender-id'));
+            applyForLender(lenderId);
+          });
+        });
+
+        lendersGrid.querySelectorAll('[data-action="details"]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var lenderId = parseInt(this.getAttribute('data-lender-id'));
+            viewLenderDetails(lenderId);
+          });
+        });
+      }
+
+      function applyForLender(lenderId) {
+        var lender = connectionState.lenders.find(function(l) { return l.id === lenderId; });
+        if (lender) {
+          alert('✅ Application submitted!\n\nLender: ' + lender.name + '\nAmount: Up to ' + lender.maxAmount + '\nRate: ' +
+            lender.rate + '\n\nThe lender will review your BridgeID and contact you soon.');
+          addActivity('📝', 'Applied for ' + lender.name);
+        }
+      }
+
+      function viewLenderDetails(lenderId) {
+        var lender = connectionState.lenders.find(function(l) { return l.id === lenderId; });
+        if (lender) {
+          alert('📋 Lender Details\n\nName: ' + lender.name + '\nMax Amount: ' + lender.maxAmount + '\nRate: ' + lender.rate +
+            '\nDescription: ' + lender.description + '\n\nMatch Score: ' + lender.matchScore + '%\n' + (lender.qualified ?
+              '✅ You qualify!' : '❌ Need ' + lender.scoreNeeded + '%+ EcoScore'));
+        }
       }
 
       function openConnectionModal() {
@@ -3182,7 +3168,19 @@
         }
       }
 
-      // ===== CONNECT BANK (REAL API) =====
+      function addActivity(icon, text) {
+        var activityList = document.getElementById('activityList');
+        if (!activityList) return;
+
+        var newActivity = document.createElement('div');
+        newActivity.className = 'activity-item';
+        newActivity.innerHTML =
+          '<div class="activity-left"><div class="activity-icon">' + icon +
+          '</div><div class="activity-text"><strong>' + text + '</strong></div></div><div class="activity-time">Just now</div>';
+        activityList.insertBefore(newActivity, activityList.children[0]);
+      }
+
+      // ===== BANK CONNECTION =====
       function openBankConnection() {
         bankConnectionModal.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -3203,6 +3201,407 @@
         document.body.style.overflow = '';
       }
 
+      // ===== YOCO CONNECTION =====
+      function openYocoConnection() {
+        yocoConnectionModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        yocoConnectionForm.reset();
+        yocoConsent.checked = false;
+        if (yocoApiKeyError) yocoApiKeyError.classList.remove('visible');
+        if (yocoConsentError) yocoConsentError.classList.remove('visible');
+        yocoConnectionSubmitBtn.classList.remove('loading');
+        yocoConnectionSubmitBtn.disabled = false;
+        setTimeout(function() { if (yocoApiKey) yocoApiKey.focus(); }, 200);
+      }
+
+      function closeYocoConnection() {
+        yocoConnectionModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      // ===== SIGNUP VALIDATION =====
+      function validateName(value) {
+        var parts = value.trim().split(/\s+/);
+        return parts.length >= 2 && parts.every(function(p) { return p.length >= 2; });
+      }
+
+      function validateEmail(value) {
+        var trimmed = value.trim();
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(trimmed);
+      }
+
+      function validatePhone(value) {
+        var trimmed = value.trim();
+        var phoneRegex = /^(\+27|0)[6-8][0-9]{8}$/;
+        return phoneRegex.test(trimmed);
+      }
+
+      function validatePassword(value) {
+        return value.length >= 8;
+      }
+
+      // ===== VALIDATION FUNCTIONS FOR ONBOARDING =====
+      function validateBusinessName(value) { return value.trim().length >= 2; }
+
+      function validateSelect(value) { return value !== ''; }
+
+      function validateLocation(value) { return value.trim().length >= 2; }
+
+      // ============================================================
+      // ATTACH ALL EVENT LISTENERS
+      // ============================================================
+
+      // ---- NAVIGATION ----
+      document.getElementById('logoLink').addEventListener('click', showLanding);
+      document.getElementById('navBridgeId').addEventListener('click', function(e) { e.preventDefault();
+        showLanding(); });
+      document.getElementById('navEcoScore').addEventListener('click', function(e) { e.preventDefault();
+        showLanding(); });
+      document.getElementById('navForLenders').addEventListener('click', function(e) { e.preventDefault();
+        showLanding(); });
+      document.getElementById('backToHomeBtn').addEventListener('click', showLanding);
+
+      // ---- FOOTER LINKS ----
+      document.getElementById('footerHome').addEventListener('click', function(e) { e.preventDefault();
+        showLanding(); });
+      document.getElementById('footerBridgeId').addEventListener('click', function(e) { e.preventDefault();
+        showLanding(); });
+      document.getElementById('footerEcoScore').addEventListener('click', function(e) { e.preventDefault();
+        showLanding(); });
+      document.getElementById('footerContact').addEventListener('click', function(e) { e.preventDefault();
+        showLanding(); });
+
+      // ---- SIGNUP ----
+      if (getStartedBtn) getStartedBtn.addEventListener('click', openModal);
+      if (joinNetworkBtn) joinNetworkBtn.addEventListener('click', openModal);
+      if (navSignupBtn) navSignupBtn.addEventListener('click', openModal);
+      if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+
+      signupModal.addEventListener('click', function(e) {
+        if (e.target === signupModal) closeModal();
+      });
+
+      // ---- SIGNUP FORM ----
+      if (signupForm) {
+        signupForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          var isNameValid = validateName(nameInput.value);
+          var isEmailValid = validateEmail(emailInput.value);
+          var isPhoneValid = validatePhone(phoneInput.value);
+          var isPasswordValid = validatePassword(passwordInput.value);
+
+          [nameInput, emailInput, phoneInput, passwordInput].forEach(function(el) {
+            el.classList.remove('error');
+          });
+          [nameError, emailError, phoneError, passwordError].forEach(function(el) {
+            el.classList.remove('visible');
+          });
+
+          var isValid = true;
+
+          if (!nameInput.value.trim() || !isNameValid) {
+            nameInput.classList.add('error');
+            nameError.textContent = 'Please enter your full name';
+            nameError.classList.add('visible');
+            isValid = false;
+          }
+
+          if (!emailInput.value.trim() || !isEmailValid) {
+            emailInput.classList.add('error');
+            emailError.textContent = 'Please enter a valid email address';
+            emailError.classList.add('visible');
+            isValid = false;
+          }
+
+          if (!phoneInput.value.trim() || !isPhoneValid) {
+            phoneInput.classList.add('error');
+            phoneError.textContent = 'Please enter a valid South African phone number';
+            phoneError.classList.add('visible');
+            isValid = false;
+          }
+
+          if (!passwordInput.value.trim() || !isPasswordValid) {
+            passwordInput.classList.add('error');
+            passwordError.textContent = 'Password must be at least 8 characters';
+            passwordError.classList.add('visible');
+            isValid = false;
+          }
+
+          if (!isValid) return;
+
+          var fullName = nameInput.value.trim();
+          var nameParts = fullName.split(/\s+/);
+          currentUser.name = nameParts[0] || 'Thabo';
+          currentUser.surname = nameParts.slice(1).join(' ') || 'Mbeki';
+          currentUser.email = emailInput.value.trim();
+          currentUser.phone = phoneInput.value.trim();
+          window.currentUser = currentUser;
+
+          submitBtn.classList.add('loading');
+          submitBtn.disabled = true;
+
+          setTimeout(function() {
+            formState.style.display = 'none';
+            successState.classList.add('active');
+            if (successMessage) {
+              successMessage.textContent = 'Welcome ' + fullName + '! Your BridgeID is being built.';
+            }
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+          }, 1800);
+        });
+      }
+
+      // ---- GO TO DASHBOARD ----
+      if (goToDashboardBtn) {
+        goToDashboardBtn.addEventListener('click', function() {
+          var fullName = currentUser.name + ' ' + currentUser.surname;
+          closeModal();
+          showDashboard(fullName);
+        });
+      }
+
+      // ---- ONBOARDING ----
+      if (startOnboardingBtn) startOnboardingBtn.addEventListener('click', openOnboarding);
+      if (quickOnboardingBtn) quickOnboardingBtn.addEventListener('click', openOnboarding);
+      if (closeOnboardingBtn) closeOnboardingBtn.addEventListener('click', closeOnboarding);
+
+      onboardingModal.addEventListener('click', function(e) {
+        if (e.target === onboardingModal) closeOnboarding();
+      });
+
+      // ---- POPIA CONSENT ----
+      if (popiaConsent) {
+        popiaConsent.addEventListener('change', function() {
+          if (this.checked) {
+            if (popiaContinueBtn) popiaContinueBtn.disabled = false;
+            if (popiaError) popiaError.classList.remove('visible');
+          } else {
+            if (popiaContinueBtn) popiaContinueBtn.disabled = true;
+            if (popiaError) popiaError.classList.add('visible');
+          }
+        });
+      }
+
+      if (popiaContinueBtn) {
+        popiaContinueBtn.addEventListener('click', function() {
+          if (popiaConsent && popiaConsent.checked) {
+            if (step1) step1.classList.remove('active');
+            if (step2) step2.classList.add('active');
+            setTimeout(function() {
+              if (businessName) businessName.focus();
+            }, 300);
+          }
+        });
+      }
+
+      if (document.getElementById('onboardingBackBtn')) {
+        document.getElementById('onboardingBackBtn').addEventListener('click', closeOnboarding);
+      }
+
+      if (backToConsentBtn) {
+        backToConsentBtn.addEventListener('click', function() {
+          if (step2) step2.classList.remove('active');
+          if (step1) step1.classList.add('active');
+        });
+      }
+
+      // ---- OTHER BUSINESS TYPE ----
+      if (businessType) {
+        businessType.addEventListener('change', function() {
+          if (this.value === 'other') {
+            if (otherBusinessTypeGroup) otherBusinessTypeGroup.style.display = 'block';
+            if (otherBusinessType) otherBusinessType.required = true;
+          } else {
+            if (otherBusinessTypeGroup) otherBusinessTypeGroup.style.display = 'none';
+            if (otherBusinessType) {
+              otherBusinessType.required = false;
+              otherBusinessType.value = '';
+            }
+            if (otherBusinessTypeError) otherBusinessTypeError.classList.remove('visible');
+          }
+        });
+      }
+
+      // ---- ONBOARDING FIELD VALIDATION ----
+      if (businessName) {
+        businessName.addEventListener('blur', function() {
+          if (!validateBusinessName(this.value) && this.value.trim() !== '') {
+            this.classList.add('error');
+            if (businessNameError) businessNameError.classList.add('visible');
+          } else {
+            this.classList.remove('error');
+            if (businessNameError) businessNameError.classList.remove('visible');
+          }
+        });
+        businessName.addEventListener('input', function() {
+          if (this.value.trim() === '') {
+            this.classList.remove('error');
+            if (businessNameError) businessNameError.classList.remove('visible');
+          } else if (!validateBusinessName(this.value)) {
+            this.classList.add('error');
+            if (businessNameError) businessNameError.classList.add('visible');
+          } else {
+            this.classList.remove('error');
+            if (businessNameError) businessNameError.classList.remove('visible');
+          }
+        });
+      }
+
+      if (businessLocation) {
+        businessLocation.addEventListener('blur', function() {
+          if (!validateLocation(this.value) && this.value.trim() !== '') {
+            this.classList.add('error');
+            if (businessLocationError) businessLocationError.classList.add('visible');
+          } else {
+            this.classList.remove('error');
+            if (businessLocationError) businessLocationError.classList.remove('visible');
+          }
+        });
+        businessLocation.addEventListener('input', function() {
+          if (this.value.trim() === '') {
+            this.classList.remove('error');
+            if (businessLocationError) businessLocationError.classList.remove('visible');
+          } else if (!validateLocation(this.value)) {
+            this.classList.add('error');
+            if (businessLocationError) businessLocationError.classList.add('visible');
+          } else {
+            this.classList.remove('error');
+            if (businessLocationError) businessLocationError.classList.remove('visible');
+          }
+        });
+      }
+
+      ['businessType', 'primaryTransactions', 'avgMonthlyRevenue', 'businessYears'].forEach(function(id) {
+        var el = document.getElementById(id);
+        var errorEl = document.getElementById(id + 'Error');
+        if (el && errorEl) {
+          el.addEventListener('change', function() {
+            if (this.value === '') {
+              this.classList.add('error');
+              errorEl.classList.add('visible');
+            } else {
+              this.classList.remove('error');
+              errorEl.classList.remove('visible');
+            }
+          });
+          el.addEventListener('blur', function() {
+            if (this.value === '') {
+              this.classList.add('error');
+              errorEl.classList.add('visible');
+            } else {
+              this.classList.remove('error');
+              errorEl.classList.remove('visible');
+            }
+          });
+        }
+      });
+
+      // ---- ONBOARDING SUBMISSION ----
+      if (onboardingForm) {
+        onboardingForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          var isValid = true;
+          var fields = [
+            { el: businessName, error: businessNameError, validator: validateBusinessName,
+              msg: 'Please enter your business name' },
+            { el: businessType, error: businessTypeError, validator: validateSelect,
+            msg: 'Please select your business type' },
+            { el: primaryTransactions, error: primaryTransactionsError, validator: validateSelect,
+              msg: 'Please select your primary transaction method' },
+            { el: avgMonthlyRevenue, error: avgMonthlyRevenueError, validator: validateSelect,
+              msg: 'Please select your revenue range' },
+            { el: businessLocation, error: businessLocationError, validator: validateLocation,
+              msg: 'Please enter your business location' },
+            { el: businessYears, error: businessYearsError, validator: validateSelect,
+              msg: 'Please select how long you\'ve been in business' }
+          ];
+
+          if (businessType.value === 'other') {
+            if (!otherBusinessType.value.trim()) {
+              otherBusinessType.classList.add('error');
+              otherBusinessTypeError.textContent = 'Please specify your business type';
+              otherBusinessTypeError.classList.add('visible');
+              isValid = false;
+            } else {
+              otherBusinessType.classList.remove('error');
+              otherBusinessTypeError.classList.remove('visible');
+            }
+          }
+
+          fields.forEach(function(field) {
+            if (!field.validator(field.el.value)) {
+              field.el.classList.add('error');
+              field.error.textContent = field.msg;
+              field.error.classList.add('visible');
+              isValid = false;
+            } else {
+              field.el.classList.remove('error');
+              field.error.classList.remove('visible');
+            }
+          });
+
+          if (!isValid) return;
+
+          var businessTypeValue = businessType.value;
+          if (businessTypeValue === 'other') {
+            businessTypeValue = otherBusinessType.value.trim();
+          }
+
+          currentUser.businessName = businessName.value.trim();
+          currentUser.businessType = businessTypeValue;
+          currentUser.primaryTransactions = primaryTransactions.value;
+          currentUser.avgMonthlyRevenue = avgMonthlyRevenue.value;
+          currentUser.businessLocation = businessLocation.value.trim();
+          currentUser.businessYears = businessYears.value;
+          currentUser.profileComplete = true;
+          window.currentUser = currentUser;
+
+          onboardingSubmitBtn.classList.add('loading');
+          onboardingSubmitBtn.disabled = true;
+
+          setTimeout(function() {
+            onboardingSubmitBtn.classList.remove('loading');
+            onboardingSubmitBtn.disabled = false;
+            closeOnboarding();
+
+            var pendingActivity = document.getElementById('pendingProfileActivity');
+            if (pendingActivity) pendingActivity.remove();
+
+            addActivity('📋', 'Profile completed — Business information added');
+
+            updateDashboard();
+
+            var onboardingCard = document.getElementById('onboardingCard');
+            if (onboardingCard) {
+              onboardingCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            var connectBankBtn = document.getElementById('connectBankFromCard');
+            var connectYocoBtn = document.getElementById('connectYocoFromCard');
+            if (connectBankBtn) {
+              connectBankBtn.style.transition = 'all 0.3s';
+              connectBankBtn.style.boxShadow = '0 0 20px rgba(0, 255, 136, 0.3)';
+              setTimeout(function() {
+                connectBankBtn.style.boxShadow = 'none';
+              }, 3000);
+            }
+            if (connectYocoBtn) {
+              connectYocoBtn.style.transition = 'all 0.3s';
+              connectYocoBtn.style.boxShadow = '0 0 20px rgba(0, 255, 136, 0.3)';
+              setTimeout(function() {
+                connectYocoBtn.style.boxShadow = 'none';
+              }, 3000);
+            }
+
+          }, 2000);
+        });
+      }
+
+      // ---- BANK CONNECTION ----
       if (closeBankConnectionBtn) {
         closeBankConnectionBtn.addEventListener('click', closeBankConnection);
       }
@@ -3285,7 +3684,6 @@
 
           closeBankConnection();
 
-          // Open the connection modal
           setTimeout(function() {
             openConnectionModal().then(function() {
               connectionState.bank.connected = true;
@@ -3293,16 +3691,11 @@
               addActivity('🏛️', 'Bank connected — ' + bankNameValue + ' Account linked');
               bankConnectionSubmitBtn.classList.remove('loading');
               bankConnectionSubmitBtn.disabled = false;
-
-              // Show success message with data info via the modal (already shown)
-              // No alert - the modal already shows success
             });
 
-            // Update connection status steps
             setTimeout(function() { updateConnectionStatus('auth'); }, 500);
             setTimeout(function() { updateConnectionStatus('consent'); }, 1200);
 
-            // Call the real API
             EcoBridgeAPI.connectBank(
               bankAccountNumber.value.trim(),
               bankNameValue
@@ -3318,7 +3711,6 @@
                 });
                 updateDashboard();
               } else {
-                // If API fails, use fallback data
                 console.warn('API connection failed, using fallback data:', result.error);
                 var fallbackResult = EcoBridgeAPI.useFallbackData(bankNameValue);
                 connectionState.bank.data = fallbackResult.data;
@@ -3332,7 +3724,6 @@
             })
             .catch(function(error) {
               console.error('Bank connection error:', error);
-              // Use fallback on error
               var fallbackResult = EcoBridgeAPI.useFallbackData(bankNameValue);
               connectionState.bank.data = fallbackResult.data;
               connectionState.bank.connected = true;
@@ -3346,24 +3737,7 @@
         });
       }
 
-      // ===== CONNECT YOCO (mock - Yoco API not provided) =====
-      function openYocoConnection() {
-        yocoConnectionModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        yocoConnectionForm.reset();
-        yocoConsent.checked = false;
-        if (yocoApiKeyError) yocoApiKeyError.classList.remove('visible');
-        if (yocoConsentError) yocoConsentError.classList.remove('visible');
-        yocoConnectionSubmitBtn.classList.remove('loading');
-        yocoConnectionSubmitBtn.disabled = false;
-        setTimeout(function() { if (yocoApiKey) yocoApiKey.focus(); }, 200);
-      }
-
-      function closeYocoConnection() {
-        yocoConnectionModal.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-
+      // ---- YOCO CONNECTION ----
       if (closeYocoConnectionBtn) {
         closeYocoConnectionBtn.addEventListener('click', closeYocoConnection);
       }
@@ -3425,7 +3799,6 @@
             setTimeout(function() { updateConnectionStatus('fetching'); }, 1500);
             setTimeout(function() { updateConnectionStatus('processing'); }, 2500);
 
-            // Mock Yoco connection - replace with real API when available
             setTimeout(function() {
               var summary = SpazaData.getMonthlySummary();
               connectionState.yoco.data = {
@@ -3444,402 +3817,13 @@
         });
       }
 
-      // ===== ACTIVITY LOG =====
-      function addActivity(icon, text) {
-        var activityList = document.getElementById('activityList');
-        if (!activityList) return;
-
-        var newActivity = document.createElement('div');
-        newActivity.className = 'activity-item';
-        newActivity.innerHTML =
-          '<div class="activity-left"><div class="activity-icon">' + icon +
-          '</div><div class="activity-text"><strong>' + text + '</strong></div></div><div class="activity-time">Just now</div>';
-        activityList.insertBefore(newActivity, activityList.children[0]);
-      }
-
-      // ===== SIGNUP VALIDATION =====
-      function validateName(value) {
-        var parts = value.trim().split(/\s+/);
-        return parts.length >= 2 && parts.every(function(p) { return p.length >= 2; });
-      }
-
-      function validateEmail(value) {
-        var trimmed = value.trim();
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(trimmed);
-      }
-
-      function validatePhone(value) {
-        var trimmed = value.trim();
-        var phoneRegex = /^(\+27|0)[6-8][0-9]{8}$/;
-        return phoneRegex.test(trimmed);
-      }
-
-      function validatePassword(value) {
-        return value.length >= 8;
-      }
-
-      // ===== SIGNUP =====
-      if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-
-          var isNameValid = validateName(nameInput.value);
-          var isEmailValid = validateEmail(emailInput.value);
-          var isPhoneValid = validatePhone(phoneInput.value);
-          var isPasswordValid = validatePassword(passwordInput.value);
-
-          // Clear previous errors
-          [nameInput, emailInput, phoneInput, passwordInput].forEach(function(el) {
-            el.classList.remove('error');
-          });
-          [nameError, emailError, phoneError, passwordError].forEach(function(el) {
-            el.classList.remove('visible');
-          });
-
-          var isValid = true;
-
-          if (!nameInput.value.trim() || !isNameValid) {
-            nameInput.classList.add('error');
-            nameError.textContent = 'Please enter your full name';
-            nameError.classList.add('visible');
-            isValid = false;
-          }
-
-          if (!emailInput.value.trim() || !isEmailValid) {
-            emailInput.classList.add('error');
-            emailError.textContent = 'Please enter a valid email address';
-            emailError.classList.add('visible');
-            isValid = false;
-          }
-
-          if (!phoneInput.value.trim() || !isPhoneValid) {
-            phoneInput.classList.add('error');
-            phoneError.textContent = 'Please enter a valid South African phone number';
-            phoneError.classList.add('visible');
-            isValid = false;
-          }
-
-          if (!passwordInput.value.trim() || !isPasswordValid) {
-            passwordInput.classList.add('error');
-            passwordError.textContent = 'Password must be at least 8 characters';
-            passwordError.classList.add('visible');
-            isValid = false;
-          }
-
-          if (!isValid) return;
-
-          var fullName = nameInput.value.trim();
-          var nameParts = fullName.split(/\s+/);
-          currentUser.name = nameParts[0] || 'Thabo';
-          currentUser.surname = nameParts.slice(1).join(' ') || 'Mbeki';
-          currentUser.email = emailInput.value.trim();
-          currentUser.phone = phoneInput.value.trim();
-          // Update window.currentUser
-          window.currentUser = currentUser;
-
-          submitBtn.classList.add('loading');
-          submitBtn.disabled = true;
-
-          setTimeout(function() {
-            formState.style.display = 'none';
-            successState.classList.add('active');
-            if (successMessage) {
-              successMessage.textContent = 'Welcome ' + fullName + '! Your BridgeID is being built.';
-            }
-            submitBtn.classList.remove('loading');
-            submitBtn.disabled = false;
-          }, 1800);
-        });
-      }
-
-      // ===== GO TO DASHBOARD =====
-      if (goToDashboardBtn) {
-        goToDashboardBtn.addEventListener('click', function() {
-          var fullName = currentUser.name + ' ' + currentUser.surname;
-          closeModal();
-          showDashboard(fullName);
-        });
-      }
-
-      // ===== ONBOARDING =====
-      function openOnboarding() {
-        if (step1) step1.classList.add('active');
-        if (step2) step2.classList.remove('active');
-        if (popiaConsent) popiaConsent.checked = false;
-        if (popiaContinueBtn) popiaContinueBtn.disabled = true;
-        if (popiaError) popiaError.classList.remove('visible');
-        if (otherBusinessTypeGroup) otherBusinessTypeGroup.style.display = 'none';
-        if (otherBusinessType) otherBusinessType.value = '';
-
-        if (onboardingForm) onboardingForm.reset();
-        document.querySelectorAll('#onboardingModal .error-text').forEach(function(el) {
-          el.classList.remove('visible');
-        });
-        document.querySelectorAll('#onboardingModal input, #onboardingModal select').forEach(function(el) {
-          el.classList.remove('error');
-        });
-        if (onboardingSubmitBtn) {
-          onboardingSubmitBtn.classList.remove('loading');
-          onboardingSubmitBtn.disabled = false;
-        }
-
-        if (onboardingModal) {
-          onboardingModal.classList.add('active');
-          document.body.style.overflow = 'hidden';
-        }
-      }
-
-      if (startOnboardingBtn) startOnboardingBtn.addEventListener('click', openOnboarding);
-      if (quickOnboardingBtn) quickOnboardingBtn.addEventListener('click', openOnboarding);
-      if (closeOnboardingBtn) closeOnboardingBtn.addEventListener('click', window.closeOnboarding);
-
-      onboardingModal.addEventListener('click', function(e) {
-        if (e.target === onboardingModal) window.closeOnboarding();
-      });
-
-      // ===== POPIA CONSENT =====
-      if (popiaConsent) {
-        popiaConsent.addEventListener('change', function() {
-          if (this.checked) {
-            if (popiaContinueBtn) popiaContinueBtn.disabled = false;
-            if (popiaError) popiaError.classList.remove('visible');
-          } else {
-            if (popiaContinueBtn) popiaContinueBtn.disabled = true;
-            if (popiaError) popiaError.classList.add('visible');
-          }
-        });
-      }
-
-      if (popiaContinueBtn) {
-        popiaContinueBtn.addEventListener('click', function() {
-          if (popiaConsent && popiaConsent.checked) {
-            if (step1) step1.classList.remove('active');
-            if (step2) step2.classList.add('active');
-            setTimeout(function() {
-              if (businessName) businessName.focus();
-            }, 300);
-          }
-        });
-      }
-
-      if (backToConsentBtn) {
-        backToConsentBtn.addEventListener('click', function() {
-          if (step2) step2.classList.remove('active');
-          if (step1) step1.classList.add('active');
-        });
-      }
-
-      // ===== OTHER BUSINESS TYPE =====
-      if (businessType) {
-        businessType.addEventListener('change', function() {
-          if (this.value === 'other') {
-            if (otherBusinessTypeGroup) otherBusinessTypeGroup.style.display = 'block';
-            if (otherBusinessType) otherBusinessType.required = true;
-          } else {
-            if (otherBusinessTypeGroup) otherBusinessTypeGroup.style.display = 'none';
-            if (otherBusinessType) {
-              otherBusinessType.required = false;
-              otherBusinessType.value = '';
-            }
-            if (otherBusinessTypeError) otherBusinessTypeError.classList.remove('visible');
-          }
-        });
-      }
-
-      // ===== ONBOARDING VALIDATION =====
-      function validateBusinessName(value) { return value.trim().length >= 2; }
-
-      function validateSelect(value) { return value !== ''; }
-
-      function validateLocation(value) { return value.trim().length >= 2; }
-
-      if (businessName) {
-        businessName.addEventListener('blur', function() {
-          if (!validateBusinessName(this.value) && this.value.trim() !== '') {
-            this.classList.add('error');
-            if (businessNameError) businessNameError.classList.add('visible');
-          } else {
-            this.classList.remove('error');
-            if (businessNameError) businessNameError.classList.remove('visible');
-          }
-        });
-        businessName.addEventListener('input', function() {
-          if (this.value.trim() === '') {
-            this.classList.remove('error');
-            if (businessNameError) businessNameError.classList.remove('visible');
-          } else if (!validateBusinessName(this.value)) {
-            this.classList.add('error');
-            if (businessNameError) businessNameError.classList.add('visible');
-          } else {
-            this.classList.remove('error');
-            if (businessNameError) businessNameError.classList.remove('visible');
-          }
-        });
-      }
-
-      if (businessLocation) {
-        businessLocation.addEventListener('blur', function() {
-          if (!validateLocation(this.value) && this.value.trim() !== '') {
-            this.classList.add('error');
-            if (businessLocationError) businessLocationError.classList.add('visible');
-          } else {
-            this.classList.remove('error');
-            if (businessLocationError) businessLocationError.classList.remove('visible');
-          }
-        });
-        businessLocation.addEventListener('input', function() {
-          if (this.value.trim() === '') {
-            this.classList.remove('error');
-            if (businessLocationError) businessLocationError.classList.remove('visible');
-          } else if (!validateLocation(this.value)) {
-            this.classList.add('error');
-            if (businessLocationError) businessLocationError.classList.add('visible');
-          } else {
-            this.classList.remove('error');
-            if (businessLocationError) businessLocationError.classList.remove('visible');
-          }
-        });
-      }
-
-      ['businessType', 'primaryTransactions', 'avgMonthlyRevenue', 'businessYears'].forEach(function(id) {
-        var el = document.getElementById(id);
-        var errorEl = document.getElementById(id + 'Error');
-        if (el && errorEl) {
-          el.addEventListener('change', function() {
-            if (this.value === '') {
-              this.classList.add('error');
-              errorEl.classList.add('visible');
-            } else {
-              this.classList.remove('error');
-              errorEl.classList.remove('visible');
-            }
-          });
-          el.addEventListener('blur', function() {
-            if (this.value === '') {
-              this.classList.add('error');
-              errorEl.classList.add('visible');
-            } else {
-              this.classList.remove('error');
-              errorEl.classList.remove('visible');
-            }
-          });
-        }
-      });
-
-      // ===== ONBOARDING SUBMISSION =====
-      if (onboardingForm) {
-        onboardingForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-
-          var isValid = true;
-          var fields = [
-            { el: businessName, error: businessNameError, validator: validateBusinessName,
-              msg: 'Please enter your business name' },
-            { el: businessType, error: businessTypeError, validator: validateSelect,
-            msg: 'Please select your business type' },
-            { el: primaryTransactions, error: primaryTransactionsError, validator: validateSelect,
-              msg: 'Please select your primary transaction method' },
-            { el: avgMonthlyRevenue, error: avgMonthlyRevenueError, validator: validateSelect,
-              msg: 'Please select your revenue range' },
-            { el: businessLocation, error: businessLocationError, validator: validateLocation,
-              msg: 'Please enter your business location' },
-            { el: businessYears, error: businessYearsError, validator: validateSelect,
-              msg: 'Please select how long you\'ve been in business' }
-          ];
-
-          if (businessType.value === 'other') {
-            if (!otherBusinessType.value.trim()) {
-              otherBusinessType.classList.add('error');
-              otherBusinessTypeError.textContent = 'Please specify your business type';
-              otherBusinessTypeError.classList.add('visible');
-              isValid = false;
-            } else {
-              otherBusinessType.classList.remove('error');
-              otherBusinessTypeError.classList.remove('visible');
-            }
-          }
-
-          fields.forEach(function(field) {
-            if (!field.validator(field.el.value)) {
-              field.el.classList.add('error');
-              field.error.textContent = field.msg;
-              field.error.classList.add('visible');
-              isValid = false;
-            } else {
-              field.el.classList.remove('error');
-              field.error.classList.remove('visible');
-            }
-          });
-
-          if (!isValid) return;
-
-          var businessTypeValue = businessType.value;
-          if (businessTypeValue === 'other') {
-            businessTypeValue = otherBusinessType.value.trim();
-          }
-
-          currentUser.businessName = businessName.value.trim();
-          currentUser.businessType = businessTypeValue;
-          currentUser.primaryTransactions = primaryTransactions.value;
-          currentUser.avgMonthlyRevenue = avgMonthlyRevenue.value;
-          currentUser.businessLocation = businessLocation.value.trim();
-          currentUser.businessYears = businessYears.value;
-          currentUser.profileComplete = true;
-          // Update window.currentUser
-          window.currentUser = currentUser;
-
-          onboardingSubmitBtn.classList.add('loading');
-          onboardingSubmitBtn.disabled = true;
-
-          setTimeout(function() {
-            onboardingSubmitBtn.classList.remove('loading');
-            onboardingSubmitBtn.disabled = false;
-            window.closeOnboarding();
-
-            var pendingActivity = document.getElementById('pendingProfileActivity');
-            if (pendingActivity) pendingActivity.remove();
-
-            addActivity('📋', 'Profile completed — Business information added');
-
-            updateDashboard();
-
-            // Auto-scroll to the Onboarding Card (which now shows "Connect your accounts")
-            var onboardingCard = document.getElementById('onboardingCard');
-            if (onboardingCard) {
-              onboardingCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-
-            // Highlight the connection buttons with a subtle animation
-            var connectBankBtn = document.getElementById('connectBankFromCard');
-            var connectYocoBtn = document.getElementById('connectYocoFromCard');
-            if (connectBankBtn) {
-              connectBankBtn.style.transition = 'all 0.3s';
-              connectBankBtn.style.boxShadow = '0 0 20px rgba(0, 255, 136, 0.3)';
-              setTimeout(function() {
-                connectBankBtn.style.boxShadow = 'none';
-              }, 3000);
-            }
-            if (connectYocoBtn) {
-              connectYocoBtn.style.transition = 'all 0.3s';
-              connectYocoBtn.style.boxShadow = '0 0 20px rgba(0, 255, 136, 0.3)';
-              setTimeout(function() {
-                connectYocoBtn.style.boxShadow = 'none';
-              }, 3000);
-            }
-
-          }, 2000);
-        });
-      }
-
-      // ===== CONNECT BUTTONS =====
+      // ---- CONNECT BUTTONS ----
       var bankConnectBtns = [quickConnectBankBtn, connectBankFromCard];
       bankConnectBtns.forEach(function(btn) {
         if (btn) {
           btn.addEventListener('click', function() {
             if (!connectionState.bank.connected) openBankConnection();
             else {
-              // Show a toast message instead of alert
               var toast = document.createElement('div');
               toast.style.cssText = 'position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#141414; color:#00ff88; padding:16px 32px; border-radius:12px; border:1px solid rgba(0,255,136,0.2); font-family:Inter,sans-serif; z-index:9999; animation:fadeUp 0.3s ease;';
               toast.textContent = '✅ Bank is already connected!';
@@ -3866,27 +3850,19 @@
         }
       });
 
-      // ===== EVENT LISTENERS =====
-      if (getStartedBtn) getStartedBtn.addEventListener('click', openModal);
-      if (joinNetworkBtn) joinNetworkBtn.addEventListener('click', openModal);
-      if (navSignupBtn) navSignupBtn.addEventListener('click', openModal);
-      if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-
-      signupModal.addEventListener('click', function(e) {
-        if (e.target === signupModal) closeModal();
-      });
-
+      // ---- CONNECTION MODAL ----
       closeConnectionBtn.addEventListener('click', closeConnectionModal);
       connectionDoneBtn.addEventListener('click', closeConnectionModal);
       connectionModal.addEventListener('click', function(e) {
         if (e.target === connectionModal) closeConnectionModal();
       });
 
+      // ---- KEYBOARD SHORTCUTS ----
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
           if (signupModal.classList.contains('active')) closeModal();
           if (connectionModal.classList.contains('active')) closeConnectionModal();
-          if (onboardingModal.classList.contains('active')) window.closeOnboarding();
+          if (onboardingModal.classList.contains('active')) closeOnboarding();
           if (bankConnectionModal.classList.contains('active')) closeBankConnection();
           if (yocoConnectionModal.classList.contains('active')) closeYocoConnection();
         }
@@ -3894,7 +3870,7 @@
 
       console.log('🌿 EcoBridge EC initialized successfully with Open Banking AIS API!');
 
-    })();
+    });
   </script>
 
 </body>
