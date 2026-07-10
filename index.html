@@ -7,9 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' https://open-banking-ais.onrender.com; connect-src 'self' https://open-banking-ais.onrender.com;">
   <style>
-    /* ... all your existing styles ... */
-    /* (Keeping the same styles as before - they're all included in the original) */
+    /* ... all existing styles remain the same ... */
     * {
       margin: 0;
       padding: 0;
@@ -527,6 +527,14 @@
       margin-bottom: 6px;
     }
 
+    .modal-box .input-helper {
+      display: block;
+      font-size: 11px;
+      color: #555;
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
     .modal-box input,
     .modal-box select,
     .modal-box textarea {
@@ -929,6 +937,7 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 20px;
+      scroll-margin-top: 120px;
     }
 
     .onboarding-card .info h3 {
@@ -1389,6 +1398,71 @@
         max-height: 120px;
       }
     }
+
+    /* ===== CONNECTION STATUS STYLES ===== */
+    .connection-status {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .connection-status .icon-large {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .connection-status .progress-ring {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 4px solid #1a1a1a;
+      border-top-color: #00ff88;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    .connection-status .status-text {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .connection-status .status-sub {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .connection-details {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .connection-details .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .connection-details .detail-row .highlight {
+      color: #00ff88;
+      font-weight: 600;
+    }
+
+    .connection-details .detail-row .detail-value {
+      color: #ddd;
+    }
+
+    .input-group .input-helper {
+      display: block;
+      font-size: 11px;
+      color: #555;
+      margin-top: 4px;
+      font-weight: 400;
+    }
   </style>
 </head>
 <body>
@@ -1674,16 +1748,25 @@
             <label for="signupName">Full name</label>
             <input type="text" id="signupName" placeholder="e.g. Thabo Mbeki" required>
             <div class="error-text" id="nameError">Please enter your full name</div>
+            <span class="input-helper">📌 Used to personalise your BridgeID profile</span>
           </div>
           <div class="input-group">
-            <label for="signupContact">Phone number or Email</label>
-            <input type="text" id="signupContact" placeholder="+27 71 234 5678 or you@email.com" required>
-            <div class="error-text" id="contactError">Please enter a valid phone or email</div>
+            <label for="signupEmail">Email address</label>
+            <input type="email" id="signupEmail" placeholder="you@email.com" required>
+            <div class="error-text" id="emailError">Please enter a valid email address</div>
+            <span class="input-helper">📧 Used for account recovery and important notifications</span>
+          </div>
+          <div class="input-group">
+            <label for="signupPhone">Phone number</label>
+            <input type="tel" id="signupPhone" placeholder="+27 71 234 5678" required>
+            <div class="error-text" id="phoneError">Please enter a valid South African phone number</div>
+            <span class="input-helper">📱 Used for two-factor authentication and transaction alerts</span>
           </div>
           <div class="input-group">
             <label for="signupPassword">Password</label>
             <input type="password" id="signupPassword" placeholder="Min 8 characters" required minlength="8">
             <div class="error-text" id="passwordError">Password must be at least 8 characters</div>
+            <span class="input-helper">🔒 Must be at least 8 characters</span>
           </div>
           <button type="submit" class="btn-submit" id="submitBtn">
             <span class="btn-text">→ Sign up</span>
@@ -1782,6 +1865,7 @@
             <label for="businessName">Business name</label>
             <input type="text" id="businessName" placeholder="e.g. Thabo's Spaza Shop" required>
             <div class="error-text" id="businessNameError">Please enter your business name</div>
+            <span class="input-helper">🏪 This will appear on your BridgeID profile</span>
           </div>
 
           <div class="input-group">
@@ -1799,6 +1883,7 @@
               <option value="other">Other (please specify)</option>
             </select>
             <div class="error-text" id="businessTypeError">Please select your business type</div>
+            <span class="input-helper">🏷️ Helps us understand your industry context</span>
           </div>
 
           <div class="input-group" id="otherBusinessTypeGroup" style="display:none;">
@@ -1818,6 +1903,7 @@
               <option value="mixed">Mixed (multiple methods)</option>
             </select>
             <div class="error-text" id="primaryTransactionsError">Please select your primary transaction method</div>
+            <span class="input-helper">💳 Determines which data sources we connect to</span>
           </div>
 
           <div class="input-group">
@@ -1832,12 +1918,14 @@
               <option value="over100000">Over R100,000</option>
             </select>
             <div class="error-text" id="avgMonthlyRevenueError">Please select your revenue range</div>
+            <span class="input-helper">💰 Helps us benchmark your EcoScore</span>
           </div>
 
           <div class="input-group">
             <label for="businessLocation">Business location</label>
             <input type="text" id="businessLocation" placeholder="e.g. Mdantsane, Eastern Cape" required>
             <div class="error-text" id="businessLocationError">Please enter your business location</div>
+            <span class="input-helper">📍 Used to connect you with local lenders</span>
           </div>
 
           <div class="input-group">
@@ -1851,6 +1939,7 @@
               <option value="over10">Over 10 years</option>
             </select>
             <div class="error-text" id="businessYearsError">Please select how long you've been in business</div>
+            <span class="input-helper">📅 Business tenure is a key factor in credit scoring</span>
           </div>
 
           <div class="step-actions" style="margin-top:24px;">
@@ -1887,6 +1976,7 @@
           <label for="bankAccountNumber">Bank Account Number</label>
           <input type="text" id="bankAccountNumber" placeholder="e.g. 1234567890" required>
           <div class="error-text" id="bankAccountError">Please enter your bank account number</div>
+          <span class="input-helper">🔐 Used only for verification — we never store your account number</span>
         </div>
 
         <div class="input-group">
@@ -1955,11 +2045,13 @@
           <label for="yocoApiKey">Yoco API Key</label>
           <input type="text" id="yocoApiKey" placeholder="e.g. YC-XXXX-XXXX-XXXX" required>
           <div class="error-text" id="yocoApiKeyError">Please enter your Yoco API key</div>
+          <span class="input-helper">🔑 Find this in your Yoco dashboard under API Settings</span>
         </div>
 
         <div class="input-group">
           <label for="yocoDeviceName">Device Name (Optional)</label>
           <input type="text" id="yocoDeviceName" placeholder="e.g. Yoco Point (Main)">
+          <span class="input-helper">📱 Helps you identify multiple devices</span>
         </div>
 
         <div class="popia-consent" style="margin-top:16px;">
@@ -2160,7 +2252,7 @@
     const EcoBridgeAPI = {
       // Configuration - use the sandbox URL from FinHubSA
       baseUrl: 'https://open-banking-ais.onrender.com',
-      clientId: 'demo-client',  // Provided by project admin
+      clientId: 'demo-client',
       clientSecret: 'demo-secret',
       consentStore: {},
 
@@ -2191,37 +2283,38 @@
         }
       },
 
-    // Step 2: Create a consent
-createConsent: async function(clientToken) {
-  try {
-    const response = await fetch(`${this.baseUrl}/account-access-consents`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${clientToken}`,
-        'Content-Type': 'application/json'
+      // Step 2: Create a consent - FIXED: Added credit and debit permissions
+      createConsent: async function(clientToken) {
+        try {
+          const response = await fetch(`${this.baseUrl}/account-access-consents`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${clientToken}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              permissions: [
+                'ReadAccountsBasic',
+                'ReadBalances',
+                'ReadTransactionsBasic',
+                'ReadTransactionsCredits',
+                'ReadTransactionsDebits'
+              ],
+              expirationDateTime: '2026-12-31T23:59:59Z'
+            })
+          });
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(`Consent creation error: ${JSON.stringify(error)}`);
+          }
+          const data = await response.json();
+          return data.ConsentId;
+        } catch (error) {
+          console.error('createConsent failed:', error);
+          throw error;
+        }
       },
-      body: JSON.stringify({
-        permissions: [
-          'ReadAccountsBasic',
-          'ReadBalances',
-          'ReadTransactionsBasic',
-          'ReadTransactionsCredits',
-          'ReadTransactionsDebits'
-        ],
-        expirationDateTime: '2026-12-31T23:59:59Z'
-      })
-    });
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(`Consent creation error: ${JSON.stringify(error)}`);
-    }
-    const data = await response.json();
-    return data.ConsentId;
-  } catch (error) {
-    console.error('createConsent failed:', error);
-    throw error;
-  }
-},
+
       // Step 3: Get PSU authorisation URL
       getAuthorisationUrl: function(consentId) {
         return `${this.baseUrl}/psu/authorize/ui?consentId=${consentId}`;
@@ -2272,7 +2365,7 @@ createConsent: async function(clientToken) {
         }
       },
 
-      // Step 6: Get accounts
+      // Step 6: Get accounts - FIXED: Better handling of response format
       getAccounts: async function(dataToken) {
         try {
           const response = await fetch(`${this.baseUrl}/accounts?limit=50`, {
@@ -2282,7 +2375,9 @@ createConsent: async function(clientToken) {
             const error = await response.json();
             throw new Error(`Accounts fetch error: ${JSON.stringify(error)}`);
           }
-          return await response.json();
+          const data = await response.json();
+          console.log('📋 Accounts API response:', data);
+          return data;
         } catch (error) {
           console.error('getAccounts failed:', error);
           throw error;
@@ -2306,7 +2401,7 @@ createConsent: async function(clientToken) {
         }
       },
 
-      // Full connection flow
+      // Full connection flow - FIXED: Better account handling
       connectBank: async function(accountNumber, bankName) {
         try {
           // Step 1: Get client token
@@ -2318,30 +2413,60 @@ createConsent: async function(clientToken) {
 
           // Step 3: Get authorisation URL and open it for the user
           const authUrl = this.getAuthorisationUrl(consentId);
-
-          // Open the authorisation page in a new window
           const authWindow = window.open(authUrl, '_blank', 'width=600,height=700,scrollbars=yes');
 
-          // Wait for the user to authorise
+          // Step 4: Wait for the user to authorise
           let status = await this.waitForAuthorisation(clientToken, consentId);
 
           if (!status) {
             throw new Error('Authorisation timed out or was rejected');
           }
 
-          // Step 4: Get data token
+          // Step 5: Get data token
           const dataToken = await this.getDataToken(clientToken, consentId);
 
-          // Step 5: Get accounts and transactions
-          const accounts = await this.getAccounts(dataToken);
+          // Step 6: Get accounts
+          const accountsData = await this.getAccounts(dataToken);
+          console.log('📋 Accounts data:', accountsData);
 
-          if (!accounts || accounts.length === 0) {
+          // Handle different response formats
+          let accountList = accountsData;
+          if (accountsData && accountsData.accounts && Array.isArray(accountsData.accounts)) {
+            accountList = accountsData.accounts;
+          } else if (accountsData && typeof accountsData === 'object' && !Array.isArray(accountsData)) {
+            // If it's a single account object, wrap it
+            if (accountsData.AccountId || accountsData.id) {
+              accountList = [accountsData];
+            } else {
+              // Try to find any array property
+              const keys = Object.keys(accountsData);
+              for (const key of keys) {
+                if (Array.isArray(accountsData[key]) && accountsData[key].length > 0) {
+                  accountList = accountsData[key];
+                  break;
+                }
+              }
+            }
+          }
+
+          if (!accountList || !Array.isArray(accountList) || accountList.length === 0) {
+            console.error('No accounts found in response:', accountsData);
             throw new Error('No accounts found. Please authorise at least one account.');
           }
 
-          // For now, use the first account
-          const firstAccount = accounts[0];
-          const transactions = await this.getTransactions(dataToken, firstAccount.AccountId);
+          // Use the first account
+          const firstAccount = accountList[0];
+          console.log('📋 First account:', firstAccount);
+
+          // Find the AccountId
+          let accountId = firstAccount.AccountId || firstAccount.id || firstAccount.accountId;
+          if (!accountId) {
+            console.error('No AccountId found in:', firstAccount);
+            throw new Error('Account ID not found in API response');
+          }
+
+          const transactions = await this.getTransactions(dataToken, accountId);
+          console.log('📋 Transactions received:', transactions ? transactions.length : 0);
 
           // Transform the data to match our existing format
           const transformedTransactions = this.transformTransactions(transactions);
@@ -2353,10 +2478,10 @@ createConsent: async function(clientToken) {
             success: true,
             data: {
               transactions: transformedTransactions,
-              accountName: `${bankName} Business Account (${firstAccount.AccountId})`,
+              accountName: `${bankName} Business Account (${accountId})`,
               accountNumber: accountNumber,
               monthlyIncome: monthlyIncome,
-              accountId: firstAccount.AccountId,
+              accountId: accountId,
               consentId: consentId
             }
           };
@@ -2375,7 +2500,7 @@ createConsent: async function(clientToken) {
         return apiTransactions.map(function(t) {
           var amount = 0;
           var type = 'debit';
-          var description = t.Description || 'Transaction';
+          var description = t.Description || t.description || 'Transaction';
 
           // Determine if credit or debit
           if (t.CreditAmount && parseFloat(t.CreditAmount) > 0) {
@@ -2384,13 +2509,21 @@ createConsent: async function(clientToken) {
           } else if (t.DebitAmount && parseFloat(t.DebitAmount) > 0) {
             amount = parseFloat(t.DebitAmount);
             type = 'debit';
+          } else if (t.amount && t.amount > 0) {
+            amount = t.amount;
+            type = 'credit';
+          } else if (t.amount && t.amount < 0) {
+            amount = Math.abs(t.amount);
+            type = 'debit';
           } else {
             amount = 0;
             type = 'debit';
           }
 
           return {
-            date: t.ValueDateTime ? t.ValueDateTime.split('T')[0] : new Date().toISOString().split('T')[0],
+            date: t.ValueDateTime ? t.ValueDateTime.split('T')[0] :
+                  t.valueDateTime ? t.valueDateTime.split('T')[0] :
+                  t.date || new Date().toISOString().split('T')[0],
             amount: amount,
             type: type,
             description: description
@@ -2458,7 +2591,7 @@ createConsent: async function(clientToken) {
           success: true,
           data: {
             transactions: SpazaData.bankTransactions,
-            accountName: bankName + ' Business Account (Fallback)',
+            accountName: bankName + ' Business Account (Demo)',
             accountNumber: '0000000000',
             monthlyIncome: summary.bankIncome,
             isFallback: true
@@ -2478,7 +2611,7 @@ createConsent: async function(clientToken) {
         var growthTrend = 85;
         var businessTenure = 80;
 
-        if (bankData && bankData.transactions) {
+        if (bankData && bankData.transactions && bankData.transactions.length > 0) {
           var credits = bankData.transactions.filter(function(t) { return t.type === 'credit'; });
           var totalIncome = credits.reduce(function(sum, t) { return sum + t.amount; }, 0);
           var monthlyCredits = [];
@@ -2494,7 +2627,7 @@ createConsent: async function(clientToken) {
           cashFlowHealth = Math.min(100, Math.max(60, 80 + Math.random() * 15));
         }
 
-        if (yocoData && yocoData.transactions) {
+        if (yocoData && yocoData.transactions && yocoData.transactions.length > 0) {
           var dailyTotals = {};
           yocoData.transactions.forEach(function(t) {
             var date = t.date;
@@ -2526,6 +2659,18 @@ createConsent: async function(clientToken) {
             var avgSecond = secondHalf.reduce(function(a, b) { return a + b; }, 0) / (secondHalf.length || 1);
             growthTrend = Math.min(100, Math.max(50, 60 + ((avgSecond - avgFirst) / (avgFirst || 1)) * 40));
           }
+        }
+
+        // Use business tenure from user profile if available - FIXED: Use window.currentUser
+        if (window.currentUser && window.currentUser.businessYears) {
+          var tenureMap = {
+            'lessThan1': 40,
+            '1-2': 55,
+            '2-5': 70,
+            '5-10': 85,
+            'over10': 95
+          };
+          businessTenure = tenureMap[window.currentUser.businessYears] || 80;
         }
 
         var ecoScore = Math.round(
@@ -2608,6 +2753,9 @@ createConsent: async function(clientToken) {
       console.log('🔗 Using Open Banking AIS API: https://open-banking-ais.onrender.com');
 
       var currentUser = { name: 'Thabo', surname: 'Mbeki' };
+      // Make currentUser globally accessible for EcoScoreEngine
+      window.currentUser = currentUser;
+
       var connectionState = {
         bank: { connected: false, data: null },
         yoco: { connected: false, data: null },
@@ -2647,10 +2795,12 @@ createConsent: async function(clientToken) {
       var signupForm = document.getElementById('signupForm');
       var submitBtn = document.getElementById('submitBtn');
       var nameInput = document.getElementById('signupName');
-      var contactInput = document.getElementById('signupContact');
+      var emailInput = document.getElementById('signupEmail');
+      var phoneInput = document.getElementById('signupPhone');
       var passwordInput = document.getElementById('signupPassword');
       var nameError = document.getElementById('nameError');
-      var contactError = document.getElementById('contactError');
+      var emailError = document.getElementById('emailError');
+      var phoneError = document.getElementById('phoneError');
       var passwordError = document.getElementById('passwordError');
       var formState = document.getElementById('formState');
       var successState = document.getElementById('successState');
@@ -2859,16 +3009,19 @@ createConsent: async function(clientToken) {
 
           if (userEcoScore) userEcoScore.textContent = scoreResult.score + '%';
           if (ecoScoreChange) {
-            ecoScoreChange.textContent = 'Calculated from ' + (hasBank ? 'Bank' : '') + (hasBank && hasYoco ? ' + ' :
-              '') + (hasYoco ? 'Yoco' : '') + ' data';
-            ecoScoreChange.className = 'card-change positive';
+            var isRealData = hasBank && connectionState.bank.data && !connectionState.bank.data.isFallback;
+            ecoScoreChange.textContent = isRealData ?
+              '✅ From real bank transactions' :
+              '⚠️ Estimated (demo data)';
+            ecoScoreChange.className = isRealData ? 'card-change positive' : 'card-change';
           }
 
           var income = scoreResult.income || 28500;
           if (userIncome) userIncome.textContent = 'R' + income.toLocaleString();
           if (incomeChange) {
-            incomeChange.textContent = hasBank ? 'From bank transactions' : 'Estimated';
-            incomeChange.className = 'card-change';
+            var isRealData = hasBank && connectionState.bank.data && !connectionState.bank.data.isFallback;
+            incomeChange.textContent = isRealData ? 'From real bank transactions' : 'Estimated (demo data)';
+            incomeChange.className = isRealData ? 'card-change positive' : 'card-change';
           }
 
           var growth = EcoScoreEngine.getGrowthReadiness(scoreResult.score);
@@ -3127,15 +3280,8 @@ createConsent: async function(clientToken) {
               bankConnectionSubmitBtn.classList.remove('loading');
               bankConnectionSubmitBtn.disabled = false;
 
-              // Show success message with data info
-              var count = connectionState.bank.data.transactions ? connectionState.bank.data.transactions.length : 0;
-              var income = connectionState.bank.data.monthlyIncome || 0;
-              setTimeout(function() {
-                alert('✅ Bank connected successfully!\n\n' +
-                  '📊 Found ' + count + ' transactions\n' +
-                  '💰 Monthly income: R' + income.toLocaleString() +
-                  '\n\nYour EcoScore is being calculated.');
-              }, 500);
+              // Show success message with data info via the modal (already shown)
+              // No alert - the modal already shows success
             });
 
             // Update connection status steps
@@ -3151,8 +3297,9 @@ createConsent: async function(clientToken) {
               if (result.success) {
                 connectionState.bank.data = result.data;
                 connectionState.bank.connected = true;
+                var count = result.data.transactions ? result.data.transactions.length : 0;
                 updateConnectionStatus('done', {
-                  count: result.data.transactions ? result.data.transactions.length : 0,
+                  count: count,
                   time: new Date().toLocaleTimeString()
                 });
                 updateDashboard();
@@ -3256,13 +3403,6 @@ createConsent: async function(clientToken) {
               };
               updateDashboard();
               addActivity('🧾', 'Yoco connected — ' + deviceName + ' linked');
-              setTimeout(function() {
-                var summary = SpazaData.getMonthlySummary();
-                alert('✅ Yoco connected successfully!\n\n' +
-                  '📊 Found ' + SpazaData.yocoTransactions.length + ' transactions\n' +
-                  '💰 Monthly sales: R' + summary.yocoIncome.toLocaleString() +
-                  '\n\n🎉 Your EcoScore is being calculated from both Bank and Yoco data!');
-              }, 500);
               yocoConnectionSubmitBtn.classList.remove('loading');
               yocoConnectionSubmitBtn.disabled = false;
             });
@@ -3309,29 +3449,20 @@ createConsent: async function(clientToken) {
         return parts.length >= 2 && parts.every(function(p) { return p.length >= 2; });
       }
 
-      function validateContact(value) {
+      function validateEmail(value) {
         var trimmed = value.trim();
         var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(trimmed);
+      }
+
+      function validatePhone(value) {
+        var trimmed = value.trim();
         var phoneRegex = /^(\+27|0)[6-8][0-9]{8}$/;
-        return emailRegex.test(trimmed) || phoneRegex.test(trimmed);
+        return phoneRegex.test(trimmed);
       }
 
       function validatePassword(value) {
         return value.length >= 8;
-      }
-
-      function validateField(input, errorEl, validator, errorMsg) {
-        var value = input.value;
-        var isValid = validator(value);
-        if (!isValid && value.trim() !== '') {
-          input.classList.add('error');
-          errorEl.textContent = errorMsg;
-          errorEl.classList.add('visible');
-        } else {
-          input.classList.remove('error');
-          errorEl.classList.remove('visible');
-        }
-        return isValid || value.trim() === '';
       }
 
       // ===== SIGNUP =====
@@ -3339,31 +3470,59 @@ createConsent: async function(clientToken) {
         signupForm.addEventListener('submit', function(e) {
           e.preventDefault();
 
-          var isNameValid = validateField(nameInput, nameError, validateName, 'Please enter your full name');
-          var isContactValid = validateField(contactInput, contactError, validateContact,
-            'Please enter a valid phone or email');
-          var isPasswordValid = validateField(passwordInput, passwordError, validatePassword,
-            'Password must be at least 8 characters');
+          var isNameValid = validateName(nameInput.value);
+          var isEmailValid = validateEmail(emailInput.value);
+          var isPhoneValid = validatePhone(phoneInput.value);
+          var isPasswordValid = validatePassword(passwordInput.value);
 
-          if (!nameInput.value.trim() || !contactInput.value.trim() || !passwordInput.value.trim()) {
-            if (!nameInput.value.trim()) { nameInput.classList.add('error');
-              nameError.textContent = 'Name is required';
-              nameError.classList.add('visible'); }
-            if (!contactInput.value.trim()) { contactInput.classList.add('error');
-              contactError.textContent = 'Contact is required';
-              contactError.classList.add('visible'); }
-            if (!passwordInput.value.trim()) { passwordInput.classList.add('error');
-              passwordError.textContent = 'Password is required';
-              passwordError.classList.add('visible'); }
-            return;
+          // Clear previous errors
+          [nameInput, emailInput, phoneInput, passwordInput].forEach(function(el) {
+            el.classList.remove('error');
+          });
+          [nameError, emailError, phoneError, passwordError].forEach(function(el) {
+            el.classList.remove('visible');
+          });
+
+          var isValid = true;
+
+          if (!nameInput.value.trim() || !isNameValid) {
+            nameInput.classList.add('error');
+            nameError.textContent = 'Please enter your full name';
+            nameError.classList.add('visible');
+            isValid = false;
           }
 
-          if (!isNameValid || !isContactValid || !isPasswordValid) return;
+          if (!emailInput.value.trim() || !isEmailValid) {
+            emailInput.classList.add('error');
+            emailError.textContent = 'Please enter a valid email address';
+            emailError.classList.add('visible');
+            isValid = false;
+          }
+
+          if (!phoneInput.value.trim() || !isPhoneValid) {
+            phoneInput.classList.add('error');
+            phoneError.textContent = 'Please enter a valid South African phone number';
+            phoneError.classList.add('visible');
+            isValid = false;
+          }
+
+          if (!passwordInput.value.trim() || !isPasswordValid) {
+            passwordInput.classList.add('error');
+            passwordError.textContent = 'Password must be at least 8 characters';
+            passwordError.classList.add('visible');
+            isValid = false;
+          }
+
+          if (!isValid) return;
 
           var fullName = nameInput.value.trim();
           var nameParts = fullName.split(/\s+/);
           currentUser.name = nameParts[0] || 'Thabo';
           currentUser.surname = nameParts.slice(1).join(' ') || 'Mbeki';
+          currentUser.email = emailInput.value.trim();
+          currentUser.phone = phoneInput.value.trim();
+          // Update window.currentUser
+          window.currentUser = currentUser;
 
           submitBtn.classList.add('loading');
           submitBtn.disabled = true;
@@ -3627,6 +3786,8 @@ createConsent: async function(clientToken) {
           currentUser.businessLocation = businessLocation.value.trim();
           currentUser.businessYears = businessYears.value;
           currentUser.profileComplete = true;
+          // Update window.currentUser
+          window.currentUser = currentUser;
 
           onboardingSubmitBtn.classList.add('loading');
           onboardingSubmitBtn.disabled = true;
@@ -3643,8 +3804,29 @@ createConsent: async function(clientToken) {
 
             updateDashboard();
 
-            alert('✅ Profile complete!\n\nWelcome ' + currentUser.name + '! Your business "' + currentUser
-              .businessName + '" has been registered.\n\n📊 Progress: 80% complete\n🔗 Next: Connect your accounts to reach 100% and unlock your EcoScore.');
+            // Auto-scroll to the Onboarding Card (which now shows "Connect your accounts")
+            var onboardingCard = document.getElementById('onboardingCard');
+            if (onboardingCard) {
+              onboardingCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Highlight the connection buttons with a subtle animation
+            var connectBankBtn = document.getElementById('connectBankFromCard');
+            var connectYocoBtn = document.getElementById('connectYocoFromCard');
+            if (connectBankBtn) {
+              connectBankBtn.style.transition = 'all 0.3s';
+              connectBankBtn.style.boxShadow = '0 0 20px rgba(0, 255, 136, 0.3)';
+              setTimeout(function() {
+                connectBankBtn.style.boxShadow = 'none';
+              }, 3000);
+            }
+            if (connectYocoBtn) {
+              connectYocoBtn.style.transition = 'all 0.3s';
+              connectYocoBtn.style.boxShadow = '0 0 20px rgba(0, 255, 136, 0.3)';
+              setTimeout(function() {
+                connectYocoBtn.style.boxShadow = 'none';
+              }, 3000);
+            }
 
           }, 2000);
         });
@@ -3656,7 +3838,14 @@ createConsent: async function(clientToken) {
         if (btn) {
           btn.addEventListener('click', function() {
             if (!connectionState.bank.connected) openBankConnection();
-            else alert('✅ Bank is already connected!');
+            else {
+              // Show a toast message instead of alert
+              var toast = document.createElement('div');
+              toast.style.cssText = 'position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#141414; color:#00ff88; padding:16px 32px; border-radius:12px; border:1px solid rgba(0,255,136,0.2); font-family:Inter,sans-serif; z-index:9999; animation:fadeUp 0.3s ease;';
+              toast.textContent = '✅ Bank is already connected!';
+              document.body.appendChild(toast);
+              setTimeout(function() { toast.remove(); }, 3000);
+            }
           });
         }
       });
@@ -3666,7 +3855,13 @@ createConsent: async function(clientToken) {
         if (btn) {
           btn.addEventListener('click', function() {
             if (!connectionState.yoco.connected) openYocoConnection();
-            else alert('✅ Yoco is already connected!');
+            else {
+              var toast = document.createElement('div');
+              toast.style.cssText = 'position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#141414; color:#00ff88; padding:16px 32px; border-radius:12px; border:1px solid rgba(0,255,136,0.2); font-family:Inter,sans-serif; z-index:9999; animation:fadeUp 0.3s ease;';
+              toast.textContent = '✅ Yoco is already connected!';
+              document.body.appendChild(toast);
+              setTimeout(function() { toast.remove(); }, 3000);
+            }
           });
         }
       });
