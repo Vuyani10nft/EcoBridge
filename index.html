@@ -1469,13 +1469,13 @@
 
   <!-- ===== NAVBAR ===== -->
   <header>
-    <div class="logo" onclick="showLanding()">
+    <div class="logo" onclick="window.showLanding()">
       🌿 EcoBridge<span>EC</span>
     </div>
     <nav>
-      <a href="#" onclick="showLanding()">BridgeID</a>
-      <a href="#" onclick="showLanding()">EcoScore</a>
-      <a href="#" onclick="showLanding()">For Lenders</a>
+      <a href="#" onclick="window.showLanding()">BridgeID</a>
+      <a href="#" onclick="window.showLanding()">EcoScore</a>
+      <a href="#" onclick="window.showLanding()">For Lenders</a>
       <a href="#" class="nav-cta" id="navSignupBtn">Sign Up</a>
       <div class="nav-user" id="navUser">
         <div class="avatar" id="userAvatar">A</div>
@@ -1699,7 +1699,7 @@
       <button class="btn" id="quickConnectYocoBtn">
         <span>🧾</span> Connect Yoco
       </button>
-      <button class="btn btn-outline" onclick="showLanding()">
+      <button class="btn btn-outline" onclick="window.showLanding()">
         <span>←</span> Back to Home
       </button>
     </div>
@@ -1721,10 +1721,10 @@
       Building trusted financial identities for South Africa's informal economy.
     </div>
     <div>
-      <a href="#" onclick="showLanding()">Home</a>
-      <a href="#" onclick="showLanding()">BridgeID</a>
-      <a href="#" onclick="showLanding()">EcoScore</a>
-      <a href="#" onclick="showLanding()">Contact</a>
+      <a href="#" onclick="window.showLanding()">Home</a>
+      <a href="#" onclick="window.showLanding()">BridgeID</a>
+      <a href="#" onclick="window.showLanding()">EcoScore</a>
+      <a href="#" onclick="window.showLanding()">Contact</a>
     </div>
     <div style="margin-top:16px; color:#333; font-size:12px;">
       © 2026 EcoBridge EC · Open Finance · Eastern Cape
@@ -1845,7 +1845,7 @@
         </div>
 
         <div class="step-actions">
-          <button class="btn-secondary" onclick="closeOnboarding()">Back</button>
+          <button class="btn-secondary" onclick="window.closeOnboarding()">Back</button>
           <button class="btn-primary" id="popiaContinueBtn" disabled>
             Continue →
           </button>
@@ -2883,6 +2883,45 @@
       var connectionDetailStatus = document.getElementById('connectionDetailStatus');
       var connectionTime = document.getElementById('connectionTime');
 
+      // ===== GLOBAL FUNCTIONS (exposed for onclick) =====
+      window.showLanding = function() {
+        landingPage.style.display = 'block';
+        profileDashboard.classList.remove('active');
+        lendersSection.classList.remove('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      window.closeOnboarding = function() {
+        if (onboardingModal) {
+          onboardingModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+        if (onboardingSubmitBtn) {
+          onboardingSubmitBtn.classList.remove('loading');
+          onboardingSubmitBtn.disabled = false;
+        }
+      };
+
+      window.applyForLender = function(lenderId) {
+        var lender = connectionState.lenders.find(function(l) { return l.id === lenderId; });
+        if (lender) {
+          alert('✅ Application submitted!\n\nLender: ' + lender.name + '\nAmount: Up to ' + lender.maxAmount + '\nRate: ' +
+            lender.rate + '\n\nThe lender will review your BridgeID and contact you soon.');
+          addActivity('📝', 'Applied for ' + lender.name);
+        }
+      };
+
+      window.viewLenderDetails = function(lenderId) {
+        var lender = connectionState.lenders.find(function(l) { return l.id === lenderId; });
+        if (lender) {
+          alert('📋 Lender Details\n\nName: ' + lender.name + '\nMax Amount: ' + lender.maxAmount + '\nRate: ' + lender.rate +
+            '\nDescription: ' + lender.description + '\n\nMatch Score: ' + lender.matchScore + '%\n' + (lender.qualified ?
+              '✅ You qualify!' : '❌ Need ' + lender.scoreNeeded + '%+ EcoScore'));
+        }
+      };
+
+      window.openOnboarding = openOnboarding;
+
       // ===== FUNCTIONS =====
 
       function openModal() {
@@ -2923,13 +2962,6 @@
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-
-      window.showLanding = function() {
-        landingPage.style.display = 'block';
-        profileDashboard.classList.remove('active');
-        lendersSection.classList.remove('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      };
 
       function updateDashboard() {
         var hasBank = connectionState.bank.connected;
@@ -3086,8 +3118,8 @@
               '<span>📌 ' + lender.description + '</span>' +
               '</div>' +
               '<div class="lender-actions">' +
-              '<button class="btn-small btn-primary-small" onclick="applyForLender(' + lender.id + ')">Apply with BridgeID</button>' +
-              '<button class="btn-small btn-outline-small" onclick="viewLenderDetails(' + lender.id + ')">Details</button>' +
+              '<button class="btn-small btn-primary-small" onclick="window.applyForLender(' + lender.id + ')">Apply with BridgeID</button>' +
+              '<button class="btn-small btn-outline-small" onclick="window.viewLenderDetails(' + lender.id + ')">Details</button>' +
               '</div>' +
               '</div>';
           }
@@ -3098,24 +3130,6 @@
         }
         lendersGrid.innerHTML = html;
       }
-
-      window.applyForLender = function(lenderId) {
-        var lender = connectionState.lenders.find(function(l) { return l.id === lenderId; });
-        if (lender) {
-          alert('✅ Application submitted!\n\nLender: ' + lender.name + '\nAmount: Up to ' + lender.maxAmount + '\nRate: ' +
-            lender.rate + '\n\nThe lender will review your BridgeID and contact you soon.');
-          addActivity('📝', 'Applied for ' + lender.name);
-        }
-      };
-
-      window.viewLenderDetails = function(lenderId) {
-        var lender = connectionState.lenders.find(function(l) { return l.id === lenderId; });
-        if (lender) {
-          alert('📋 Lender Details\n\nName: ' + lender.name + '\nMax Amount: ' + lender.maxAmount + '\nRate: ' + lender.rate +
-            '\nDescription: ' + lender.description + '\n\nMatch Score: ' + lender.matchScore + '%\n' + (lender.qualified ?
-              '✅ You qualify!' : '❌ Need ' + lender.scoreNeeded + '%+ EcoScore'));
-        }
-      };
 
       function openConnectionModal() {
         connectionModal.classList.add('active');
@@ -3576,26 +3590,12 @@
         }
       }
 
-      function closeOnboarding() {
-        if (onboardingModal) {
-          onboardingModal.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-        if (onboardingSubmitBtn) {
-          onboardingSubmitBtn.classList.remove('loading');
-          onboardingSubmitBtn.disabled = false;
-        }
-      }
-
-      window.openOnboarding = openOnboarding;
-      window.closeOnboarding = closeOnboarding;
-
       if (startOnboardingBtn) startOnboardingBtn.addEventListener('click', openOnboarding);
       if (quickOnboardingBtn) quickOnboardingBtn.addEventListener('click', openOnboarding);
-      if (closeOnboardingBtn) closeOnboardingBtn.addEventListener('click', closeOnboarding);
+      if (closeOnboardingBtn) closeOnboardingBtn.addEventListener('click', window.closeOnboarding);
 
       onboardingModal.addEventListener('click', function(e) {
-        if (e.target === onboardingModal) closeOnboarding();
+        if (e.target === onboardingModal) window.closeOnboarding();
       });
 
       // ===== POPIA CONSENT =====
@@ -3795,7 +3795,7 @@
           setTimeout(function() {
             onboardingSubmitBtn.classList.remove('loading');
             onboardingSubmitBtn.disabled = false;
-            closeOnboarding();
+            window.closeOnboarding();
 
             var pendingActivity = document.getElementById('pendingProfileActivity');
             if (pendingActivity) pendingActivity.remove();
@@ -3886,7 +3886,7 @@
         if (e.key === 'Escape') {
           if (signupModal.classList.contains('active')) closeModal();
           if (connectionModal.classList.contains('active')) closeConnectionModal();
-          if (onboardingModal.classList.contains('active')) closeOnboarding();
+          if (onboardingModal.classList.contains('active')) window.closeOnboarding();
           if (bankConnectionModal.classList.contains('active')) closeBankConnection();
           if (yocoConnectionModal.classList.contains('active')) closeYocoConnection();
         }
